@@ -1,0 +1,9 @@
+[submodule "data/source/lc/maps"]
+	path = data/source/lc/maps
+	url = git@github.com:LotroCompanion/lotro-maps-db.git
+[submodule "data/source/lc/items"]
+	path = data/source/lc/items
+	url = git@github.com:LotroCompanion/lotro-items-db.git
+[submodule "data/source/lc/general"]
+	path = data/source/lc/general
+	url = git@github.com:LotroCompanion/lotro-data.git
