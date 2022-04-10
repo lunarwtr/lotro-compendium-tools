@@ -6,24 +6,31 @@ use utf8;
 use Encode;
 use Storable qw(freeze thaw store retrieve);
 use XML::LibXML;
+use JSON;
 #use Compress::Zlib;
 # use open ':utf8';
 # binmode STDOUT, ":utf8";
 $|=1;
 
-# autoBestowed, hidden, lockType, maxLevel, requiredClass, requiredFaction, requiredRace, sessionPlay, shareable, size
 my %attrmap = ( 
     questArc => 'arcs', name => 'name', description => 'd', category => 'category', level => 'level', minLevel => 'minlevel', 
     id => 'id', repeatable => 'repeatable', monsterPlay => 'faction', instanced => 'instanced'
 );
+my %rewardmap = (
+    XP => 'xp', classPoints => 'cp', craftingXp => 'cx', emote => 'em', glory => 'gl', itemXP => 'ix', lotroPoints => 'lp', 
+    money => 'mo', mountXP => 'mx', object => 'rc', reputationItem => 'ri', selectOneOf => 'so', title => 'ti', trait => 'tr', 
+    virtue => 'vr', virtueXP => 'vx'
+);
+
 my %moneymap = ( gold => 'g', silver => 's', copper => 'c' );
 my $geodb = loadgeodb();
 my $poidb = loadpoidb($geodb);
+my $craftdb = loadcraftdb();
+my $commentdb = decode_json(loadfile('commentdb.json', ':raw'));
 
 my $filename = 'data/source/lc/general/quests/quests.xml';
-# open my $fh, '<', $filename;
-# binmode $fh, ':raw';
-# $dom = XML::LibXML->load_xml(IO => $fh);
+my $outputdir = 'data/output/Compendium/Quests';
+
 my $dom = XML::LibXML->load_xml(location => $filename);
 my @quests = ();
 foreach my $quest ($dom->findnodes('//quest')) {
@@ -38,7 +45,8 @@ foreach my $quest ($dom->findnodes('//quest')) {
     $rec{repeatable} = $rec{repeatable} ? 'Yes' : 'No';
     $rec{faction} = $rec{faction} ? 'Mon' : 'FrP';
     $rec{instanced} = defined $rec{instanced} && $rec{instanced} eq 'true' ? 'Yes' : 'No';
-    
+    my $comments = $commentdb->{"$rec{name}|$rec{category}"};
+    $rec{c} = $comments if (defined $comments);
 
     if ((my $mapId = $quest->findvalue('./map/@mapId'))) {
         my $geo = $geodb->{$mapId};
@@ -68,18 +76,20 @@ foreach my $quest ($dom->findnodes('//quest')) {
 
     foreach my $p ($quest->findnodes('./compoundPrerequisite/prerequisite')) {
         # only add prereqs that have a quest name
-        push(@{$rec{prev}}, $p->findvalue('./@id')) if ($p->findvalue('./@name'));
+        push(@{$rec{prev}}, uc(sprintf("%x", $p->findvalue('./@id')))) if ($p->findvalue('./@name'));
     }
     foreach my $p ($quest->findnodes('./prerequisite')) {
         # only add prereqs that have a quest name
-        push(@{$rec{prev}}, $p->findvalue('./@id')) if ($p->findvalue('./@name'));
+        push(@{$rec{prev}}, uc(sprintf("%x", $p->findvalue('./@id')))) if ($p->findvalue('./@name'));
     }
     foreach my $n ($quest->findnodes('./nextQuest')) {
-        push(@{$rec{next}}, $n->findvalue('./@id'));
+        push(@{$rec{next}}, uc(sprintf("%x", $n->findvalue('./@id'))));
     }
 
+    my %rew = ();
     foreach my $reward ($quest->findnodes('./rewards/*')) {
         my $type = $reward->localname;
+        my $rewkey = $rewardmap{$type};
         # "destinypoints","virtues","titles","traits"
         if ($type eq 'money') {
             my @moneys = ();
@@ -87,37 +97,42 @@ foreach my $quest ($dom->findnodes('//quest')) {
                 my $v = $reward->findvalue("./\@$a");
                 push(@moneys, "$v$moneymap{$a}") if ($v && $v ne '0');
             }
-            push(@{$rec{money}}, { val => join(' ', @moneys)});
+            push(@{$rew{$rewkey}}, { val => join(' ', @moneys)});
         } elsif ($type eq 'reputationItem') {
             my $amount = $reward->findvalue('./@amount');
             $amount = "+$amount" unless ($amount =~ m/^\-/);
-            push(@{$rec{reputation}}, "$amount with " . $reward->findvalue('./@faction'))
+            push(@{$rew{$rewkey}}, { val => "$amount with " . $reward->findvalue('./@faction') })
         } elsif ($type eq 'selectOneOf') {
             foreach my $o ($reward->findnodes('./object')) {
                 my %item = itemmap($o);
-                push(@{$rec{selectoneof}}, \%item);
+                #{id="700005F3",q="(x3)",val="Mushroom Pie"}
+                push(@{$rew{$rewkey}}, \%item);
             }
         } elsif ($type eq 'object') {
             my %item = itemmap($reward);
-            push(@{$rec{receive}}, \%item);
+            push(@{$rew{$rewkey}}, \%item);
         } elsif ($type eq 'title') {
-            my %rec = attmap($reward);
-            push(@{$rec{titles}}, { val => $rec{name} });
+            my %atts = attmap($reward);
+            push(@{$rew{$rewkey}}, { val => $atts{name} });
         } elsif ($type eq 'trait') {
-            my %rec = attmap($reward);
-            push(@{$rec{traits}}, { val => $rec{name} });
+            my %atts = attmap($reward);
+            push(@{$rew{$rewkey}}, { val => $atts{name} });
         } elsif ($type =~ m/^(XP|glory|virtueXP|itemXP|mountXP|classPoints|lotroPoints)$/i) {
-            push(@{$rec{lc($type)}}, $reward->findvalue('./@quantity'));
+            push(@{$rew{$rewkey}}, { val => $reward->findvalue('./@quantity') });
         } elsif ($type eq 'craftingXp') {
             # <craftingXp profession="COOK" tier="4" XP="36"/>
-
+            my $craft = $craftdb->{$reward->findvalue('./@profession')}{name};
+            push(@{$rew{$rewkey}}, { craft => $craft, val => $reward->findvalue('./@XP') });
         } elsif ($type eq 'virtue') {
             # dont see this much other than single quest 
         } else {
             # unknown
-            print "Unknown Reward Type!!! $type\n";
+            #print "Unknown Reward Type!!! $type\n";
         }
         # destinypoints not given for quests anymore
+    }
+    if (keys %rew > 0) {
+        $rec{r} = \%rew;
     }
 
     my @objectives = ();
@@ -142,8 +157,10 @@ foreach my $quest ($dom->findnodes('//quest')) {
         }
     }
     if (scalar @objectives > 0) {
-        my $o = join('\n', @objectives);
-        $o =~ s/\n+/\n/gs;
+        my $o = join("\n", @objectives);
+        $o =~ s/[\n]+/\n/gs;
+        $o =~ s/\s*\(\$\{\w+\}\/(\$\{\w+\}|\d+)\)//gis;
+        $o =~ s/\\q/"/gis;
         $rec{o} = $o;
         #$rec{o} = compress(encode('utf-8', $o), 9);
     }
@@ -304,6 +321,21 @@ print INDEX <<EOB;
 EOB
 
 exit;
+
+sub loadcraftdb {
+    my $craftdbfile = 'craft.db';
+    if (-e $craftdbfile) {
+        return retrieve($craftdbfile);
+    }
+    my %crafts = ();
+    my $dom = XML::LibXML->load_xml(location => 'data/source/lc/general/crafting/crafting.xml');
+    foreach my $p ($dom->findnodes('/crafting/profession')) {
+        my %rec = attmap($p);
+        $crafts{$rec{key}} = \%rec;
+    }
+    store(\%crafts, $craftdbfile);
+	return \%crafts;
+}
 
 sub geopath {
     my($geosref, $c, $r) = @_;
@@ -473,9 +505,9 @@ sub string {
 		}
 		$newval .= "}";
 		return $newval;
-    } elsif ($val =~ /[^[:print:]]/s) {
-        $val =~ s/"/\\"/gs;
-        return "\"$val\"";
+    # } elsif ($val =~ /[^[:print:]]/s) {
+    #     $val =~ s/"/\\"/gs;
+    #     return "\"$val\"";
 	} else {
 		return escapelua($val);
 	}
@@ -526,7 +558,7 @@ sub poilookup {
                     $ew = $ew < 0 ?  (- $ew)."W" : "${ew}E";
                     my $ns = coorround($coor->{latitude});
                     $ns = $ns < 0 ?  (- $ns)."S" : "${ns}N";
-                    push(@{$rec{locations}}, "$ns, $ew");
+                    push(@{$rec{loc}}, "$ns, $ew");
                 }
             #}
             return \%rec;
@@ -539,4 +571,15 @@ sub poilookup {
 sub coorround {
     my($v) = @_;
     return int($v * 10)/10;
+}
+
+sub loadfile {
+    my ($file, $encoding) = @_;
+	#print "$file\n";
+    my $data = do {
+        local $/ = undef;
+        open my $fh, "<$encoding", $file or die "Cannot open $file";
+        <$fh>;
+    };	
+    return $data;
 }
