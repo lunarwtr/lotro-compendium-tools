@@ -139,6 +139,7 @@ foreach my $quest ($dom->findnodes('//quest')) {
     foreach my $o ($quest->findnodes('./objectives/objective')) {
         my %ob = attmap($o);
         my $desc = '';
+        # TODO: handle <objective index="3" text="${RACE:Jon Brackenbrook wishes to speak with you.&#10;&#10;After the assault on Archet, Jon Brackenbrook returned to the town to assist and rebuild, taking up his father's legacy.'[U,D,L]|'Mundo Sackville-Baggins wishes to speak with you.&#10;&#10;After the assault on Archet, you helped Mundo Sackville-Baggins and Celandine Brandybuck on their return trip to the Shire.'[O]}" progressOverride="${RACE:Speak with Mundo Sackville-Baggins[O]|Speak with Jon Brackenbrook in Archet[U,D,L]}">
         $desc .= "$ob{text}\n" if ($ob{text});
         $desc .= "$ob{progressOverride}" if ($ob{progressOverride});
         my @sub = ("Obj $ob{index}:\n$desc");

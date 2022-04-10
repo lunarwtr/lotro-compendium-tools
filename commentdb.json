@@ -1,18 +1,9 @@
 {
-    "Vol. I, Book 2, Chapter 16: Agamaur Secured|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Talk to Radagast the Brown in his tower in the back of Ost Guruth"
-    ],
     "The Brimstone Swamp|Angmar": [
         "* The hunting-camp of Tyrn Lhuig is located at [1.9S, 33.2W]."
     ],
     "Sending a Message|Mirkwood": [
         "* Ukhurk's Standard is in Garmadh-maudhûl at [16.6S, 46.7W]"
-    ],
-    "Vol. I, Book 1, Chapter 9: Lilies for the River-daughter|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
-        "* Go down the hill into the river\n* Collect 4 large lilies\n* Return to Tom Bombadil"
-    ],
-    "Vol. II, Book 1, Chapter 11: Worth Beyond Measure|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Dithalion [28.5S, 6.2W] is by The Forges of Rivendell and Wafi [28.5S, 6.2W] is by The Forging Hall in Thorin's Hall\n* There is a dwarf Forge-master right at his side."
     ],
     "The Choicest Cut|Forochel": [
         "* Silvan Thirty-Point is southwest of the lake"
@@ -38,8 +29,8 @@
     "Pembar's Relics|Eregion": [
         "* Pembar is at [44.1S, 10.8W]"
     ],
-    "Vol. II, Book 1, Expedition: Danger Beneath the Surface|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* The entrance to the Brackwater is at [50.3S, 5.2W]\n* Defeat Cave-lizard inside"
+    "Book 2, Chapter 1: Rise of the Orcs|Epic - Vol. I, Book 2: The Red Maid": [
+        "* The Orcs to kill are just southwest of Candaith's camp at Glumhallow"
     ],
     "Expedition: Bridging the Gap|Mirkwood": [
         "* The western bridge can be found in the Mirk-eaves at [16.9S, 61.4W]\n* The eastern bridge can be found in the Mirk-eaves at [17.0S, 60.1W]"
@@ -53,8 +44,8 @@
     "Optional Objective: Bog-lurkers|Garth Agarwen": [
         "* Kill all bog-lurkers. There should be enough bog-lurkers."
     ],
-    "Vol. I, Book 6, Chapter 6: Challenging the Stone|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Find one of the Watching-stones in the Ram Dúath. There at least 2 possible locations\nBetween Duvairë (Morroval) and Frith-vailë among the seige-engines (easiest to reach).\n* Between Bail Róva and Frith-vailë.\n* Use the stone & fight its spirit.\n* Return to Corunir in Aughaire."
+    "Book 2, Chapter 16: Agamaur Secured|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Talk to Radagast the Brown in his tower in the back of Ost Guruth"
     ],
     "Free the Fallen|Fornost": [
         "* Quest-giver, Emma Slee, is found in the Fornost Free Peoples' Camp\n* These reside in skeletons in the middle area of the ]. However, some skeletons (~60-75%) contain aggressive (enemy) shades which will attack the player. To release a shade for this quest, a player must walk near the skeleton. When the shade appears on the screen, it will either attack or it will fulfill the quest requirements. The player must click on the shade to complete its release.\n* Each shade will grant quest credit to only the player who clicks on it, not to all members of a fellowship. Thus, a six-person fellowship needs to release a total of 180 friendly shades to complete the quest. With the spawn rate near 1 in 3 or 1 in 4, this means that, on average, 500-700 shades must be released, and most will attack the players and need to be defeated. Statistically, this means the quest will likely require multiple visits to the instance in order successfully release the 30 shades required per person."
@@ -107,6 +98,12 @@
     "Gain and Glory: Assist the Rich|Frostbluff": [
         "* Talk to Winston Goodnough.\n* Talk to Gareth Rust.\n* Talk to Daley Utteridge.\n* Do the emotes.\n* Report back to the mayor.\n* Go to south Frostbluff and sound the Summoning Horn.\n* Defeat Gareth Rust.\n* Return to the mayor."
     ],
+    "Book 6, Chapter 7: Beyond Light and Knowledge|Epic - Vol. II, Book 6: The Shadowy Abyss": [
+        "* You will find a Burned Hat by The Bridge-shard [14.1S, 97.5W]\n* You will find some Burned Rubble where the stairs did collapse in The Endless Stair [14.7S, 99.0W]\neven though the quest states to search the bottom of the endless stair the rubble is at the top of the stairs."
+    ],
+    "Book 6, Chapter 1: Of Golodir and Angmar|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Go to Daervunn at Esteldín in the North Downs"
+    ],
     "Intro:  Skorgrím's Tomb|Introduction": [
         "* This is a solo quest, and cannot be completed in a fellowship.\n* Talk to Dwalin and enter Skorgrím's Tomb\n* Complete the instance\n* Talk to Skògi"
     ],
@@ -134,12 +131,6 @@
     "The Puzzle-vault|Ered Luin": [
         "* The stairs are on the right just after the Bard in Thorin's Hall. The levers are just left of Heikki Goldwatcher. The sequence of the levers is: Moon, Axe, Sun, Jewel."
     ],
-    "Vol. I, Book 8, Chapter 4: A Beacon of Hope|Epic - Vol. I, Book 8: The Scourge of the North": [
-        "* Laerdann and Golodir are in Gath Forthnír in Angmar"
-    ],
-    "Vol. II, Book 1, Chapter 10: Forgotten Lineage|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Dithalion [28.5S, 6.2W] is by The Forges of Rivendell and Wafi [28.5S, 6.2W] is by The Forging Hall in Thorin's Hall\n* There is a dwarf Forge-master right at his side."
-    ],
     "Forest Patrol|Mirkwood": [
         "* The north waypoint is in Emyn Lûm at [13.6S, 51.2W]\n* The north-east waypoint is in Emyn Lûm at [13.7S, 50.0W]\n* The east a waypoint is in Emyn Lûm at [14.5S, 49.5W]\n* The south-east a waypoint is in Emyn Lûm at [14.5S, 49.7W]"
     ],
@@ -148,6 +139,9 @@
     ],
     "Rune-kenner|North Downs": [
         "* Gandelin is at Lin Giliath [13.7S, 44.7W]"
+    ],
+    "Book 1, Expedition: The Top of the Waterfall|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* The strongbox at the top of the waterfall"
     ],
     "Dunland's Champion|Eregion": [
         "* Orders to the White Hand drops from a Dunlending"
@@ -185,6 +179,9 @@
     "Dark Standards|Angmar": [
         "* Tór Gailvin is at [3.4N, 34.6W]"
     ],
+    "Book 1, Chapter 13: The Watcher in the Water|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Talk to Ráthwald and finish the instance"
+    ],
     "Pulling Beards|North Downs": [
         "* Torfi Hammerhorn is at Thurum [4.8S, 45.6W]"
     ],
@@ -212,23 +209,29 @@
     "Crafting: Knowledge is the Best Defence|Crafting": [
         "* Collect Scroll of Minor Battle Lore\n* Collect Scroll of Minor Weaponsmithing Lore"
     ],
-    "Vol. I, Book 8, Chapter 5: Mordirith's Fall|Epic - Vol. I, Book 8: The Scourge of the North": [
-        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
-    ],
     "Murder in the Ruins|Evendim": [
         "* Glirion can be found in the ruins of Arthobel [17.8S, 64.9W]"
     ],
-    "A Brother's Plea|North Downs": [
-        "* Oskari [8.9S, 32.6W] is at the back of a Rauta-lehmä camp in Fashat Laug"
+    "Book 2, Chapter 4: Light in the Darkness|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Go to the top of Weathertop for the stone"
+    ],
+    "Stones for the Lodge|Forochel": [
+        "* The Mounds where you must place the Bay Stones are at Kaleva's side."
     ],
     "The Fourth Gear|Ered Luin": [
         "* The Chest is in Kheledûl at [21.0S, 92.2W]. To find it, turn left immediately on entering Kheledûl and follow along the wall until you reach it."
     ],
-    "Vol. I, Book 6, Chapter 4: Heart of Stone|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Head north out of Aughaire then west into Western Malenhad. Do not try and cross the line of standing statues in the middle - you will be defeated instantly. Displays the prompt \"The will of the Silent Watchers has overpowered you.  You do not yet have the strength to overcome their malice.  You succumb to your wounds.\"  Fallen statues can be found in various pools in Malenhad. There is one available at [0.4N, 31.2W].\n* After successfully collecting a heart return to Corunir."
+    "Book 1, Chapter 10: Forgotten Lineage|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Dithalion [28.5S, 6.2W] is by The Forges of Rivendell and Wafi [28.5S, 6.2W] is by The Forging Hall in Thorin's Hall\n* There is a dwarf Forge-master right at his side."
     ],
     "Practised Villainy|Evendim": [
         "* Do alongside Quest:The Thief-takers"
+    ],
+    "Book 1, Expedition: Unpleasant Business|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* The bone piles are in Filgogân near the mob Graug"
+    ],
+    "Book 7, Chapter 1: Hidden in Shadow|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Head north from Gabilshathûr to the hidden refuge of Gath Forthnír\n* Talk to Areneth, then to Lorniel who is in a room inside."
     ],
     "Scouring the Path|Eregion": [
         "* You will find a Pipeweed Pouch at an abandoned camp in the High Hollin area [43.8S, 12.9W]"
@@ -248,6 +251,9 @@
     "Lothlórien Preparations III|Lothlórien": [
         "* The Stacks of Supplies can be found outside Caras Galadhon [16.8S, 67.3W]"
     ],
+    "Book 7, Chapter 6: Thrór's Hammer|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Head to the NE corner of Thorin's Gate and enter Skorgrím's Tomb.\n* The first two groups of Wights will have powerful disease effects, so be prepared.\n* Defeat the two groups of two L49-50 Wights per group.\n* Watch out for the trap spikes.  They are easy to recognize and can be timed without difficulty.\n* Head due west until you reach Faerdami, a signature mob with about 4.4K Morale.\n* Defeat Faerdami and loot the hammer.  He restricts the area you can move about in, so it is a close up fight.\n* Return to Litli at Thorin's Hall"
+    ],
     "The Shattered Past|Garth Agarwen": [
         "* There are darkwaters inside the Fortress and Arboretum Garth Agarwen instances. They can also be found outside the instance entrances"
     ],
@@ -257,8 +263,8 @@
     "The Standing-stone|Ered Luin": [
         "* The Standing Stone is in Emyn Hoedh at [17.9S, 93.4W]\n* You will need to defeat a level 14 signature wight with approximately 600 morale called the Mound-wight Master."
     ],
-    "Vol. I, Book 6, Chapter 7: Beyond Rammas Deluon|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Talk to Braigiar at Gabilshathûr."
+    "Book 5, Instance: The Battle of the Way of Smiths|Epic - Vol. II, Book 5: Drums in the Deep": [
+        "* In the last dialogue, Stóthkell talks about nearly losing Zigilburk. Since the axe has already been lost in Chapter 3, I guess he meant Nâr-khelab, The Heart of Fire."
     ],
     "The Frostbluff Theatre|Frostbluff": [
         "* You should find the fireworks (at the top of the stairs overlooking the Festival square) and set them off first. That will distract the wealthy people, wich you can pickpocket now."
@@ -287,9 +293,6 @@
     "Lost Goods|Eregion": [
         "* Daegennan is at Gwingris"
     ],
-    "Vol. I, Book 2, Chapter 14: History of the Red Maid|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Talk to Radagast the Brown in his tower in the back of Ost Guruth"
-    ],
     "Lost My Marbles|Forochel": [
         "* The marbles drop from Peikkos, Tundra Bears, Steppe-elk Harts, and Steppe-elk Hinds"
     ],
@@ -301,6 +304,12 @@
     ],
     "Songs for the Saplings|Lothlórien": [
         "* Orthir can be found in Cirin-en-galadh at [11.8S, 68.8W]"
+    ],
+    "Book 7, Chapter 4: Dwarf Mastery|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Go to Dwalin in Thorin's Hall"
+    ],
+    "Book 3, Chapter 6, Part II: The Defence of Trestlebridge|Epic - Vol. I, Book 3: The Council of the North": [
+        "* Talk to Halbarad and complete the instance [35] The Defence of Trestlebridge\n* Talk to Nellie Boskins when done"
     ],
     "Reporting the Findings|Moria Lower Deeps": [
         "* Jatgír is in The Rotting Cellar at [14.6S, 111.9W]"
@@ -329,11 +338,17 @@
     "Guiding the Shadow|Eregion": [
         "* Dagronk is found wandering at [49.1S, 10.W]"
     ],
+    "Book 2, Chapter 8: The Red Swamp|Epic - Vol. I, Book 2: The Red Maid": [
+        "* The bog-lurker nests are in the Circle of Blood at Haragmar, east of Ost Guruth"
+    ],
     "The Scattered Tales of Audaghaim|Mirkwood": [
         "* Over the blank gravestone you will find the shade of the Record-keeper of Audaghaim, who will tell you the whole story. He is at [14.7S, 56.2W]"
     ],
     "Mother of Beasts|Forochel": [
         "* The Great Snow-matron is inside the Peikko Cave [9.5N, 79.9W]"
+    ],
+    "Prologue, Prologue: Make Yourself Useful|Epic - Vol. I, Prologue": [
+        "* Head for Scary by going east past Overhill and Brockenborings\n* When in Scary speak with Wilcome Tunnelly"
     ],
     "Keeping the Norsu Pure|Forochel": [
         "* The Gauradan Seer is in Norsu-hauta at [8.3N, 81.5W]. He is accompanied by a wolf and is near an Elite Mammoth, but the mamoth won't attack you and will leave when the Seer is defeated."
@@ -371,17 +386,20 @@
     "Hungry Mouths to Feed|Ered Luin": [
         "* The trap with the rabbit is in Haudh Lin at [21.9S, 93.9W]. You can see if there's a rabbit in a trap if you watch closely."
     ],
-    "Vol. I, Book 2, Chapter 11: The Stone-speaker|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Aric the Stone-speaker is in south Harloeg in Ost Haer"
-    ],
     "The Ties That Bind|Forochel": [
         "* Complete Instance: The Ties That Bind"
     ],
-    "Vol. I, Book 2, Chapter 12: A Dead Man's Challenge|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Emelin is in the same part of the ruins as Alric. After talking to him you must defeat 3 shades summoned by him."
+    "Book 7, Chapter 8: The Gates of Carn Dûm|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Talk to Lorniel to enter the instance\n* Protect Lorniel as you fight through several groups of Angamarin, trolls, little people, and others. AOE skills will be very helpful.\n* Fight round to the opposite side of the gate and pull the lever\n* Protect Lorniel through several more groups.\n* Defeat Mordirith, who has about 49K morale. Persistence is the key!"
+    ],
+    "Book 7, Chapter 2: Ringbearer's Respite|Epic - Vol. II, Book 7: Leaves of Lórien": [
+        "* Frodo Baggins is at Cerin Amroth [11.8, 67.7W]\n* Samwise Gamgee is at Cerin Amroth [11.8, 67.7W], at Frodo's side as usual\n* Meriadoc Brandybuck is at Bain Gwaloth [12.9, 67.1W]\n* Meriadoc Brandybuck is in Cirin-en-Galadh [11.1, 69.1W]"
     ],
     "The Bloodstone Trove|Angmar": [
         "* The Trove is located at deep within the camp. [3.4N, 35.3 W]  It is not in a corner as the quest suggests, but out in the open in front of a tent."
+    ],
+    "Book 6, Chapter 3: Secrets of the Stones|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Find the watching stone at [3.1N, 35.7W]\n* Return to Corunir in Aughaire"
     ],
     "A Vital Message|Mirkwood": [
         "* The first Milestone is in Emyn Lûm at [14.1S, 53.0W]\n* The second Milestone is in The Dourstocks at [14.7S, 54.7W]\n* The third Milestone is in The Dourstocks at [14.6S, 55.6W]\n* As of the patch on 09/07/10 Laeginn tends to fall through the floor into the basement of The Haunted Inn, where he is inaccessible unless you have the corresponding quest that allows you to enter the basement."
@@ -404,6 +422,9 @@
     "Entangled Elves|Mirkwood": [
         "* There is a Cocooned Elf in the Scuttledells at [11.3S, 52.0W]\n* There is a Cocooned Elf in the Scuttledells at [10.1S, 50.3W]\n* There is a Cocooned Elf in the Scuttledells at [11.3S, 50.6W]\n* There is a Cocooned Elf in the Scuttledells at [11.5S, 51.3W]"
     ],
+    "Book 9, Chapter 5: Treacherous Lights|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
+        "* The real Rósar is in the Drownholt at [17.4S, 56.6W]. The other ones are actually Bog-lights luring you into a trap.\n* The real Stígur is in the Drownholt at [18.4S, 56.9W]. The other ones are actually Bog-lights luring you into a trap."
+    ],
     "The Den-mother|Forochel": [
         "* The den-mother can be found in a small island in the nearby lake at [2.9N, 60.5W]"
     ],
@@ -416,6 +437,9 @@
     "A Peculiar Tomb|Mirkwood": [
         "* The Gravestones are in the Dourstocks at [14.7S, 56.2W]"
     ],
+    "Book 8, Instance: Mordirith's Fall|Epic - Vol. I, Book 8: The Scourge of the North": [
+        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
+    ],
     "Angmarim Sorcery|Forochel": [
         "* The Angmarim Sorcerer is in Länsi-mâ at [8.1N, 79.3W]."
     ],
@@ -424,6 +448,9 @@
     ],
     "The Captain of Sâd Rechu|Eregion": [
         "* The Sâd Rechu Mustering-horn is in Pend Eregion [42.2S, 13.0W]"
+    ],
+    "Book 8, Chapter 3: Forging the Sword|Epic - Vol. I, Book 8: The Scourge of the North": [
+        "* Elrond is at Rivendell in the Trollshaws.\n* Hemeldir can be found near Rivendell's forges [28.5S, 6.2W]"
     ],
     "Message to Taylor Green|Bree-land": [
         "* Taylor Green is in the Combe lumber camp, east of Combe"
@@ -436,9 +463,6 @@
     ],
     "Orc-thieves|Lone-lands": [
         "*"
-    ],
-    "Vol. I, Book 9, Foreword: News of the Palantír|Epic - Vol. I, Book 9: The Shores of Evendim": [
-        "* Gandalf is in Bilbo's room on the ground floor of the Last Homely House, in Rivendell."
     ],
     "Strength of Stone|Angmar": [
         "* There are one or two siege engines located just outside of the Angmarim camp of Skathmúr that are relatively unguarded. They respawn every one or two minutes, so you don't need to bother taking out the ones that are heavily guarded by groups of Orcs."
@@ -491,9 +515,6 @@
     "Instructions in the Map|Moria Upper Levels": [
         "* Páshnar is in Nud-melek, at [7.1S, 103.2W]"
     ],
-    "Vol. I, Book 4, Instance: The Unmarked Trail|Epic - Vol. I, Book 4: Chasing Shadows": [
-        "* Enter the instance.\n* Protect Legolas as he hunts for the evil.\n* Defeat Taushakh."
-    ],
     "The Prisoner of Barad Morlas|Eregion": [
         "* You must escort Anurandir till [47.3S, 13.5W]"
     ],
@@ -530,6 +551,9 @@
     "The Fountain of the Lady|Lothlórien": [
         "* The first pitcher must be carried to the Parched Elf at [14.5S, 66.3W]\n* The second pitcher must be carried to the Parched Elf at [14.5S, 67.0W]\n* The second pitcher must be carried to the Parched Elf at [15.3S, 67.1W], at the end of the carpeted path just before the stairs that lead to the House of Celeborn"
     ],
+    "Book 1, Expedition: The Common Thread|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Filgogân is at [53.1S, 7.5W]\n* Defeat half-orcs inside who will drop the painted stones"
+    ],
     "Hewing the Wood|Evendim": [
         "* 21"
     ],
@@ -551,20 +575,14 @@
     "Amber for Othrikar|Crafting": [
         "* Jaki Stonehand [5.4S, 46.9W] can be found NW of Othrikar near the Fatherlode."
     ],
-    "Vol. I, Book 1, Chapter 10: Into the Barrow-downs|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
-        "* Go northeast into the Barrow-downs\n* Defeat Andraste and the crebain\n* Return to Tom Bombadil"
+    "Book 2, Chapter 14: History of the Red Maid|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Talk to Radagast the Brown in his tower in the back of Ost Guruth"
     ],
     "Cutting Cords|Ered Luin": [
         "* Vifill is in the Vale of Thráin at [19.0S, 101.7W]"
     ],
-    "Vol. I, Book 8, Chapter 1: The Flickering Flame|Epic - Vol. I, Book 8: The Scourge of the North": [
-        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
-    ],
     "Ancient Records|Mirkwood": [
         "* There are many Silvan records on the remaining walls of the Wild Ruin"
-    ],
-    "Vol. I, Book 3, Chapter 4, Part II: Freeing Dori|Epic - Vol. I, Book 3: The Council of the North": [
-        "* Dori is imprisoned at [7.7S, 47.0W]"
     ],
     "Singing to Saplings|Lothlórien": [
         "* Orthir can be found in Cirin-en-galadh at [11.8S, 68.8W]\n* Saplings can be found at:"
@@ -590,17 +608,20 @@
     "Protecting the Herd|Enedwaith": [
         "* Kill peikkos around Sûri-kylä"
     ],
+    "Book 9, Chapter 3: Journey to Gondamon|Epic - Vol. I, Book 9: The Shores of Evendim": [
+        "* The Knight of Mordirith in Ered Luin is Kevoca (lvl 50 Signature with 4,428 morale) and can be found near Ringdale [18.4S, 96.1W]"
+    ],
+    "Book 2, Chapter 2: Store-houses of the Western Halls|Epic - Vol. II, Book 2: Echoes in the Dark": [
+        "* You will find a broken tablet within an old strongbox in the Chamber of Wisdom [7.9S, 112.3W]\n* You will find some dusty pages within an old strongbox in the Chamber of Knowledge [7.5S, 112.0W]\n* You will find a weathered tome within an old strongbox in the Chamber of Deep Thought [8.3S, 114.9W]"
+    ],
     "Crannog's Fifth Challenge|Angmar": [
         "* Nekhtan is found by a tree in Fasach-larran [1.7N, 37.7W]"
     ],
     "Against the Cold|Forochel": [
         "* The bears (Ice-shore Matron, Ice-shore Yearling, Ice-shore Bear) are east of Sûri-kylä"
     ],
-    "Vol. I, Book 6, Chapter 1: Of Golodir and Angmar|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Go to Daervunn at Esteldín in the North Downs"
-    ],
-    "Vol. II, Book 9, Chapter 5: Treacherous Lights|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
-        "* The real Rósar is in the Drownholt at [17.4S, 56.6W]. The other ones are actually Bog-lights luring you into a trap.\n* The real Stígur is in the Drownholt at [18.4S, 56.9W]. The other ones are actually Bog-lights luring you into a trap."
+    "Book 13, Chapter 3: Favour of Wisdom|Epic - Vol. I, Book 13: Doom of the Last-king": [
+        "* Clothing (Fur Pelts)\n* Water (Bucket of Water)\n* Fire (Campfire)\n* Food (Fish)\n* Weapons (Weapon Rack)"
     ],
     "Wolf-bounty|Eregion": [
         "* Wolves can be found throughout Eregion."
@@ -611,17 +632,23 @@
     "Falling Standards|Forochel": [
         "* Reginald's Banner can be found in Jä-rannit at [15.2N, 66.6W]"
     ],
+    "Book 1, Chapter 11: Worth Beyond Measure|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Dithalion [28.5S, 6.2W] is by The Forges of Rivendell and Wafi [28.5S, 6.2W] is by The Forging Hall in Thorin's Hall\n* There is a dwarf Forge-master right at his side."
+    ],
+    "Book 7, Chapter 2: Crossing the Shadow|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Head West from Gath Forthnír to find Raghnall\n* When you've spoke to him, 1 Hunting Morroval will show up but it will disappear after a minute so you don't have to kill them\n* Return to Lorniel"
+    ],
     "Lest We Forget|Moria Upper Levels": [
         "* Stand before the northern statue at [3.0S, 109.0W]\n* Stand before the southern fountain at [4.2S, 109.1W]\n* Stand before the central statue at [3.6S, 109.3W]"
     ],
     "A Bird in the Hand|North Downs": [
         "* The northhawks are south and around Othrikar."
     ],
-    "Vol. I, Book 5, Chapter 5: The Last Refuge|Epic - Vol. I, Book 5: The Last Refuge": [
-        "* Talk to Gimli to start the instance\n* Defeat enemies (Dourhands and Frost Giants) & protect Gimli\n* Defeat Skorgrím Dourhand\n* Talk to Glóin"
-    ],
     "Rhudaur's Traitors|Lone-lands": [
         "* The satchels can drop from the Rhudaur north-east of the Eglan-camp."
+    ],
+    "Prologue, Prologue: Mundo's Complaint|Epic - Vol. I, Prologue": [
+        "* Head for Michel Delving to the south and speak with Mayor Will Whitfoot"
     ],
     "The Dark Apprentice|Mirkwood": [
         "* The Corrupted Altar is in Sâd Morangol at [18.6S, 48.7W]\n* Destroying the Altar will summon Mâb Rhûnadan"
@@ -641,6 +668,9 @@
     "Rumming's Remaining Riddle|Evendim": [
         "* The answer to the riddle is \"Worm\". The Chest of the Worm can be found at [12.0S, 71.0W]"
     ],
+    "Book 2, Chapter 1: New Residents|Epic - Vol. II, Book 2: Echoes in the Dark": [
+        "* Bósi is at the Chamber of the Crossroads [5.2S, 112.1W]"
+    ],
     "Stolen Skulls|Angmar": [
         "* The skull is in the Orc camp to the south east of Ram Dúath."
     ],
@@ -650,14 +680,8 @@
     "Moving Unseen|Eregion": [
         "* Lynx can be found prowling in High Hollin, north-east of Echad Eregion. A high concentration of Lynx can be found at Talath Dindal."
     ],
-    "Vol. II, Book 6, Chapter 7: Beyond Light and Knowledge|Epic - Vol. II, Book 6: The Shadowy Abyss": [
-        "* You will find a Burned Hat by The Bridge-shard [14.1S, 97.5W]\n* You will find some Burned Rubble where the stairs did collapse in The Endless Stair [14.7S, 99.0W]\neven though the quest states to search the bottom of the endless stair the rubble is at the top of the stairs."
-    ],
     "Now is Found|Ered Luin": [
         "* Langlas in Thrasi's Lodge at [21.6S, 94.1W]"
-    ],
-    "Vol. I, Book 9, Instance: Oakheart's Might|Epic - Vol. I, Book 9: The Shores of Evendim": [
-        "* Sara Oakheart is a lvl 50 Avenger with 44,284 morale. Just let her get the aggro of the spirits and help her beating on one of them.\n* Then just relax and watch the movie unwind.\n* You cannot avoid being defeated at the end of the instance."
     ],
     "Hallowed Ground|Ered Luin": [
         "* The Stone Table in Tham Gelair is at [27.5S, 94.4W]"
@@ -713,20 +737,14 @@
     "Unsure Steps|Eregion": [
         "* Ruidhriel is encamped near the Burnt Tor, north-west of Echad Dúnann.\n* Limlaer is encamped along the road, south-west of Echad Dúnann."
     ],
-    "Vol. I, Book 9, Chapter 3: Journey to the Lone-lands|Epic - Vol. I, Book 9: The Shores of Evendim": [
-        "* The Knight of Mordirith in the Lone-lands is Neacal (lvl 50 Signature with 4,428 morale) and can be found in Harloeg [39.2S, 25.1W]"
-    ],
     "Elessar's Return|Lothlórien": [
         "* Milwen can be found in Cirin-en-Galadh [11.9S, 69.0W]\n* As stated, Aragorn is in the Company's Pavilion [15.0S, 66.8W]"
-    ],
-    "Vol. I, Prologue, Prologue: Make Yourself Useful|Epic - Vol. I, Prologue": [
-        "* Head for Scary by going east past Overhill and Brockenborings\n* When in Scary speak with Wilcome Tunnelly"
     ],
     "The Hirvi-herd|Forochel": [
         "* Matti is in Sûri-kylä at [19.5N, 71.3W]\n* Kaleva is in Sûri-kylä at [19.2N, 70.9W]\n* Rauno is inside the Great Lodge of Sûri-kylä at [19.5N, 72.0W]"
     ],
-    "Little Wonders|Enedwaith": [
-        "* Small Arrow [64.3S, 22.2W]\n* Small Boots [61.3S, 19.2W]\n* Small Bucket [63.3S, 22.2W]\n* Small Skeleton [63.3S, 22.6W]\n* Small Tool [64.6S, 20.4W]\n* Small Bow [63.7S, 23.0W]"
+    "Common Blood|North Downs": [
+        "* Ragnarr and the camp are at [9.3S, 39.9W]"
     ],
     "Bear-hunter|North Downs": [
         "* The bears are scattered south of Othrikar."
@@ -770,8 +788,8 @@
     "Ancient Rituals|Forochel": [
         "* You can use the feathers in your inventory anywhere in Reodh Fuil\n* You must place the fish upon a Ritual Stone in Jä-rannit at [15.3N, 66.7W]"
     ],
-    "Vol. II, Book 3, Chapter 1: An Overzealous Explorer|Epic - Vol. II, Book 3: The Lord of Moria": [
-        "* Útrygg can be found at [6.7S, 104.4W]"
+    "Book 7, Chapter 7: The Key Forged|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Return to Lorniel in Gath Forthnír."
     ],
     "The Writhing Glade|Mirkwood": [
         "* You will need to defeat 5 Mirk-huorns. Those are Signature creatures, but you might find yourself fighting more than one at the same time. Hence the Small Fellowship type of the quest.\n* After defeating the 5 Mirk-huorns, speak with the Wrathful Huorn in Sâd Meryrn at [19.0S, 57.3W]"
@@ -779,17 +797,11 @@
     "Drawing the Enemy|Eregion": [
         "* You can set the false firecamp on a Clear Patch in Emyn Naer, at [54.2S, 11.2W]"
     ],
-    "Vol. I, Book 2, Chapter 1: Rise of the Orcs|Epic - Vol. I, Book 2: The Red Maid": [
-        "* The Orcs to kill are just southwest of Candaith's camp at Glumhallow"
-    ],
     "A Tour of Bree|Bree-land": [
         "* Talk to Bonny Thatcher at the Three-farrow Crafting-hall\n* Talk to Second-watcher Heathstraw near the Boar Fountain\n* Talk to Barliman Butterbur at The Prancing Pony Inn\n* Talk to Lily Sandheaver at her home near the West-gate\n* Talk to Harry Goatleaf at the West-gate\n* Talk to Watchman Cardoon near the West-gate\n* Talk to Ted Gardener/Maud Foxglove at the vault\n* Talk to Clar Whitethorn at Whitethorn's Taxidermy right across the vault\n* Talk to Newbold Leafcutter inside the Scholar's Stair\n* Talk to Mat Heathertoes in Beggar's Alley\n* Talk to Lily Appledore at the Bree Jail\n* Talk to an auctioneer near the South-gate\n* Talk to Tad Leafcutter at the hunting-lodge in south Bree\n* Return to Mayor Graeme Tenderlarch at the Bree Town Hall"
     ],
     "The Terror that was Azog|Moria Upper Levels": [
         "* Arnfinn is in a corner in The Mustering Hall at [2.9S, 106.9W]"
-    ],
-    "Vol. I, Prologue, Prologue: Mundo's Complaint|Epic - Vol. I, Prologue": [
-        "* Head for Michel Delving to the south and speak with Mayor Will Whitfoot"
     ],
     "Niphredil and Elanor|Lothlórien": [
         "* Maliriel is at [17.2S, 64.0W]\n* Ambendel is at [14.3S, 73.1W]\n* Bahanneth is at [12.1S, 71.1W]"
@@ -820,9 +832,6 @@
     ],
     "Quenching a Thirst|Ered Luin": [
         "* There are thickets clogging the canal in the Vale of Thráin at [20.0S, 100.6W]"
-    ],
-    "Vol. I, Book 5, Chapter 4: The Key-stone|Epic - Vol. I, Book 5: The Last Refuge": [
-        "* Head north into Bruinen Source West\n* Collect the key from a chest at Iskeld's Lookout [21.5S, 4.6W]\n* Return to Glóin"
     ],
     "There and Back Again|Evendim": [
         "* This last Stone Marker is the first one you found, the one in Canadiach [10.7S, 64.8W]"
@@ -860,8 +869,8 @@
     "Lord and Lady of the Golden Wood|Lothlórien": [
         "* Both Lord Celeborn and Lady Galadriel are in the House of Celeborn [15.4S, 66.9W], that can be reached following the teal carpet behind Forbad"
     ],
-    "Vol. II, Book 7, Instance: The Lost Workshop|Epic - Vol. II, Book 7: Leaves of Lórien": [
-        "* I found the papers at the end of the workshop"
+    "Prologue, Prologue: The Aid of Halros|Epic - Vol. I, Prologue": [
+        "* Halros can be found at [26.7S, 67.0W]"
     ],
     "Instance: A Cornered Foe|Mirkwood": [
         "* WARNING: This is a solo quest, and cannot be completed in a fellowship."
@@ -869,8 +878,8 @@
     "Someone Worthy|Ered Luin": [
         "* Penglir is at Duillond in Ered Luin [23.9S, 92.6W]"
     ],
-    "Vol. I, Book 7, Instance: The Gates of Carn Dûm|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Follow Lorniel\n* Push the lever using the path on the right side\n* Follow Lorniel until the East Gate of Carn Dûm\n* Defeat Mordirith\n* Talk to Golodir"
+    "Book 8, Chapter 4: A Beacon of Hope|Epic - Vol. I, Book 8: The Scourge of the North": [
+        "* Laerdann and Golodir are in Gath Forthnír in Angmar"
     ],
     "Establishing a Foothold|Mirkwood": [
         "* You must plant the banner in a Rock-pile in Fállug at [16.7S, 62.0W]"
@@ -884,8 +893,8 @@
     "Routing Cry|Captain": [
         "* Nanulg is in Hurmulkezer at [17.0S, 107.2W]"
     ],
-    "Vol. II, Book 7, Chapter 7: The Lost Workshop|Epic - Vol. II, Book 7: Leaves of Lórien": [
-        "* The entrance to Melkólf Stonecarver's workshop is in Zirakzigil at [14.6N, 109.6W]"
+    "Wargs of Shadow|Eregion": [
+        "* Burnt Tor is near Ruidhriel, at [49.1S, 10.5W]"
     ],
     "Pembar's Unwelcome Visitors|Eregion": [
         "* Pembar is at [44.1S, 10.8W]"
@@ -896,8 +905,8 @@
     "Exiles of Winter|Forochel": [
         "* Nicca is north-east of Zigilgund"
     ],
-    "Vol. II, Book 7, Chapter 2: Ringbearer's Respite|Epic - Vol. II, Book 7: Leaves of Lórien": [
-        "* Frodo Baggins is at Cerin Amroth [11.8, 67.7W]\n* Samwise Gamgee is at Cerin Amroth [11.8, 67.7W], at Frodo's side as usual\n* Meriadoc Brandybuck is at Bain Gwaloth [12.9, 67.1W]\n* Meriadoc Brandybuck is in Cirin-en-Galadh [11.1, 69.1W]"
+    "Book 3, Chapter 4, Part II: Freeing Dori|Epic - Vol. I, Book 3: The Council of the North": [
+        "* Dori is imprisoned at [7.7S, 47.0W]"
     ],
     "A Respectable Ritual|Forochel": [
         "* You can get a Coil of Rope at [10.0N, 69.6W]\n* Altti is in Jänis-leiri at [7.4N, 75.4W]"
@@ -929,6 +938,9 @@
     "A Remarkable Bow|Ered Luin": [
         "* Starkath can be found right outside the wall of Kheledul, at [21.1S, 92.4W]"
     ],
+    "Book 3, Chapter 5, Part II: Tending the Glade|Epic - Vol. I, Book 3: The Council of the North": [
+        "* You can wait for Drukordh to walk away from the other mobs before engaging in battle so that no adds participate"
+    ],
     "Lembas for the Gates|Lothlórien": [
         "* Losdirith can be found at [15.5S, 66.1W]\n* Minathlang can be found at [16.2S, 67.0W]"
     ],
@@ -941,6 +953,9 @@
     "The Will of the Iron, Part II|Crafting": [
         "* The Ancient Emblem drops from the Shades in the Fields of Fornost in North Downs"
     ],
+    "Book 6, Chapter 5: The Sorcerer's Doom|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Enter Tór Gailvin and defeat Sorcerer Tath. The spirit will aggro after Tath is dead but does not need to be defeated.\n* Loot Tath's body and return to Corunir in Aughaire."
+    ],
     "Scattered Belongings|North Downs": [
         "* [14.2S, 44.1W]\n* [14.5S, 44.1W]\n* [14.8S, 43.7W]\n* [14.3S, 43.1W]\n* [14.0S, 43.1W]\n* [14.7S, 43.2W]\n* [14.6S, 42.5W]\n* [14.5S, 42.3W]\n* [14.8S, 42.1W]\n* [14.2S, 42.6W]"
     ],
@@ -949,9 +964,6 @@
     ],
     "Wards of the Gauredain|Evendim": [
         "* 1st ward is located at [4.1S, 73.0W] just inside the pass leading into their camp.\n* 2nd ward is located at [3.8S, 72.7W] along the riverbed.\n* 3rd ward is located at [4.4S, 72.2W] up the hill on the path #2 was found at.\n* 4th ward is located at [4.1S, 72.0W] in the encampment up hill from #4.\n* 5th ward is located at [3.7S, 72.4W] down the hill (next path over) from #4."
-    ],
-    "Vol. I, Book 5, Chapter 2: Troublesome Goblins|Epic - Vol. I, Book 5: The Last Refuge": [
-        "* Head east and a bit north to Pinnath Fenui\n* Defeat Gurzmat who is at the top of the hill and calls 1 add\n* Return to Glóin"
     ],
     "Fisherman's Foe|Forochel": [
         "* The buckets are at the edge of the east side of the lake south of Sûri-kylä"
@@ -974,18 +986,6 @@
     "Winter Gloves|North Downs": [
         "* Collect the lynx-furs from the lynx south and around Othrikar"
     ],
-    "Wings of Darkness and Death|Angmar": [
-        "* The Merrevail can be found just to the north of the Scout. Although the quest is marked as Small Fellowship, the mobs are Signature difficulty and can be taken down one at a time solo. Consider getting a small fellowship together though, since the follow-up quest Mistress of Shadows requires it."
-    ],
-    "Wild Ruins|Mirkwood": [
-        "* There is nothing to be found in the south-east ([15.4S, 50.4W]) and southern ruins ([15.4S, 51.1W]), but there are some Odd Footprints in the Wild Ruin at [15.2S, 52.0W]"
-    ],
-    "Wilderness by Ost Guruth|Hunter": [
-        "* After speaking with Unni, if you follow your directions you will find some Subtle Tracks that will give you new directions. If you keep following the directions correctly, you will find more Subtle Tracks that will led you closer to Hogahild. If you stray from the correct direction, you will find some Subtle Tracks that won't give any clear directions. Of course, you can go straight to Hogahild. She is located directly due east of Ost Guruth, due north of the \"G\" and \"M\" of the name \"Haragmar\" on the map. Just take the east exit from Ost Guruth and follow the hillside around the Red Swamp [30.5S, 27.6W]"
-    ],
-    "Bounty: Harry Hinchcliffe, Dead-eye|Evendim": [
-        "* Ballard Wilmer is in Ost Forod [8.0S, 64.2W]"
-    ],
     "Fell the Trolls|Fornost": [
         "* Silith, is located in the Fornost Free Peoples' Camp\n* Jarn-olog Warriors are melee; the trolls named simply Jarn-olog are ranged and will throw stones.\n* The trolls often live or patrol in groups of two. They have a knockback skill which sends the player flying through the air."
     ],
@@ -995,23 +995,38 @@
     "The Tainted Living|Lone-lands": [
         "* The stumps are scattered north-west of the Eglain-encampment."
     ],
-    "What was Lost|Ered Luin": [
-        "* The broken sword is in a Stone Cairn in Dol Ringwest at [24.9S, 95.1W]"
+    "Wings of Darkness and Death|Angmar": [
+        "* The Merrevail can be found just to the north of the Scout. Although the quest is marked as Small Fellowship, the mobs are Signature difficulty and can be taken down one at a time solo. Consider getting a small fellowship together though, since the follow-up quest Mistress of Shadows requires it."
     ],
     "False Orders|Angmar": [
         "* Sub-commander's strongboxes are found in Dûn Covád at:\n[5.3N, 38.4W]\n* [5.9N, 38.3W]\n* [5.7N, 38.5W]\n* [5.6N, 38.7W]"
     ],
-    "What Else Left Behind?|Eregion": [
-        "* Rinneldor is at Echad Dúnann"
+    "Wild Ruins|Mirkwood": [
+        "* There is nothing to be found in the south-east ([15.4S, 50.4W]) and southern ruins ([15.4S, 51.1W]), but there are some Odd Footprints in the Wild Ruin at [15.2S, 52.0W]"
     ],
-    "What Came to Pass|Mirkwood": [
-        "* You will find the records buried under som Loose Earth in Audaghaim at [14.0S, 55.2W]"
+    "Wilderness by Ost Guruth|Hunter": [
+        "* After speaking with Unni, if you follow your directions you will find some Subtle Tracks that will give you new directions. If you keep following the directions correctly, you will find more Subtle Tracks that will led you closer to Hogahild. If you stray from the correct direction, you will find some Subtle Tracks that won't give any clear directions. Of course, you can go straight to Hogahild. She is located directly due east of Ost Guruth, due north of the \"G\" and \"M\" of the name \"Haragmar\" on the map. Just take the east exit from Ost Guruth and follow the hillside around the Red Swamp [30.5S, 27.6W]"
     ],
     "Dead Water|Lone-lands": [
         "* pending"
     ],
     "The Sundered Shield|Ered Luin": [
         "* You can find a Sundered Shield on some newly placed grave-markers in Ringdale at [18.0S, 96.0W]"
+    ],
+    "Bounty: Harry Hinchcliffe, Dead-eye|Evendim": [
+        "* Ballard Wilmer is in Ost Forod [8.0S, 64.2W]"
+    ],
+    "What was Lost|Ered Luin": [
+        "* The broken sword is in a Stone Cairn in Dol Ringwest at [24.9S, 95.1W]"
+    ],
+    "What Else Left Behind?|Eregion": [
+        "* Rinneldor is at Echad Dúnann"
+    ],
+    "Book 2, Instance: Red-pass|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Kill all the mobs in the way. Radagast will not aggro or hit the mobs."
+    ],
+    "What Came to Pass|Mirkwood": [
+        "* You will find the records buried under som Loose Earth in Audaghaim at [14.0S, 55.2W]"
     ],
     "Well-prepared|Lone-lands": [
         "* Northrim is at Dol Vaeg\n* The boars are east of Dol Vaeg"
@@ -1022,38 +1037,23 @@
     "Waste Near Gath Forthnir|Hunter": [
         "* 1) [10.0N, 25.0W]\n* 2) [9.2N, 24.5W]\n* 3)[10.0N, 26.1W]"
     ],
-    "Wargs of Shadow|Eregion": [
-        "* Burnt Tor is near Ruidhriel, at [49.1S, 10.5W]"
-    ],
-    "Vol. I, Prologue, Prologue: Troubles To Come|Epic - Vol. I, Prologue": [
-        "* The Brockenborings Watch Office, inside of which is Bounder Primstone, can be found at 27.5S, 68.1W.\n* Wilcome Tunnelly can be found at 27.9S, 66.3W."
-    ],
-    "Vol. I, Prologue, Prologue: The Aid of Halros|Epic - Vol. I, Prologue": [
-        "* Halros can be found at [26.7S, 67.0W]"
-    ],
-    "Vol. II, Book 2, Chapter 2: Store-houses of the Western Halls|Epic - Vol. II, Book 2: Echoes in the Dark": [
-        "* You will find a broken tablet within an old strongbox in the Chamber of Wisdom [7.9S, 112.3W]\n* You will find some dusty pages within an old strongbox in the Chamber of Knowledge [7.5S, 112.0W]\n* You will find a weathered tome within an old strongbox in the Chamber of Deep Thought [8.3S, 114.9W]"
-    ],
-    "Flet-runner Challenge: Bregradel|Lothlórien": [
-        "* You have 55 s to find the flet-runner"
-    ],
     "Fruits of the Forest|Evendim": [
         "* [7.7S, 72.1W]\n* [8.1S, 72.2W]\n* [8.2S, 72.3W]\n* [7.8S, 73.1W]\n* [7.3S, 72.3W]\n* [7.8S, 72.7W]"
     ],
-    "Vol. II, Book 9, Chapter 4: First Offensives|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
-        "* This quest involves a Skirmish that can be completed at Solo, Small Fellowship, Fellowship, or Raid group sizes by using the Skirmish Join Panel. This Skirmish has a minimum level of 60.\n* Before launching the Skirmish, you should visit one of the Skirmish Camps found throughout Middle-earth and speak with a Skirmish Captain to properly train. Skirmish Camps can be found in the following regions: Ered Luin, Bree-land, the Shire, the Lone-lands, the North Downs, the Trollshaws, Evendim, Forochel, Angmar, Eregion, Moria, and Lothlórien."
+    "Prologue, Prologue: Troubles To Come|Epic - Vol. I, Prologue": [
+        "* The Brockenborings Watch Office, inside of which is Bounder Primstone, can be found at 27.5S, 68.1W.\n* Wilcome Tunnelly can be found at 27.9S, 66.3W."
     ],
-    "Vol. II, Book 9, Chapter 2: Rumour of Mazog|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
-        "* There is an Orc Leader's Coffer in Maudhûl-ulur at [17.4S, 60.0W] where you can find a report for Mazog.\n* There is an Orc Leader's Coffer in Ashúrz Maufulug at [18.4S, 60.9W] where you can find a report for Mazog."
+    "Prologue, Prologue: Goblin Foothold|Epic - Vol. I, Prologue": [
+        "* The goblins can be found at Scrag-dells, the entrance to which is at 25.0S, 67.0W."
     ],
     "Keepers of the Wood|Eregion": [
         "* Holly-troll Warriors, Holly-troll Lobbers, and Holly-troll Elders are in Sâd Thareg"
     ],
-    "Vol. I, Book 6, Chapter 3: Secrets of the Stones|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Find the watching stone at [3.1N, 35.7W]\n* Return to Corunir in Aughaire"
+    "Book 7, Instance: The Gates of Carn Dûm|Epic - Vol. I, Book 7: The Hidden Hope": [
+        "* Follow Lorniel\n* Push the lever using the path on the right side\n* Follow Lorniel until the East Gate of Carn Dûm\n* Defeat Mordirith\n* Talk to Golodir"
     ],
-    "Vol. II, Book 8, Instance: Escape from Rushdurinul|Epic - Vol. II, Book 8: Scourge of Khazad-dûm": [
-        "* This is a solo quest, and cannot be completed with a Fellowship.\n* You can use the banner that Bróin will plant to get some nice buffs from your companions, but they must be renewed every time your party moves and Bróin plants the banner again.\n* You can switch the support role of your companions even in midfight."
+    "Prologue, Instance: To Avert a War|Epic - Vol. I, Prologue": [
+        "* Follow and defend Langlas\n* Everytime he takes a pause, speak with him\n* Defeat Hakon Ironfist\n* Talk to Langlas to leave the instance"
     ],
     "Purging Evil|Mirkwood": [
         "* The Idol of the Necromancer is in Burgûl-stazg at [12.6S, 59.0W], and is guarded by Grishbugud."
@@ -1061,20 +1061,20 @@
     "The Carver's Stash|Moria Upper Levels": [
         "* You will find several hide-bound books in some Rubble in Nud-melek at [8.5S, 103.9W], but before you can search the rubble you will have to defeat the signature orc and the troll that are nearby."
     ],
-    "Bitter Scenes in Audaghaim|Mirkwood": [
-        "* There is evidence of violence in Audaghaim at [14.1S, 55.4W]\n* There are old weapons in Audaghaim at [13.9S, 54.9W]\n* There is a sign of the Necromancer's influence in Audaghaim at [13.2S, 54.8W]"
+    "The Thief-takers|Evendim": [
+        "* Crates can be found at [7.4S, 69.4W]\n* This quest is incorrectly marked as fellowship. The crates are guarded by 36 and 37 non-elite mobs. This is a solo-able quest.\n* Do this alongside Quest:Practised Villainy, the objectives are the same."
     ],
-    "Spiders in the Quarry|Shire": [
-        "* The spiders to kill are in the Scary Quarry east of Scary"
+    "A Cry of Vengeance|Captain": [
+        "* Pukhal is in the Flaming Deeps at [14.1S, 109.9W]"
     ],
-    "Vol. II, Book 5, Instance: The Battle of the Way of Smiths|Epic - Vol. II, Book 5: Drums in the Deep": [
-        "* In the last dialogue, Stóthkell talks about nearly losing Zigilburk. Since the axe has already been lost in Chapter 3, I guess he meant Nâr-khelab, The Heart of Fire."
+    "Reconnecting Ties|Bree-land": [
+        "* Covell Woodwright is at [27.2S, 44.5W]"
     ],
-    "Vol. I, Prologue, Prologue: Goblin Foothold|Epic - Vol. I, Prologue": [
-        "* The goblins can be found at Scrag-dells, the entrance to which is at 25.0S, 67.0W."
+    "Book 7, Instance: The Lost Workshop|Epic - Vol. II, Book 7: Leaves of Lórien": [
+        "* I found the papers at the end of the workshop"
     ],
-    "Vol. II, Book 2, Chapter 1: New Residents|Epic - Vol. II, Book 2: Echoes in the Dark": [
-        "* Bósi is at the Chamber of the Crossroads [5.2S, 112.1W]"
+    "Book 7, Chapter 7: The Lost Workshop|Epic - Vol. II, Book 7: Leaves of Lórien": [
+        "* The entrance to Melkólf Stonecarver's workshop is in Zirakzigil at [14.6N, 109.6W]"
     ],
     "The Strength of the Smith, Part II|Crafting": [
         "* Jon Whetstone's Notes are in your inventory. This will give you a hint in where to find the non-crafted component."
@@ -1082,62 +1082,62 @@
     "Purging the Plains|North Downs": [
         "* Warg Hunters and Dire Wargs are all over Nan Amlug."
     ],
-    "Vol. II, Book 1, Instance: The Watcher in the Water|Epic - Vol. II, Book 1: The Walls of Moria": [
+    "Book 5, Chapter 3: The High Fortress|Epic - Vol. I, Book 5: The Last Refuge": [
+        "* Head east then south to Gabilazan [28.0S, 0.8E]\n* The vault is on the right/west a short way inside\n* Defeat the mobs inside then inspect the cornerstone\n* Return to Glóin"
+    ],
+    "Book 6, Instance: New Devilry|Epic - Vol. II, Book 6: The Shadowy Abyss": [
+        "* Fire Rogmul\n* Shadow Rogmul\n* The Gloom-walker\n* The Flame-drinker\n* Gwathnor"
+    ],
+    "Book 3, Chapter 1: An Overzealous Explorer|Epic - Vol. II, Book 3: The Lord of Moria": [
+        "* Útrygg can be found at [6.7S, 104.4W]"
+    ],
+    "Book 1, Instance: The Watcher in the Water|Epic - Vol. II, Book 1: The Walls of Moria": [
         "* Make sure you have used the Scion scroll on your weapon or else you would not be able to damage the Watchers"
     ],
-    "Vol. II, Book 1, Expedition: Unpleasant Business|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* The bone piles are in Filgogân near the mob Graug"
+    "Book 1, Expedition: Orders for Half-orcs|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Filgogân is at [53.1S, 7.5W]\n* The pieces are marked in the instance map"
     ],
-    "Pipe-weed Delivery|Bree-land": [
-        "* Roger is at Adso's camp, west of Bree (just take the road west)"
-    ],
-    "Vol. I, Prologue, Instance: To Avert a War|Epic - Vol. I, Prologue": [
-        "* Follow and defend Langlas\n* Everytime he takes a pause, speak with him\n* Defeat Hakon Ironfist\n* Talk to Langlas to leave the instance"
-    ],
-    "Stuffing the Stuffed|Frostbluff": [
-        "* Winterberries can be found all over Frostbluff outside of town.\n* Eggs can be found in the chicken coop called Cluckland in the north of the middle of Frostbluff.\n* Mushrooms can be found in the mushroom tent in the south of the middle of Frostbluff.\n* The servants' oven to make the bread is located a step up from the town's northern exit."
-    ],
-    "Vol. II, Book 1, Chapter 14: Khazad-dûm At Last!|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Go into Moria, if it is too dark, turn up the Gamma in the Graphics in the Options Menu."
+    "Book 1, Expedition: Danger Beneath the Surface|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* The entrance to the Brackwater is at [50.3S, 5.2W]\n* Defeat Cave-lizard inside"
     ],
     "Dâr Narbugud: The Heart of the Scourge|Dungeons of Lothlórien": [
         "* Stand in the entrance of the Mistress' room (you don't even have to kill her), you'll get the white text message to use the item in inventory for the quest update."
     ],
-    "Vol. II, Book 1, Chapter 13: The Watcher in the Water|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Talk to Ráthwald and finish the instance"
+    "Book 1, Chapter 14: Khazad-dûm At Last!|Epic - Vol. II, Book 1: The Walls of Moria": [
+        "* Go into Moria, if it is too dark, turn up the Gamma in the Graphics in the Options Menu."
     ],
-    "Vol. II, Book 1, Chapter 12: Forged Anew|Epic - Vol. II, Book 1: The Walls of Moria": [
+    "Book 1, Chapter 12: Forged Anew|Epic - Vol. II, Book 1: The Walls of Moria": [
         "* Once an Item Advancement weapon receives enough experience, it can be brought to a Forge-master to be reforged. Reforging such a weapon reveals its hidden potential."
     ],
     "Intro: The Storm is Upon Us|Introduction": [
         "* Talk to Jon Brackenbrook to enter the instance\n* Complete Instance: The Assault on Archet\n* Talk to Jon Brackenbrook in Archet"
     ],
-    "Vol. I, Book 9, Chapter 3: Journey to Gondamon|Epic - Vol. I, Book 9: The Shores of Evendim": [
-        "* The Knight of Mordirith in Ered Luin is Kevoca (lvl 50 Signature with 4,428 morale) and can be found near Ringdale [18.4S, 96.1W]"
+    "Darkened by Mildew|Moria Lower Deeps": [
+        "* The Fungus-covered Mirror is at [17.7S, 111.5W]"
     ],
-    "Reconnecting Ties|Bree-land": [
-        "* Covell Woodwright is at [27.2S, 44.5W]"
+    "Book 1, Chapter 10: Into the Barrow-downs|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
+        "* Go northeast into the Barrow-downs\n* Defeat Andraste and the crebain\n* Return to Tom Bombadil"
     ],
     "Bounty: Thauk, Vile Warg|Evendim": [
         "* Rowena Parker is in Ost Forod [7.3S, 64.3W]\n* You will find Thauk in Tum Fuin, north of Ost Forod [4.4S, 65.2W]"
     ],
-    "Vol. I, Book 8, Chapter 6: A Watchful Eye|Epic - Vol. I, Book 8: The Scourge of the North": [
+    "Book 9, Foreword: News of the Palantír|Epic - Vol. I, Book 9: The Shores of Evendim": [
+        "* Gandalf is in Bilbo's room on the ground floor of the Last Homely House, in Rivendell."
+    ],
+    "Book 9, Chapter 3: Journey to the Lone-lands|Epic - Vol. I, Book 9: The Shores of Evendim": [
+        "* The Knight of Mordirith in the Lone-lands is Neacal (lvl 50 Signature with 4,428 morale) and can be found in Harloeg [39.2S, 25.1W]"
+    ],
+    "Book 8, Chapter 6: A Watchful Eye|Epic - Vol. I, Book 8: The Scourge of the North": [
         "* Aragorn in Rivendell in one of the guest rooms [30.7S, 6.2W]"
     ],
-    "Vol. I, Book 8, Chapter 3: Forging the Sword|Epic - Vol. I, Book 8: The Scourge of the North": [
-        "* Elrond is at Rivendell in the Trollshaws.\n* Hemeldir can be found near Rivendell's forges [28.5S, 6.2W]"
+    "Book 8, Chapter 5: Mordirith's Fall|Epic - Vol. I, Book 8: The Scourge of the North": [
+        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
     ],
-    "Vol. I, Book 7, Chapter 8: The Gates of Carn Dûm|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Talk to Lorniel to enter the instance\n* Protect Lorniel as you fight through several groups of Angamarin, trolls, little people, and others. AOE skills will be very helpful.\n* Fight round to the opposite side of the gate and pull the lever\n* Protect Lorniel through several more groups.\n* Defeat Mordirith, who has about 49K morale. Persistence is the key!"
+    "Book 8, Chapter 1: The Flickering Flame|Epic - Vol. I, Book 8: The Scourge of the North": [
+        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
     ],
-    "Vol. I, Book 7, Chapter 7: The Key Forged|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Return to Lorniel in Gath Forthnír."
-    ],
-    "Vol. I, Book 7, Chapter 6: Thrór's Hammer|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Head to the NE corner of Thorin's Gate and enter Skorgrím's Tomb.\n* The first two groups of Wights will have powerful disease effects, so be prepared.\n* Defeat the two groups of two L49-50 Wights per group.\n* Watch out for the trap spikes.  They are easy to recognize and can be timed without difficulty.\n* Head due west until you reach Faerdami, a signature mob with about 4.4K Morale.\n* Defeat Faerdami and loot the hammer.  He restricts the area you can move about in, so it is a close up fight.\n* Return to Litli at Thorin's Hall"
-    ],
-    "Vol. I, Book 7, Chapter 4: Dwarf Mastery|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Go to Dwalin in Thorin's Hall"
+    "Fallen Oak|Lone-lands": [
+        "* Gloomleaf is located at [27.6S, 29.7W]"
     ],
     "Lost Dog|Evendim": [
         "* Roverandom @ Wikipedia.org\n* Roverandom @ Google Books\n* Roverandom @ Amazon.com"
@@ -1148,8 +1148,8 @@
     "Leader of the Foul Wood|Eregion": [
         "* Zagâfum is found inside a cave Tawarond in Sâd Thareg [42.3N, 16.4W]\n* Quest:Instance: Leader of the Foul Wood"
     ],
-    "Vol. I, Book 6, Chapter 5: The Sorcerer's Doom|Epic - Vol. I, Book 6: Fires in the North": [
-        "* Enter Tór Gailvin and defeat Sorcerer Tath. The spirit will aggro after Tath is dead but does not need to be defeated.\n* Loot Tath's body and return to Corunir in Aughaire."
+    "Book 6, Chapter 6: Challenging the Stone|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Find one of the Watching-stones in the Ram Dúath. There at least 2 possible locations\nBetween Duvairë (Morroval) and Frith-vailë among the seige-engines (easiest to reach).\n* Between Bail Róva and Frith-vailë.\n* Use the stone & fight its spirit.\n* Return to Corunir in Aughaire."
     ],
     "A Final Act|Frostbluff": [
         "* This quest only shows up when the Deed Honoured Yule-friend is completed.\n* Talk to Albert Yule near the entrance of Winter-home.\n* Decide which quest to take."
@@ -1160,8 +1160,8 @@
     "Spirits in Bloom|Lothlórien": [
         "* Maliriel is at [17.2S, 64.0W]\n* Ambendel is at [14.3S, 73.1W]\n* Bahanneth is at [12.1S, 71.1W]"
     ],
-    "Vol. I, Book 7, Chapter 2: Crossing the Shadow|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Head West from Gath Forthnír to find Raghnall\n* When you've spoke to him, 1 Hunting Morroval will show up but it will disappear after a minute so you don't have to kill them\n* Return to Lorniel"
+    "Book 6, Chapter 4: Heart of Stone|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Head north out of Aughaire then west into Western Malenhad. Do not try and cross the line of standing statues in the middle - you will be defeated instantly. Displays the prompt \"The will of the Silent Watchers has overpowered you.  You do not yet have the strength to overcome their malice.  You succumb to your wounds.\"  Fallen statues can be found in various pools in Malenhad. There is one available at [0.4N, 31.2W].\n* After successfully collecting a heart return to Corunir."
     ],
     "Rituals of the Forest - Creeping Moss|Enedwaith": [
         "* [67.1S, 23.4W]\n* [67.2S, 23.5W]\n* [67.1S, 23.1W]\n* [67.0S, 23.0W]"
@@ -1169,8 +1169,8 @@
     "Dread in the Fallen City|Angmar": [
         "* The lesser watching-stones are found in Dûn Covád at:\n[6.1N, 38.7W]\n* [5.6N, 38.7W]\n* [5.3N, 38.2W]"
     ],
-    "The Thieves' Trail|Eregion": [
-        "* Thlûk is still in the Tâl Caradhras area [48.1S, 8.7W]"
+    "Strange Beasts|Angmar": [
+        "* pending"
     ],
     "Honouring the Fallen|Eregion": [
         "* Barad Morlas is at [48.1S, 13.7W]\n* Statues can be found at:\n[47.9S, 13.6W]\n* [48.0S, 13.8W]\n* [47.7S, 13.4W]\n* [47.6S, 13.7W]\n* [48.5S, 13.8W]\n* [48.6S, 14.1W]\n* [48.5S, 14.2W]\n* [48.2S, 14.5W]\n* Shatogtar can be found at [47.9S, 13.9W]"
@@ -1178,11 +1178,11 @@
     "Treasure in the Ruins|Evendim": [
         "* Sid Waring can be found in a small island in Men Erain [15.3S, 66.2W]\n* Chests One and Two can be found at [15.7S, 66.3W]\n* Chests Three and Four can be found at [16.7S, 66.6W]"
     ],
-    "Vol. I, Book 5, Chapter 7: Evil Tidings|Epic - Vol. I, Book 5: The Last Refuge": [
-        "* Walk back to Rivendell and speak with Elrond."
-    ],
-    "Vol. I, Book 5, Chapter 6: In the Steps of Evil|Epic - Vol. I, Book 5: The Last Refuge": [
+    "Book 5, Chapter 6: In the Steps of Evil|Epic - Vol. I, Book 5: The Last Refuge": [
         "* Head north-east to some steps and a door on the east side of Northern Bruinen Source, some way below Helegrod itself. Do not enter the door.\n* Defeat & search the wights that appear on the steps.\n* Return to Glóin"
+    ],
+    "Rituals of the Forest - Mistletoe|Enedwaith": [
+        "* [66.3S, 23.7W]\n* [66.6S, 23.2W]\n* [66.7S, 23.4W]\n* [66.7S, 23.6W]\n* [66.2S, 23.8W]\n* [66.4S, 23.5W]\n* [66.5S, 23.6W]\n* [66.7S, 23.8W]"
     ],
     "An End to the Poaching|Lothlórien": [
         "* If you complete Asmund's poaching quest, you will fail Limhendeth's one. If you turn in Limhendeth's quest, you will fail the poaching quest and won't be able to take any more poaching quests, should there be more."
@@ -1190,8 +1190,8 @@
     "Cleansing the Ruins|Ered Luin": [
         "* This quest can be a bit confusing because there is nothing to click on or highlight with the mouse, you'll need to either open your bag or hotkey the potion when the notice is given that you should use your potion. Then click on the cleansing potion just as you would any other potion.\n* The first tower is in Dol Ringwest around [24.8S, 94.9W]\n* The second tower is in Dol Ringwest around [24.8S, 95.1W]"
     ],
-    "Vol. I, Book 5, Chapter 3: The High Fortress|Epic - Vol. I, Book 5: The Last Refuge": [
-        "* Head east then south to Gabilazan [28.0S, 0.8E]\n* The vault is on the right/west a short way inside\n* Defeat the mobs inside then inspect the cornerstone\n* Return to Glóin"
+    "Spider-leg Prisms|Moria Lower Deeps": [
+        "* Gabil-munz is at [16.5S, 114.0]"
     ],
     "Tad's Request|Reputation": [
         "* Ted is in Southern Bree ouside the Bree Hunting Lodge"
@@ -1199,19 +1199,19 @@
     "Fungus and Acid|Moria Lower Deeps": [
         "* The Great Wheel is at [17.7S, 115.6W]"
     ],
-    "Vol. I, Book 3, Chapter 6, Part II: The Defence of Trestlebridge|Epic - Vol. I, Book 3: The Council of the North": [
-        "* Talk to Halbarad and complete the instance [35] The Defence of Trestlebridge\n* Talk to Nellie Boskins when done"
+    "Book 7, Chapter 1: The Hill of Cerin Amroth|Epic - Vol. II, Book 7: Leaves of Lórien": [
+        "* If you have not already completed Volume II, Book 6, it is encouraged, though not required, that you do so before beginning this quest."
     ],
     "Grain-buyer|North Downs": [
         "* Gatson is at [10.3S, 45.6W]"
     ],
-    "Vol. I, Book 3, Chapter 5, Part II: Tending the Glade|Epic - Vol. I, Book 3: The Council of the North": [
-        "* You can wait for Drukordh to walk away from the other mobs before engaging in battle so that no adds participate"
+    "Book 2, Chapter 11: The Stone-speaker|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Aric the Stone-speaker is in south Harloeg in Ost Haer"
     ],
-    "Vol. I, Book 2, Instance: Red-pass|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Kill all the mobs in the way. Radagast will not aggro or hit the mobs."
+    "Book 4, Instance: The Unmarked Trail|Epic - Vol. I, Book 4: Chasing Shadows": [
+        "* Enter the instance.\n* Protect Legolas as he hunts for the evil.\n* Defeat Taushakh."
     ],
-    "Vol. I, Book 2, Chapter 9: The Bloated Dead|Epic - Vol. I, Book 2: The Red Maid": [
+    "Book 2, Chapter 9: The Bloated Dead|Epic - Vol. I, Book 2: The Red Maid": [
         "* Several wights are in the Circle of Blood but there are more wights in east Haragmar"
     ],
     "Miraculous Growth -- Repeatable|Enedwaith": [
@@ -1226,17 +1226,17 @@
     "Beastly Things|Forochel": [
         "* Kill Peikko and Savage Peikko in the Peikko Cave [9.5N, 79.9W]"
     ],
-    "Vol. I, Book 2, Chapter 8: The Red Swamp|Epic - Vol. I, Book 2: The Red Maid": [
-        "* The bog-lurker nests are in the Circle of Blood at Haragmar, east of Ost Guruth"
+    "The Black-fire|North Downs": [
+        "* You will find on of the crates in the northern hill [16.5S, 46.9W]\n* You will find on of the crates in the south-eastern hill [17.0S, 46.7W]\n* You will find on of the crates in the south-western hill [16.7S, 48.2W]"
     ],
-    "Vol. I, Book 2, Chapter 4: Light in the Darkness|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Go to the top of Weathertop for the stone"
+    "Book 14, Chapter 1: The Long Road South|Epic - Vol. I, Book 14: The Ring-forges of Eregion": [
+        "* Golodir at Gath Forthnír (leads to Chapter 1: The Heraldry of Lindon)\n* Filegnaneth in the Hall of Fire of the Last Homely House (leads to Chapter 1: Many Provisions)\n* Nat Collop, the Stable-master at Tinnudir in Evendim (leads to Chapter 1: The Steed Arel)"
     ],
     "Instance: A Spear at the Southern March|Warden": [
         "* This is a Solo quest, and cannot be completed with a Fellowship.\n* MAKE SURE TO TURN OFF FORCED MARCH AND REGEN POWER BEFORE STARTING.\n* For this quest, you will be asked to hold a line with one Warden NPC \"helping\" you. You will face 4 waves of 2-3 half-orcs or bandits each, with the last wave including a signature half-orc. The NPC will help you kill these enemies, but it's up to you to keep him from dying.\n* The best way to do that (without dying yourself) is to taunt 2 of the 3 enemies onto yourself and kill them while he's killing his one enemy. If you're well-equipped or slightly above-level, you can probably handle all three on you with little difficulty.\n* For the final wave, make sure the bigger enemy is on you, and not on the NPC. Otherwise handle this the same way."
     ],
-    "Vol. I, Book 2, Chapter 13: In the Gaunt-lord's Grasp|Epic - Vol. I, Book 2: The Red Maid": [
-        "* Brudhraw is up the steps past the Bog-lord in Nindor"
+    "Little Wonders|Enedwaith": [
+        "* Small Arrow [64.3S, 22.2W]\n* Small Boots [61.3S, 19.2W]\n* Small Bucket [63.3S, 22.2W]\n* Small Skeleton [63.3S, 22.6W]\n* Small Tool [64.6S, 20.4W]\n* Small Bow [63.7S, 23.0W]"
     ],
     "In Honour of Love Deferred|Lothlórien": [
         "* The spot at which Elessar and Undómiel plighted their troth is at [12.0S, 67.8W]"
@@ -1244,14 +1244,14 @@
     "Cold as Death|Forochel": [
         "* Delucheleg can only be summoned by re-kindling the 3 braziers in Kibilzahar at the same time."
     ],
-    "Vol. I, Book 1, Chapter 6: In the Black Riders' Wake|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
-        "* Go down the hill from Lenglinn, there are Crebain there. Defeat them and return to Lenglinn"
+    "Book 2, Chapter 13: In the Gaunt-lord's Grasp|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Brudhraw is up the steps past the Bog-lord in Nindor"
     ],
-    "Stones for the Lodge|Forochel": [
-        "* The Mounds where you must place the Bay Stones are at Kaleva's side."
+    "Book 2, Chapter 12: A Dead Man's Challenge|Epic - Vol. I, Book 2: The Red Maid": [
+        "* Emelin is in the same part of the ruins as Alric. After talking to him you must defeat 3 shades summoned by him."
     ],
-    "Vol. I, Book 2, Chapter 10: Breeders of the Dead|Epic - Vol. I, Book 2: The Red Maid": [
-        "* The Gaunt-Men will usually generate several adds, so this quest is a bit more difficult than the preceding one."
+    "Book 5, Chapter 2: Troublesome Goblins|Epic - Vol. I, Book 5: The Last Refuge": [
+        "* Head east and a bit north to Pinnath Fenui\n* Defeat Gurzmat who is at the top of the hill and calls 1 add\n* Return to Glóin"
     ],
     "A Chill Wind|Forochel": [
         "* Ruaraikh can be found in the Ironspan at [16.7N, 60.9W]"
@@ -1259,11 +1259,11 @@
     "Defending the Herd|North Downs": [
         "* Defeat several waves of 3 Orcs each."
     ],
-    "Instance: Jail Break|Introduction": [
-        "* Talk to Amdir.\n* Collect and equip weapons from the nearby lootable crate.\n* Talk to and follow Amdir.\n* Defeat Celandine Brandybuck's captors and talk to her.\n* Defeat Mundo's captor; talk to Mundo Sackville-Baggins.\n* Find and talk to Amdir.\n* Talk to Celandine Brandybuck to leave the instance."
+    "Book 2, Chapter 10: Breeders of the Dead|Epic - Vol. I, Book 2: The Red Maid": [
+        "* The Gaunt-Men will usually generate several adds, so this quest is a bit more difficult than the preceding one."
     ],
-    "Seeds for the Future|Eregion": [
-        "* Holly-seeds can be found on the bushes growing underneath the trees in Glâd Ereg, south of Gwingris. Celebrandir has asked you to collect holly-seeds for him, so that he may begin replanting the wood."
+    "Book 1, Chapter 9: Lilies for the River-daughter|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
+        "* Go down the hill into the river\n* Collect 4 large lilies\n* Return to Tom Bombadil"
     ],
     "He Who Leads|Forochel": [
         "* Nadelek can be found in Barad Gaurhoth at [11.5N, 82.5W]"
@@ -1274,20 +1274,23 @@
     "Goblins in the Valley|Ered Luin": [
         "* Gazrîp is in Rath Teraig at [23.4S, 97.5W]"
     ],
-    "An Unpleasant Meal|Evendim": [
-        "* The Giant Stew-pot in Amon Mòth is at [8.9S, 75.0W]"
+    "Instance: Jail Break|Introduction": [
+        "* Talk to Amdir.\n* Collect and equip weapons from the nearby lootable crate.\n* Talk to and follow Amdir.\n* Defeat Celandine Brandybuck's captors and talk to her.\n* Defeat Mundo's captor; talk to Mundo Sackville-Baggins.\n* Find and talk to Amdir.\n* Talk to Celandine Brandybuck to leave the instance."
     ],
     "Ablaze within Târ Stazg|Eregion": [
         "* The Târ Stazg Mustering Horn is in Târ Stazg, at [48.4S, 5.5W]"
     ],
-    "Vol. I, Book 14, Chapter 1: The Long Road South|Epic - Vol. I, Book 14: The Ring-forges of Eregion": [
-        "* Golodir at Gath Forthnír (leads to Chapter 1: The Heraldry of Lindon)\n* Filegnaneth in the Hall of Fire of the Last Homely House (leads to Chapter 1: Many Provisions)\n* Nat Collop, the Stable-master at Tinnudir in Evendim (leads to Chapter 1: The Steed Arel)"
+    "Book 1, Chapter 6: In the Black Riders' Wake|Epic - Vol. I, Book 1: Stirrings in the Darkness": [
+        "* Go down the hill from Lenglinn, there are Crebain there. Defeat them and return to Lenglinn"
     ],
-    "Vol. I, Book 13, Chapter 3: Favour of Wisdom|Epic - Vol. I, Book 13: Doom of the Last-king": [
-        "* Clothing (Fur Pelts)\n* Water (Bucket of Water)\n* Fire (Campfire)\n* Food (Fish)\n* Weapons (Weapon Rack)"
+    "Symbols of Conquest|Mirkwood": [
+        "* There are Banners of Dol Guldur in Gathbúrz in all the Orc-camps and fortresses, as in [11.2S, 46.8W], [10.9S, 46.3W], [11.8S, 46.8W], [11.9S, 45.6W], [11.9S, 45.4W], [11.9S, 44.9W], [11.6S, 45.4W], [11.5S, 44.8W]"
     ],
     "Invaders of Barad Morlas|Eregion": [
         "* Barad Morlas is at [48.1S, 13.7W]"
+    ],
+    "An Unpleasant Meal|Evendim": [
+        "* The Giant Stew-pot in Amon Mòth is at [8.9S, 75.0W]"
     ],
     "Villains in the Vale|Ered Luin": [
         "* The Blue-crag Chieftain can be found in Orodost at [20.4S, 102.1W]"
@@ -1295,8 +1298,8 @@
     "Vessel of Purity|Garth Agarwen": [
         "* Urn: This quest can be combined with several other Agamaur quests.  The Urn is at the top of several tiers of stairs, guarded by a 4.3k morale named elite.  It can only be taken by one person at a time, and requires the fellowship to wait around for it to respawn. The Urn of Agamur is in Agamaur at [29.6S, 29.5W]\n* Altar: Run due east from Dannasen, jinking around walls and through gates.  The altar does not flash like normal quest targets.  It is a blocky stone thing in a pool of red water, surrounded by dark-waters.  When standing next to it, you get a banner telling you to 'fill the urn'.  Right click on the urn in your inventory to do this. The Altar is in Agamaur at [29.7S, 25.5W].  Note that the altar is not inside Garth Agarwen."
     ],
-    "Darkened by Mildew|Moria Lower Deeps": [
-        "* The Fungus-covered Mirror is at [17.7S, 111.5W]"
+    "Book 9, Instance: Oakheart's Might|Epic - Vol. I, Book 9: The Shores of Evendim": [
+        "* Sara Oakheart is a lvl 50 Avenger with 44,284 morale. Just let her get the aggro of the spirits and help her beating on one of them.\n* Then just relax and watch the movie unwind.\n* You cannot avoid being defeated at the end of the instance."
     ],
     "Guardians of the Glade|North Downs": [
         "* [15.4S, 44.0W]\n* [14.5S, 43.8W]\n* [14.0S, 43.5W]"
@@ -1304,14 +1307,11 @@
     "One More Marker|Evendim": [
         "* This Stone Marker is guarded by many tomb-robbers. Across the clearing, there is a group of treasure-hunters, that will attack the tomb-robbers guarding the Stone Marker if you speak with their captain [9.5S, 73.0W]. You can either help the treasure hunters defeat the Tomb-robbers, or avoid getting aggro and complete the quest while they fight."
     ],
-    "Venom of the Ruin-stalkers|Lone-lands": [
-        "* Talk to Candac Brightwood at The Forsaken Inn"
-    ],
     "Blackwold Valuables|Bree-land": [
         "* The Blackwold Supervisor is at [27.9S, 44.1W]"
     ],
-    "Vanity|Moria Upper Levels": [
-        "* The Mirror is in Dâr-rukh at [4.5S, 100.4W]"
+    "Venom of the Ruin-stalkers|Lone-lands": [
+        "* Talk to Candac Brightwood at The Forsaken Inn"
     ],
     "The Raven|Forochel": [
         "* The raven is in Metsästä-sija at [1.6N, 60.9W]"
@@ -1319,11 +1319,14 @@
     "The Master of the Roost|Mirkwood": [
         "* The Summoning Horn to summon the Morvul Guard is in Dannenglor at [11.4S, 54.8W]"
     ],
-    "Upon the Lonely Bank|Lothlórien": [
-        "* The lonely tree is in Egladil at [17.2S, 63.6W]"
+    "Vanity|Moria Upper Levels": [
+        "* The Mirror is in Dâr-rukh at [4.5S, 100.4W]"
     ],
     "Mockery|Lothlórien": [
         "* Târgrat can be found at Nardur-stazg camp [8.3S, 73.5W]"
+    ],
+    "Upon the Lonely Bank|Lothlórien": [
+        "* The lonely tree is in Egladil at [17.2S, 63.6W]"
     ],
     "Flet-runner Challenge: Lintwen|Lothlórien": [
         "* You have 1 min 40 s to find the flet-runner"
@@ -1331,17 +1334,14 @@
     "Dark Raiders|Angmar": [
         "* Morfil is a cave located east of the Cairn of Honour"
     ],
-    "Finding Reason|Bree-land": [
-        "* Look for the cocoons on the wall"
-    ],
     "An Errand for Millicent Greenlake|Crafting": [
         "* Supervisor Beecher is in Trestlebridge at [17.0S, 53.7W]"
     ],
+    "Finding Reason|Bree-land": [
+        "* Look for the cocoons on the wall"
+    ],
     "Unpaid Debts|Bree-land": [
         "* The lockbox is at [27.9S, 44.7W] surrounded by several Blackwolds"
-    ],
-    "Little Revolution|Moria Upper Levels": [
-        "* Zâhof's throne is in the south-eastern corner of Fehem-dûm at [4.3S, 104.0W]"
     ],
     "The Wayward Bull|Forochel": [
         "* The Wayward Bull can be found in Jä-rannit at [20.5, 72.4W]"
@@ -1355,14 +1355,14 @@
     "Churning Froth|Moria Lower Deeps": [
         "* The Great Wheel is at [17.7S, 115.6W]"
     ],
+    "Little Revolution|Moria Upper Levels": [
+        "* Zâhof's throne is in the south-eastern corner of Fehem-dûm at [4.3S, 104.0W]"
+    ],
     "Troves and Trickery -- Duillond|Festival": [
         "* Emote: /look\n* Emote: /hail\n* Emote: /eat\n* Emote: /dance\n* Note: You cannot be mounted while performing this emote.\n* Emote: /handstand\n* Emote: /roar\n* Emote: /cower\n* Emote: /whippitydo"
     ],
-    "Common Blood|North Downs": [
-        "* Ragnarr and the camp are at [9.3S, 39.9W]"
-    ],
-    "Vol. II, Book 1, Expedition: The Common Thread|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Filgogân is at [53.1S, 7.5W]\n* Defeat half-orcs inside who will drop the painted stones"
+    "Flet-runner Challenge: Bregradel|Lothlórien": [
+        "* You have 55 s to find the flet-runner"
     ],
     "Trouble at Trestlebridge|Lone-lands": [
         "*"
@@ -1376,8 +1376,8 @@
     "Elders in the Shadows|Lone-lands": [
         "* The Ruin-web Spinner and the Ruin-web Weaver can be found all throughout Amon Ros. They are fairly easy to find, and you will most likely stumble upon them by accident.\n* The Ruin-web Trapper is invisible and is usually found in a corner beneath the bridge or in the corner of the small ruined area on the ground level."
     ],
-    "Vol. II, Book 6, Instance: New Devilry|Epic - Vol. II, Book 6: The Shadowy Abyss": [
-        "* Fire Rogmul\n* Shadow Rogmul\n* The Gloom-walker\n* The Flame-drinker\n* Gwathnor"
+    "Spiders in the Quarry|Shire": [
+        "* The spiders to kill are in the Scary Quarry east of Scary"
     ],
     "Empty Keg Emergency|Frostbluff": [
         "* Get the keg at the servant's area (by the oven).  Avoid watchers and bring it to the thirsty patron lazily lying down on the only keg outside of the servants' area."
@@ -1457,17 +1457,17 @@
     "A Poultice for Our Hurts|Angmar": [
         "* pending"
     ],
-    "Strange Beasts|Angmar": [
-        "* pending"
+    "Book 5, Chapter 7: Evil Tidings|Epic - Vol. I, Book 5: The Last Refuge": [
+        "* Walk back to Rivendell and speak with Elrond."
     ],
-    "Vol. I, Book 7, Chapter 1: Hidden in Shadow|Epic - Vol. I, Book 7: The Hidden Hope": [
-        "* Head north from Gabilshathûr to the hidden refuge of Gath Forthnír\n* Talk to Areneth, then to Lorniel who is in a room inside."
+    "The Thieves' Trail|Eregion": [
+        "* Thlûk is still in the Tâl Caradhras area [48.1S, 8.7W]"
     ],
     "The Root of the Problem|Forochel": [
         "* Ringdagnir can be found in the sulfur pools of Länsi-mâ at [10.5N, 82.8W]"
     ],
-    "The Thief-takers|Evendim": [
-        "* Crates can be found at [7.4S, 69.4W]\n* This quest is incorrectly marked as fellowship. The crates are guarded by 36 and 37 non-elite mobs. This is a solo-able quest.\n* Do this alongside Quest:Practised Villainy, the objectives are the same."
+    "Book 9, Chapter 4: First Offensives|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
+        "* This quest involves a Skirmish that can be completed at Solo, Small Fellowship, Fellowship, or Raid group sizes by using the Skirmish Join Panel. This Skirmish has a minimum level of 60.\n* Before launching the Skirmish, you should visit one of the Skirmish Camps found throughout Middle-earth and speak with a Skirmish Captain to properly train. Skirmish Camps can be found in the following regions: Ered Luin, Bree-land, the Shire, the Lone-lands, the North Downs, the Trollshaws, Evendim, Forochel, Angmar, Eregion, Moria, and Lothlórien."
     ],
     "Crafting: The Maker's Hall|Crafting": [
         "* Egil Oldbeard is in the area before Forging Hall of Thorin's Hall"
@@ -1544,14 +1544,14 @@
     "Another Thin Winter|Forochel": [
         "* Moose (Shaggy Frost-antler and Shaggy Bull Frost-antler) roam all over Itä-ma, near and far from Jänis-leiri."
     ],
-    "The Black-fire|North Downs": [
-        "* You will find on of the crates in the northern hill [16.5S, 46.9W]\n* You will find on of the crates in the south-eastern hill [17.0S, 46.7W]\n* You will find on of the crates in the south-western hill [16.7S, 48.2W]"
-    ],
     "Some Kind of Safety|Moria Lower Deeps": [
         "* You don't need to go far to test the water. The water at the base of the stairs [15.3S, 112.4W] going down from The Rotting Cellar will do. There, you must use the White Cloth Strip from your inventory."
     ],
     "Snapper Soup|Bree-land": [
         "* Collect 5 Snapper-shells and 15 Chunks of Snapper-meat from the Snapper Turtles around Nen Harn in northeast Bree-land.\n* Return them to Emma."
+    ],
+    "A Brother's Plea|North Downs": [
+        "* Oskari [8.9S, 32.6W] is at the back of a Rauta-lehmä camp in Fashat Laug"
     ],
     "The Path to Learning, Part II|Crafting": [
         "* The Lost Stanzas of Aiglos can be found in a brown satchel on the ground in the North Downs [7.8S, 49.6W]"
@@ -1583,8 +1583,8 @@
     "The Half-orcs' Beasts|Eregion": [
         "* Barad Morlas is at [48.1S, 13.7W]"
     ],
-    "Vol. II, Book 7, Chapter 1: The Hill of Cerin Amroth|Epic - Vol. II, Book 7: Leaves of Lórien": [
-        "* If you have not already completed Volume II, Book 6, it is encouraged, though not required, that you do so before beginning this quest."
+    "Bitter Scenes in Audaghaim|Mirkwood": [
+        "* There is evidence of violence in Audaghaim at [14.1S, 55.4W]\n* There are old weapons in Audaghaim at [13.9S, 54.9W]\n* There is a sign of the Necromancer's influence in Audaghaim at [13.2S, 54.8W]"
     ],
     "The Glowering Trees of the Drownholt|Mirkwood": [
         "* Nífdir is in the Drownholt at [18.3S, 57.4W]"
@@ -1619,8 +1619,8 @@
     "Long Overdue Justice|Garth Agarwen": [
         "* The Créoth's are inside the instance Garth Agarwen: Fortress"
     ],
-    "Fallen Oak|Lone-lands": [
-        "* Gloomleaf is located at [27.6S, 29.7W]"
+    "Book 6, Chapter 7: Beyond Rammas Deluon|Epic - Vol. I, Book 6: Fires in the North": [
+        "* Talk to Braigiar at Gabilshathûr."
     ],
     "The Errant Coinpurse|Bree-land": [
         "* Collect Lolo Wendingway's pack from the bears east of Lolo\n* Bring the pack to Lolo Wendingway"
@@ -1628,8 +1628,8 @@
     "The Second Gear|Ered Luin": [
         "* The second gear is in a Chest in Orodost at [20.6S, 102.4W]"
     ],
-    "Sweet Water|Lothlórien": [
-        "* The spring with the buckets in Egladil is at [18.3S, 65.6W]"
+    "Stuffing the Stuffed|Frostbluff": [
+        "* Winterberries can be found all over Frostbluff outside of town.\n* Eggs can be found in the chicken coop called Cluckland in the north of the middle of Frostbluff.\n* Mushrooms can be found in the mushroom tent in the south of the middle of Frostbluff.\n* The servants' oven to make the bread is located a step up from the town's northern exit."
     ],
     "Rurik Fennel, Locksmith|Bree-land": [
         "* The Blackwold Supervisor is at [27.9S, 44.1W]"
@@ -1670,8 +1670,8 @@
     "Treasures from Barad Morlas|Eregion": [
         "* Barad Morlas is at [48.1S, 13.7W]"
     ],
-    "Symbols of Conquest|Mirkwood": [
-        "* There are Banners of Dol Guldur in Gathbúrz in all the Orc-camps and fortresses, as in [11.2S, 46.8W], [10.9S, 46.3W], [11.8S, 46.8W], [11.9S, 45.6W], [11.9S, 45.4W], [11.9S, 44.9W], [11.6S, 45.4W], [11.5S, 44.8W]"
+    "Sweet Water|Lothlórien": [
+        "* The spring with the buckets in Egladil is at [18.3S, 65.6W]"
     ],
     "Instance: The Fall of Moria|Moria": [
         "* When you get to the mines, kill Crazed Deep-claw and Maddened Cave-claw"
@@ -1682,17 +1682,17 @@
     "Terror of the Drownholt|Mirkwood": [
         "* To summon Mirefang, inspect a Freshly-mauled Corpse in the Pool of Creeping Death at [16.7S, 57.7W]"
     ],
-    "Vol. II, Book 1, Expedition: Orders for Half-orcs|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* Filgogân is at [53.1S, 7.5W]\n* The pieces are marked in the instance map"
-    ],
     "In Pursuit|Moria": [
         "* Kambi is in The Great Delving at [7.7S, 114.7W]\n* If you find him, you'll be attacked by a goblin, Chieftain Lûrkh. He is a normal goblin and should not cause too much trouble to defeat."
+    ],
+    "Burning Drûmaudhul|Lothlórien": [
+        "* The Drûmaudhul Banner is in Drûmaudhul at [10.2S, 72.6W]"
     ],
     "Spoiling the Spoils|Eregion": [
         "* Pembar is at [44.1S, 10.8W]\n* Worm-eggs can be found at:\n[44.2S, 10.7W]\n* [44.2S, 10.8W]\n* [44.1S, 10.8W]\n* [44.0S, 10.9W]\n* [43.9S, 10.7W]\n* [44.0S, 10.7W]\n* [44.0S, 10.6W]\n* [44.1S, 10.6W]\n* [44.1S, 11.0W]\n* [44.2S, 10.9W]\n* [43.8S, 10.9W]\n* [44.3S, 10.6W]"
     ],
-    "Burning Drûmaudhul|Lothlórien": [
-        "* The Drûmaudhul Banner is in Drûmaudhul at [10.2S, 72.6W]"
+    "Book 5, Chapter 4: The Key-stone|Epic - Vol. I, Book 5: The Last Refuge": [
+        "* Head north into Bruinen Source West\n* Collect the key from a chest at Iskeld's Lookout [21.5S, 4.6W]\n* Return to Glóin"
     ],
     "Into the Ram Dúath|North Downs": [
         "* Chief Tuokki is at Lehmä-koti in Angmar. Use the right Ram Dúath road."
@@ -1700,11 +1700,11 @@
     "The Spy-master|Eregion": [
         "* Pizumu the Spy-master can be found at Cirth Narugorch [45.6S, 7.2W]"
     ],
-    "Spider-leg Prisms|Moria Lower Deeps": [
-        "* Gabil-munz is at [16.5S, 114.0]"
-    ],
     "First Age Relics - Introduction|Reputation": [
         "* First Age Relics drop from Dourhands in the Icereave Mines and everything in Sarnúr"
+    ],
+    "Seeds for the Future|Eregion": [
+        "* Holly-seeds can be found on the bushes growing underneath the trees in Glâd Ereg, south of Gwingris. Celebrandir has asked you to collect holly-seeds for him, so that he may begin replanting the wood."
     ],
     "Death to the Puny Mine-dwellers|Moria Upper Levels": [
         "* The Durub Shrine in Gazatu-ru where you must plant the banner is at [8.1S, 105.2W]"
@@ -1718,8 +1718,8 @@
     "Fell Spirits|Garth Agarwen": [
         "* Gloom-waters can be found the in Garth Agarwen area and near the Garth Agarwen instance entrances.\n* They can also be found inside the instances Garth Agarwen: Arboretum and Garth Agarwen: Fortress."
     ],
-    "Rituals of the Forest - Mistletoe|Enedwaith": [
-        "* [66.3S, 23.7W]\n* [66.6S, 23.2W]\n* [66.7S, 23.4W]\n* [66.7S, 23.6W]\n* [66.2S, 23.8W]\n* [66.4S, 23.5W]\n* [66.5S, 23.6W]\n* [66.7S, 23.8W]"
+    "Book 5, Chapter 5: The Last Refuge|Epic - Vol. I, Book 5: The Last Refuge": [
+        "* Talk to Gimli to start the instance\n* Defeat enemies (Dourhands and Frost Giants) & protect Gimli\n* Defeat Skorgrím Dourhand\n* Talk to Glóin"
     ],
     "A Stare from the Wild|Forochel": [
         "* Blökk is on the southwestern shore of the lake"
@@ -1736,8 +1736,8 @@
     "Dark Idols|Mirkwood": [
         "* There are Dark Idols in Gathbúrz at [13.0S, 45.0W],  [13.5S, 44.8W], [14.4S, 44.7W], [14.8S, 45.6W], [14.3S, 46.3W]"
     ],
-    "Vol. I, Book 8, Instance: Mordirith's Fall|Epic - Vol. I, Book 8: The Scourge of the North": [
-        "* This quest is meant for a fellowship. If you choose to undertake this quest solo you will receive an inspiration bonus, but the challenge will be great."
+    "Book 8, Instance: Escape from Rushdurinul|Epic - Vol. II, Book 8: Scourge of Khazad-dûm": [
+        "* This is a solo quest, and cannot be completed with a Fellowship.\n* You can use the banner that Bróin will plant to get some nice buffs from your companions, but they must be renewed every time your party moves and Bróin plants the banner again.\n* You can switch the support role of your companions even in midfight."
     ],
     "An Honourless People|Lone-lands": [
         "* Daegwalt is at Ost Guruth"
@@ -1754,8 +1754,8 @@
     "Predators in the Foothills|Angmar": [
         "* Scara Hunters, Scara Corpse-ravagers, and Scara Skulkers are in Fasach-larran"
     ],
-    "Vol. II, Book 1, Expedition: The Top of the Waterfall|Epic - Vol. II, Book 1: The Walls of Moria": [
-        "* The strongbox at the top of the waterfall"
+    "Pipe-weed Delivery|Bree-land": [
+        "* Roger is at Adso's camp, west of Bree (just take the road west)"
     ],
     "False Wards|Evendim": [
         "* 1st ward is located at [5.6S, 71.9W]\n* 2nd ward is located at [5.4S, 72.5W]\n* 3rd ward is located at [6.1S, 73.2W]\n* 4th ward is located at [6.6S, 73.7W]\n* 5th ward is located at [6.6S, 74.2W]"
@@ -1766,8 +1766,8 @@
     "Out of the Darkness|Moria Lower Deeps": [
         "* Kraibag is in The Chamber of Dark Waters [16.1S, 111.9W]"
     ],
-    "A Cry of Vengeance|Captain": [
-        "* Pukhal is in the Flaming Deeps at [14.1S, 109.9W]"
+    "Book 9, Chapter 2: Rumour of Mazog|Epic - Vol. II, Book 9: Fortress of the Nazgûl": [
+        "* There is an Orc Leader's Coffer in Maudhûl-ulur at [17.4S, 60.0W] where you can find a report for Mazog.\n* There is an Orc Leader's Coffer in Ashúrz Maufulug at [18.4S, 60.9W] where you can find a report for Mazog."
     ],
     "A New Shine|Ered Luin": [
         "* Geitir is in Noglond at [19.3S, 100.5W]\n* Óláfr is in Noglond at [19.4S, 100.5W]"
