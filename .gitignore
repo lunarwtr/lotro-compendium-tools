@@ -2,3 +2,6 @@
 oldscripts/
 *.bak
 plugin/
+bak/
+/*.db
+/*.lua
