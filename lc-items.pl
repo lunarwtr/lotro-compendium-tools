@@ -1,11 +1,13 @@
 #!/usr/bin/perl
 
+use lib '.';
 use strict;
 use warnings;
 use utf8;
 use Encode;
 use Storable qw(freeze thaw store retrieve);
 use XML::LibXML;
+use Compendium;
 use JSON;
 $|=1;
 
@@ -129,111 +131,4 @@ sub loadsetsdb {
 sub loaditemclassdb {
     return loadmap('itemclass.db', 'data/source/lc/general/common/enums/ItemClass.xml', '//entry', 'code');
 }
-sub loadmap {
-    my($dbfile, $xmlfile, $nodexpath, $keyattr) = @_;
-    if (-e $dbfile) {
-        return retrieve($dbfile);
-    }
-    my %db = ();
-    my $dom = XML::LibXML->load_xml(location => $xmlfile);
-    foreach my $p ($dom->findnodes($nodexpath)) {
-        my %rec = attmap($p);
-        $db{$rec{$keyattr}} = \%rec if (defined $rec{$keyattr});
-    }
-    store(\%db, $dbfile);
-	return \%db;
-}
 
-sub sortkey {
-    if ($a eq $b) {
-        return 0;
-    } elsif ($a =~ m/^(id|name)$/ && $b =~ m/^(id|name)$/) {
-        return $a cmp $b;
-    } elsif ($a =~ m/^(id|name)$/ && $b ne $a) {
-        return -1;
-    } elsif ($b =~ m/^(id|name)$/ && $b ne $a) {
-        return 1;
-    } else {
-        return $a cmp $b;
-    }
-}
-
-sub string {
-	my($val) = @_;
-	if (ref($val) eq 'HASH') {
-		my $newval = "{";
-		my $count = 0;
-		#while (my($k,$v) = each %{ $val }) {
-		foreach my $k (sort sortkey keys %{ $val }) {
-			my $v = $val->{$k};
-			my $hk = string($k);
-			if ($hk =~ m/^"(next|\d+)"$/) {
-				$hk = "[".$hk."]";
-			} else {
-				$hk =~ s/^"(.*?)"$/$1/is;
-			}
-			my $hv = string($v);
-			$newval .= "," if ($count > 0);
-			$newval .= "$hk=$hv";
-			$count++;
-		}
-		$newval .= "}";
-		return $newval;
-	} elsif (ref($val) eq 'ARRAY') {
-		my $newval = "{";
-		my $count = 0;
-		foreach my $item (sort @{ $val }) {
-			$newval .= "," if ($count > 0);
-			$newval .= string($item); 
-			$count++;
-		}
-		$newval .= "}";
-		return $newval;
-    # } elsif ($val =~ /[^[:print:]]/s) {
-    #     $val =~ s/"/\\"/gs;
-    #     return "\"$val\"";
-	} else {
-		return escapelua($val);
-	}
-}
-
-sub escapelua {
-	my($val) = @_;
-	$val =~ s/\s+$//s;
-	$val =~ s/^\s+//s;
-	$val =~ s/\\/\\\\/gis;
-	$val =~ s/\s*\n\s*/\\n/gis;
-	$val =~ s/\s*\r\s*/\\r/gis;
-	$val =~ s/"/\\"/gis;
-	$val = $val =~ m/^\d+$/ ? "$val" : "\"$val\"";
-	return $val;
-}
-
-sub attmap {
-    my($n) = @_;
-    return map { $_->name => $_->value } $n->attributes();
-}
-
-sub itemmap {
-    my($n) = @_;
-    my %rec = attmap($n);
-    my %item = ( id => uc(sprintf("%x", $rec{id})), val => $rec{name} );
-    $item{q} = $rec{quantity} if ($rec{quantity});
-    return %item;
-}
-
-sub tohex {
-    my($id) = @_;
-    return uc(sprintf("%x", $id));
-}
-
-sub loadfile {
-    my ($file, $encoding) = @_;
-	#print "$file\n";
-    my $data = do {
-        local $/ = undef;
-        open my $fh, "<$encoding", $file or die "Cannot open $file";
-        <$fh>;
-    };	
-    return $data;
-}
