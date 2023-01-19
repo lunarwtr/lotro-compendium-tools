@@ -371,6 +371,7 @@ sub loadquestdb {
     my %moneymap = ( gold => 'g', silver => 's', copper => 'c' );
     my $geodb = loadgeodb();
     my $poidb = loadpoidb($geodb);
+    my $labeldb = loadlabeldb();
     my $craftdb = loadcraftdb();
     my $commentdb = decode_json(loadfile('commentdb.json', ':raw'));
 
@@ -382,7 +383,7 @@ sub loadquestdb {
     foreach my $quest ($dom->findnodes('//quest')) {
 
         my %rec = ();
-        my %att = attmap($quest);
+        my %att = attmap($quest, $labeldb);
         while (my($name, $val) = each %att) {
             my $key = $attrmap{$name};
             next unless ($key);
@@ -484,10 +485,10 @@ sub loadquestdb {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
             } elsif ($type eq 'title') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type =~ m/^(XP|glory|virtueXP|itemXP|mountXP|classPoints|lotroPoints)$/i) {
                 push(@{$rew{$rewkey}}, { val => $reward->findvalue('./@quantity') });
@@ -509,20 +510,20 @@ sub loadquestdb {
 
         my @objectives = ();
         foreach my $o ($quest->findnodes('./objectives/objective')) {
-            my %ob = attmap($o);
+            my %ob = attmap($o, $labeldb);
             my $desc = '';
             # TODO: handle <objective index="3" text="${RACE:Jon Brackenbrook wishes to speak with you.&#10;&#10;After the assault on Archet, Jon Brackenbrook returned to the town to assist and rebuild, taking up his father's legacy.'[U,D,L]|'Mundo Sackville-Baggins wishes to speak with you.&#10;&#10;After the assault on Archet, you helped Mundo Sackville-Baggins and Celandine Brandybuck on their return trip to the Shire.'[O]}" progressOverride="${RACE:Speak with Mundo Sackville-Baggins[O]|Speak with Jon Brackenbrook in Archet[U,D,L]}">
             $desc .= "$ob{text}\n" if ($ob{text});
             $desc .= "$ob{progressOverride}" if ($ob{progressOverride});
             my @sub = ("Obj $ob{index}:\n$desc");
             foreach my $prog ($o->findnodes('./*[@progressOverride]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $labeldb);
                 push(@sub, "* $att{progressOverride}");
             }
             push(@objectives, join("\n", @sub));
             
             foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $labeldb);
                 foreach my $key (qw(npcId itemId mobId)) {
                     my $id = $att{$key};
                     $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
@@ -595,6 +596,21 @@ sub dungpath {
             dungpath($georef, $d, $vals);
         }
     }
+}
+
+sub loadlabeldb {
+    my $labeldbfile = 'questlabel.db';
+    if (-e $labeldbfile) {
+        return retrieve($labeldbfile);
+    }
+    my %labels = ();
+    my $dom = XML::LibXML->load_xml(location => 'data/source/lc/general/labels/en/quests.xml');
+    foreach my $p ($dom->findnodes('/labels/label')) {
+        my %rec = attmap($p);
+        $labels{$rec{key}} = $rec{value};
+    }
+    store(\%labels, $labeldbfile);
+	return \%labels;
 }
 
 sub loadgeodb {
@@ -774,8 +790,15 @@ sub escapelua {
 }
 
 sub attmap {
-    my($n) = @_;
-    return map { $_->name => $_->value } $n->attributes();
+    my($n, $labels) = @_;
+    return map { 
+        my $att = $_;
+        my $val = $att->value;
+        if (defined $labels && defined $val && $val =~ /^key:/) {
+            $val = $labels->{$val};
+        }
+        $att->name => $val;
+    } $n->attributes();
 }
 
 sub itemmap {
