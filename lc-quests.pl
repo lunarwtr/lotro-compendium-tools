@@ -148,6 +148,10 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         if ($level eq 'Scaling') {
             push(@{$indexes{'Scaling'}}, $index);
             $menu{'Level Ranges'}{'Scaling'} = 1;
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
+        } else {
+            push(@{$indexes{'Non-Scaling'}}, $index);
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
         }
         my $curlevel = $level eq 'Scaling' ? -1 : int($level);
         my $minlevel = defined $rec{minlevel} ? int($rec{minlevel}) : 0;
@@ -739,7 +743,7 @@ sub sortkey {
 }
 
 sub string {
-	my($val) = @_;
+	my($val, $stringonly) = @_;
 	if (ref($val) eq 'HASH') {
 		my $newval = "{";
 		my $count = 0;
@@ -752,7 +756,7 @@ sub string {
 			} else {
 				$hk =~ s/^"(.*?)"$/$1/is;
 			}
-			my $hv = string($v);
+			my $hv = string($v, $stringonly || $hk eq 'id');
 			$newval .= "," if ($count > 0);
 			$newval .= "$hk=$hv";
 			$count++;
@@ -764,7 +768,7 @@ sub string {
 		my $count = 0;
 		foreach my $item (sort @{ $val }) {
 			$newval .= "," if ($count > 0);
-			$newval .= string($item); 
+			$newval .= string($item, $stringonly); 
 			$count++;
 		}
 		$newval .= "}";
@@ -773,19 +777,23 @@ sub string {
     #     $val =~ s/"/\\"/gs;
     #     return "\"$val\"";
 	} else {
-		return escapelua($val);
+		return escapelua($val, $stringonly);
 	}
 }
 
 sub escapelua {
-	my($val) = @_;
+	my($val, $stringonly) = @_;
 	$val =~ s/\s+$//s;
 	$val =~ s/^\s+//s;
 	$val =~ s/\\/\\\\/gis;
 	$val =~ s/\s*\n\s*/\\n/gis;
 	$val =~ s/\s*\r\s*/\\r/gis;
 	$val =~ s/"/\\"/gis;
-	$val = $val =~ m/^\d+$/ ? "$val" : "\"$val\"";
+    if ($stringonly) {
+        $val = "\"$val\"";
+    } else {
+	    $val = $val =~ m/^\d+$/ ? "$val" : "\"$val\"";
+    }
 	return $val;
 }
 
