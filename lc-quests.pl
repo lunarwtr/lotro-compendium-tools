@@ -380,7 +380,7 @@ sub loadquestdb {
     my $craftdb = loadcraftdb();
     my $commentdb = decode_json(loadfile('quest-commentdb.json', ':raw'));
 
-    my $filename = 'data/source/lc/general/quests/quests.xml';
+    my $filename = 'data/source/lc/general/lore/quests.xml';
     my $outputdir = 'data/output/Compendium/Quests';
 
     my $dom = XML::LibXML->load_xml(location => $filename);
