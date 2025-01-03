@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib '.';
+use lib '/home/kriley/workspace/lotro-compendium-tools/';
 use strict;
 use warnings;
 use utf8;
@@ -88,7 +88,7 @@ foreach my $q (@{ $questdb }) {
 	$questtoindex{$q->{id}} = $index;
 	$index++;
 }
-for (my $i = 1; $i <= 140; $i += 5) {
+for (my $i = 1; $i <= 150; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
@@ -154,6 +154,10 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         if ($level eq 'Scaling') {
             push(@{$indexes{'Scaling'}}, $index);
             $menu{'Level Ranges'}{'Scaling'} = 1;
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
+        } else {
+            push(@{$indexes{'Non-Scaling'}}, $index);
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
         }
         my $curlevel = $level eq 'Scaling' ? -1 : int($level);
         my $minlevel = defined $rec{minlevel} ? int($rec{minlevel}) : 0;
@@ -377,8 +381,11 @@ sub loadquestdb {
     my %moneymap = ( gold => 'g', silver => 's', copper => 'c' );
     my $geodb = loadgeodb();
     my $poidb = loadpoidb($geodb);
+    my $labeldb = loadlabeldb('quests');
     my $craftdb = loadcraftdb();
     my $commentdb = decode_json(loadfile('quest-commentdb.json', ':raw'));
+    my $catlabeldb = loadlabeldb('enum-QuestCategory');
+    my $catdb = loadmap('questcats.db', 'data/source/lc/general/lore/enums/QuestCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
     my $filename = 'data/source/lc/general/lore/quests.xml';
     my $outputdir = 'data/output/Compendium/Quests';
@@ -388,7 +395,7 @@ sub loadquestdb {
     foreach my $quest ($dom->findnodes('//quest')) {
 
         my %rec = ();
-        my %att = attmap($quest);
+        my %att = attmap($quest, $labeldb);
         while (my($name, $val) = each %att) {
             my $key = $attrmap{$name};
             next unless ($key);
@@ -399,6 +406,8 @@ sub loadquestdb {
         $rec{repeatable} = $rec{repeatable} ? 'Yes' : 'No';
         $rec{faction} = $rec{faction} ? 'Mon' : 'FrP';
         $rec{instance} = defined $rec{instance} && $rec{instance} eq 'true' ? 'Yes' : 'No';
+        my $catrec = $catdb->{$rec{category}};
+        $rec{category} = $catrec ? $catrec->{name} : 'Unknown';
         my $comments = $commentdb->{"$rec{name}|$rec{category}"};
         $rec{c} = $comments if (defined $comments);
         if ($att{size} && $att{size} =~ m/(SMALL_FELLOWSHIP|FELLOWSHIP)/) {
@@ -490,10 +499,10 @@ sub loadquestdb {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
             } elsif ($type eq 'title') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type =~ m/^(XP|glory|virtueXP|itemXP|mountXP|classPoints|lotroPoints)$/i) {
                 push(@{$rew{$rewkey}}, { val => $reward->findvalue('./@quantity') });
@@ -515,20 +524,20 @@ sub loadquestdb {
 
         my @objectives = ();
         foreach my $o ($quest->findnodes('./objectives/objective')) {
-            my %ob = attmap($o);
+            my %ob = attmap($o, $labeldb);
             my $desc = '';
             # TODO: handle <objective index="3" text="${RACE:Jon Brackenbrook wishes to speak with you.&#10;&#10;After the assault on Archet, Jon Brackenbrook returned to the town to assist and rebuild, taking up his father's legacy.'[U,D,L]|'Mundo Sackville-Baggins wishes to speak with you.&#10;&#10;After the assault on Archet, you helped Mundo Sackville-Baggins and Celandine Brandybuck on their return trip to the Shire.'[O]}" progressOverride="${RACE:Speak with Mundo Sackville-Baggins[O]|Speak with Jon Brackenbrook in Archet[U,D,L]}">
             $desc .= "$ob{text}\n" if ($ob{text});
             $desc .= "$ob{progressOverride}" if ($ob{progressOverride});
             my @sub = ("Obj $ob{index}:\n$desc");
             foreach my $prog ($o->findnodes('./*[@progressOverride]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $labeldb);
                 push(@sub, "* $att{progressOverride}");
             }
             push(@objectives, join("\n", @sub));
             
             foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $labeldb);
                 foreach my $key (qw(npcId itemId mobId)) {
                     my $id = $att{$key};
                     $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
