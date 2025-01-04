@@ -8,14 +8,11 @@ use Storable qw(freeze thaw store retrieve);
 use XML::LibXML;
 use Compendium;
 use JSON;
-#use Compress::Zlib;
-# use open ':utf8';
-# binmode STDOUT, ":utf8";
 $|=1;
 
 my $questdb = loadquestdb();
 
-open INDEX, ">:utf8", "CompendiumQuestsDB.lua";
+open INDEX, ">:utf8", "data/output/Compendium/Quests/CompendiumQuestsDB.lua";
 
 print INDEX <<EOB;
 ---\@diagnostic disable
@@ -355,7 +352,7 @@ close INDEX;
 
 $menu{'Level Ranges'}{'Custom'} = 1;
 open OUT, ">:utf8", "questmenu.lua";
-print OUT generatemenu(\%menu, "", 0);
+print OUT generatemenu("", \%menu, "", 0);
 close OUT;
 
 
@@ -381,10 +378,10 @@ sub loadquestdb {
     my %moneymap = ( gold => 'g', silver => 's', copper => 'c' );
     my $geodb = loadgeodb();
     my $poidb = loadpoidb($geodb);
-    my $labeldb = loadlabeldb('quests');
+    my $labeldb = loadlabels('quests');
     my $craftdb = loadcraftdb();
     my $commentdb = decode_json(loadfile('quest-commentdb.json', ':raw'));
-    my $catlabeldb = loadlabeldb('enum-QuestCategory');
+    my $catlabeldb = loadlabels('enum-QuestCategory');
     my $catdb = loadmap('questcats.db', 'data/source/lc/general/lore/enums/QuestCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
     my $filename = 'data/source/lc/general/lore/quests.xml';
@@ -566,28 +563,4 @@ sub loadquestdb {
     }
     store(\@quests, $questdbfile);
     return \@quests;
-}
-
-sub generatemenu {
-	my($ref,$tabs,$all) = @_;
-	
-	my @m = ();
-	if ($ref == 1) {
-		return "0";
-	} else {
-		push(@m, $tabs . "[".string("All") . "]=0") unless ($tabs eq "" || !$all);
-		foreach my $key (sort keys %{ $ref }) {
-			my $nref = $ref->{$key};
-			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
-			my $item;
-			if ($nref != 1 && scalar keys %{ $nref } == 0) {
-				$item = $tabs . "[".string($key) . "]=0";
-			} else {
-				$item = $tabs . "[". string($key) . "]=" . generatemenu($nref, "$tabs\t", $nall);
-			}
-			push(@m, $item);
-		}
-		return "{\n". join (",\n", @m) . "\n$tabs}";
-	}
-	
 }

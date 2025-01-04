@@ -8,9 +8,9 @@ use Encode;
 use Storable qw(freeze thaw store retrieve);
 use XML::LibXML;
 use parent 'Exporter';  # inherit all of Exporter's methods
-our @EXPORT = qw(attmap coorround dungpath escapelua geopath itemmap loadlabeldb loadcraftdb loadfactiondb loadfile loadgeodb loadmap loadpoidb poilookup sortkey string tohex 
+our @EXPORT = qw(generatemenu attmap coorround dungpath escapelua geopath itemmap loadlabels loadcraftdb loadfactiondb loadfile loadgeodb loadmap loadpoidb poilookup sortkey string tohex 
 );
-our @EXPORT_OK = qw(attmap coorround dungpath escapelua geopath itemmap loadlabeldb loadcraftdb loadfactiondb loadfile loadgeodb loadmap loadpoidb poilookup sortkey string tohex 
+our @EXPORT_OK = qw(generatemenu attmap coorround dungpath escapelua geopath itemmap loadlabels loadcraftdb loadfactiondb loadfile loadgeodb loadmap loadpoidb poilookup sortkey string tohex 
 );
 
 sub loadmap {
@@ -138,28 +138,6 @@ sub geopath {
     $r->{$c->{type}} = $c->{name};
 }
 
-sub dungpath {
-    my($georef, $c, $vals) = @_;
-    return unless (defined $c->{id});
-    return if (defined $georef->{$c->{id}});
-    while (my($k,$v) = each %{$vals}) {
-        $c->{$k} = $v;
-    }
-    #$c->{dungeon} = $c->{name};
-    #delete $c->{name};
-    $georef->{$c->{id}} = $c;
-    if (defined $c->{dungeons}) {
-        foreach my $d (@{$c->{dungeons}}) {
-            dungpath($georef, $d, $vals);
-        }
-    }
-    if (defined $c->{parents}) {
-        foreach my $d (@{$c->{parents}}) {
-            dungpath($georef, $d, $vals);
-        }
-    }
-}
-
 sub itemmap {
     my($n) = @_;
     my %rec = attmap($n);
@@ -168,19 +146,14 @@ sub itemmap {
     return %item;
 }
 
-sub loadlabeldb {
+sub loadlabels {
     my($dbname) = @_;
-    my $labeldbfile = "${dbname}label.db";
-    if (-e $labeldbfile) {
-        return retrieve($labeldbfile);
-    }
     my %labels = ();
     my $dom = XML::LibXML->load_xml(location => "data/source/lc/general/lore/labels/en/${dbname}.xml");
     foreach my $p ($dom->findnodes('/labels/label')) {
         my %rec = attmap($p);
         $labels{$rec{key}} = $rec{value};
     }
-    store(\%labels, $labeldbfile);
 	return \%labels;
 }
 
@@ -188,62 +161,6 @@ sub loadlabeldb {
 sub loadcraftdb {
     return loadmap('craft.db', 'data/source/lc/general/lore/crafting.xml', '/crafting/profession', 'key');
 }
-
-# sub loadgeodb {
-#     my $geodbfile = 'geo.db';
-#     if (-e $geodbfile) {
-#         return retrieve($geodbfile);
-#     }
-#     my $meid = 0;
-#     my %geoids = ();
-#     my $geodom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/parchmentMaps.xml');
-#     my %regions = ();
-#     foreach my $g ($geodom->findnodes('//parchmentMaps/parchmentMap')) {
-#         my %rec = attmap($g);
-#         my $mn = $rec{name};
-#         if ($rec{region} eq '0') {
-#             $meid = $rec{id};
-#             next;
-#         }
-#         if ($rec{parentMapId} eq $meid) {
-#             $rec{type} = 'region';
-#             $regions{$rec{id}} = $rec{name};
-#         }
-#         $geoids{$rec{id}} = \%rec;
-#         foreach my $a ($geodom->findnodes('./area')) {
-#             my %att = attmap($a);
-#             $att{parentMapId} = $rec{id};
-#             $geoids{$att{id}} = \%att;
-
-#             if ($att{parentMapId} eq $meid) {
-#                 $att{type} = 'region';
-#                 $regions{$att{id}} = $att{name};
-#             }
-#         }
-#     }
-#     my $dungdom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/dungeons.xml');
-#     foreach my $g ($geodom->findnodes('//dungeons/dungeon')) {
-#         my %rec = attmap($g);
-#         $rec{type} = 'dungeon';
-#         my $zoneid = $g->findvalue('./position/@zoneID');
-#         if ($zoneid) {
-#             $rec{parentMapId} = $zoneid;
-#         }
-#         $geoids{$rec{id}} = \%rec;
-#     }
-#     while (my($id, $rec) = each %geoids) {
-#         if ($regions{$id}) {
-#             # nothing to do
-#             $rec->{type} = 'region';
-#         } elsif ($regions{$rec->{parentMapId}}) {
-#             $rec->{type} = 'territory';
-#         } else {
-#             $rec->{type} = 'area';
-#         }
-#     }
-#     store(\%geoids, $geodbfile);
-# 	return \%geoids;
-# }
 
 sub loadgeodb {
     my $geodbfile = 'geo.db';
@@ -290,36 +207,55 @@ sub loadgeodb {
             $geos{$id} = $geobyname{$rec{name}};
         }
     }
-    # $mapdom = XML::LibXML->load_xml(location => 'data/source/lc/maps/links.xml');
-    # my %scanme = ();
-    # foreach my $g ($mapdom->findnodes('//links/*')) {
-    #     my %rec = attmap($g);
-    #     # if (length($id) < 10) {
-    #     #     next;
-    #     # }
-    #     my $target = $rec{target};
-    #     if ($rec{type} && $rec{type} eq 'TO_DUNGEON') {
-    #         my $targetRec = $maps{$target};
-    #         $targetRec->{dungeon} = $targetRec->{name};
-    #     }
+    # dungeons.xml
+    # <dungeon id="1879323954" name="The Dome of Stars" basemapId="1091961257">
+    #     <position region="3" longitude="-9.04206" latitude="-61.52641" zoneID="1879320844"/>
+    # </dungeon>
+    # -or-
+    # landblock.xml
+    #     <landblock region="3" blockX="254" blockY="194" areaId="1879320844" dungeonId="1879323954" height="0.0">
 
-    #     my $id = $rec{parentId};
-    #     my $geo = $geos{$id};
-    #     if ($geo) {
-    #         my %vals = ();
-    #         foreach my $key (qw(region territory area)) {
-    #             $vals{$key} = $geo->{$key} if ($geo->{$key});
-    #         }
-    #         $vals{parentId} = $id;
-    #         $scanme{$target} = \%vals;
-    #     } else {
-    #         push(@{$maps{$target}{parents}}, $maps{$id});
-    #         push(@{$maps{$id}{dungeons}}, $maps{$target});
-    #     }
-    # }
-    # while (my($root,$vals) = each %scanme) {
-    #     dungpath(\%geos, $maps{$root}, $vals);
-    # }
+    # Landmarks (ex. https://lotro-wiki.com/wiki/Hall_of_the_Osgiliath-stone)
+    #   Osgiliath (geoAreas.xml) -> Dome of Stars (dungeons.xml) -> Hall of the Osgiliath-stone (markers-*.xml & category=74)
+    # markers-*.xml and filter for category 74
+    # <marker id="978051086" label="Hall of the Osgiliath-stone" category="74" did="1879324614" parentZoneId="1879320844" longitude="-9.342412" latitude="-61.5315"/>
+    # <marker id="988520457" label="Hall of the Osgiliath-stone" category="74" did="1879324614" parentZoneId="1879324341" longitude="-9.299209" latitude="63.263317"/>
+    
+    # # Some dungeons are linked to multiple areas... perhaps override and use the position zoneID in those instances (if it has one)
+    # <dungeon id="1879051243" name="Barad Eithel" basemapId="1090551220">
+    # <position region="1" longitude="-55.35667" latitude="-3.8971972" zoneID="1879063986"/>
+    # </dungeon>
+    # <landblock region="1" blockX="20" blockY="151" areaId="1879063919" dungeonId="1879051243" height="0.6906738">
+    # <landblock region="1" blockX="20" blockY="151" areaId="1879063919" dungeonId="1879051243" height="0.6906738">
+    my $dungdom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/dungeons.xml');
+    my %dungeons = ();
+    foreach my $d ($dungdom->findnodes('//dungeons/dungeon')) {
+        my $name = $d->findvalue('./@name');
+        $name =~ s/[\n\r]+.*//s;
+        $dungeons{$d->findvalue('./@id')} = { name => $name, override => $d->findvalue('./position/@zoneID') };
+    }
+    my $lbdom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/landblocks.xml');
+    my %lbseen = ();
+    foreach my $g ($lbdom->findnodes('//landblocks/landblock[@areaId and @dungeonId]')) {
+        my $dungId = $g->findvalue('./@dungeonId');
+        next if ($dungId eq '0'); # skip placeholder ids
+        my $drec = $dungeons{$dungId};
+        my $id = $drec->{override} or $g->findvalue('./@areaId');
+        next if (defined $lbseen{"$id|$dungId"}); # skip ones we've processed before as there are dups
+        my $geo = $geos{$id};
+        if ($geo) {
+            my %vals = ( id => $dungId, type => 'dungeon', dungeon => $drec->{name}, name => $drec->{name} );
+            foreach my $key (qw(region territory area)) {
+                $vals{$key} = $geo->{$key} if ($geo->{$key});
+            }
+            if (defined $geos{$dungId}) {
+                die "ERROR: id collision for dungeon! : $dungId";
+            }
+            $geos{$dungId} = \%vals;
+        }
+        $lbseen{"$id|$dungId"} = 1;
+    }
+
     store(\%geos, $geodbfile);
 	return \%geos;
 }
@@ -410,7 +346,7 @@ sub loadfactiondb {
     if (-e $factiondbfile) {
         return retrieve($factiondbfile);
     }
-    my $factionlabeldb = loadlabeldb('factions');
+    my $factionlabeldb = loadlabels('factions');
     my %factions = ();
     my $dom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/factions.xml');
     foreach my $f ($dom->findnodes('/factions/faction')) {
@@ -423,6 +359,48 @@ sub loadfactiondb {
     }
     store(\%factions, $factiondbfile);
 	return \%factions;
+}
+
+sub level_range_sort {
+    my $ai = $a =~ /^(\d+)/ ? int($1) : -1;
+    my $bi = $b =~ /^(\d+)/ ? int($1) : -1;
+    if ($ai > -1 && $bi > -1) {
+        return $ai <=> $bi
+    } elsif ($ai > -1) {
+        return -1;
+    } elsif ($bi > -1) {
+        return 1;
+    }
+    return $a cmp $b;
+}
+
+sub generatemenu {
+	my($parentkey, $ref,$tabs,$all) = @_;
+	
+	my @m = ();
+	if ($ref == 1) {
+		return "0";
+	} else {
+		push(@m, $tabs . "[".string("All") . "]=0") unless ($tabs eq "" || !$all);
+        my @keys = sort keys %{ $ref };
+        if ($parentkey eq 'Level Ranges') {
+            # sort keys numerically
+            @keys = sort level_range_sort keys %{$ref};
+        }
+		foreach my $key (@keys) {
+			my $nref = $ref->{$key};
+			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
+			my $item;
+			if ($nref != 1 && scalar keys %{ $nref } == 0) {
+				$item = $tabs . "[".string($key) . "]=0";
+			} else {
+				$item = $tabs . "[". string($key) . "]=" . generatemenu($key, $nref, "$tabs\t", $nall);
+			}
+			push(@m, $item);
+		}
+		return "{\n". join (",\n", @m) . "\n$tabs}";
+	}
+	
 }
 
 1;

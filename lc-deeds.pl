@@ -14,7 +14,7 @@ $|=1;
 
 my $deeddb = loaddeeddb();
 
-open INDEX, ">:utf8", "CompendiumDeedsDB.lua";
+open INDEX, ">:utf8", "data/output/Compendium/Deeds/CompendiumDeedsDB.lua";
 
 print INDEX <<EOB;
 ---\@diagnostic disable
@@ -339,7 +339,7 @@ close INDEX;
 
 $menu{'Level Ranges'}{'Custom'} = 1;
 open OUT, ">:utf8", "deedmenu.lua";
-print OUT generatemenu(\%menu, "", 0);
+print OUT generatemenu("", \%menu, "", 0);
 close OUT;
 
 exit;
@@ -376,9 +376,9 @@ sub loaddeeddb {
         $geobyname{$gname} = $r unless (defined $geobyname{$gname});
     }
     my $commentdb = decode_json(loadfile('deed-commentdb.json', ':raw'));
-    my $deedlabeldb = loadlabeldb('deeds');
-    my $questlabeldb = loadlabeldb('quests');
-    my $catlabeldb = loadlabeldb('enum-DeedCategory');
+    my $deedlabeldb = loadlabels('deeds');
+    my $questlabeldb = loadlabels('quests');
+    my $catlabeldb = loadlabels('enum-DeedCategory');
     my $catdb = loadmap('deedcats.db', 'data/source/lc/general/lore/enums/DeedCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
     my $filename = 'data/source/lc/general/lore/deeds.xml';
@@ -458,7 +458,7 @@ sub loaddeeddb {
         if (!$rec{zone}) {
             ##  USING THE MAPS IN DEEDS IS PROBLEMATIC.. THEY HAVE MAP REFERENCES THAT 
             ## have nothign to do with the deed persay.. i.e. Ring-lore of Tham M�rdain
-            foreach my $m ($deed->findnodes('./map[@mapId and @region]')) {
+            foreach my $m ($deed->findnodes('./map[@mapId]')) {
                 my $mapId = $m->findvalue('./@mapId');
                 my $geo = $geodb->{$mapId};
                 if ($geo) {
@@ -556,38 +556,38 @@ sub loaddeeddb {
                     }
                 }
                 push(@sub, "* $po");
-                my @points = $prog->findnodes('./point');
+                # my @points = $prog->findnodes('./point');
                 
-                if (scalar @points == 0) {
-                    foreach my $key (qw(npcId itemId mobId)) {
-                        my $id = $att{$key};
-                        $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
-                    }
-                } else {
-                    my $objName = $po;
-                    foreach my $key (keys %att) {
-                        if ($key =~ m/Name/) {
-                            $objName = $att{$key};
-                            last;
-                        }
-                    }
-                    $objName =~ s/^(Defeat|Discover|Find) (the|a)\s*//;
-                    my %poi = ( name => $objName, zone => $rec{zone} );
-                    $poi{area} = $rec{area} if ($rec{area} ne 'Unknown'); 
-                    my %uniq = ();
-                    #print "POINTS: $nodename, keys : " . join(", ", sort keys %att) . "\n";
-                    foreach my $point (@points) {
-                        my %coors = attmap($point);
-                        my $ew = coorround($coors{longitude});
-                        $ew = $ew < 0 ?  (- $ew)."W" : "${ew}E";
-                        my $ns = coorround($coors{latitude});
-                        $ns = $ns < 0 ?  (- $ns)."S" : "${ns}N";
-                        $uniq{"$ns, $ew"}++;
-                    }
-                    my @locs = sort keys %uniq;
-                    $poi{loc} = \@locs;
-                    push(@{$rec{pois}}, \%poi);
-                }
+                # if (scalar @points == 0) {
+                #     foreach my $key (qw(npcId itemId mobId)) {
+                #         my $id = $att{$key};
+                #         $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
+                #     }
+                # } else {
+                #     my $objName = $po;
+                #     foreach my $key (keys %att) {
+                #         if ($key =~ m/Name/) {
+                #             $objName = $att{$key};
+                #             last;
+                #         }
+                #     }
+                #     $objName =~ s/^(Defeat|Discover|Find) (the|a)\s*//;
+                #     my %poi = ( name => $objName, zone => $rec{zone} );
+                #     $poi{area} = $rec{area} if ($rec{area} ne 'Unknown'); 
+                #     my %uniq = ();
+                #     #print "POINTS: $nodename, keys : " . join(", ", sort keys %att) . "\n";
+                #     foreach my $point (@points) {
+                #         my %coors = attmap($point);
+                #         my $ew = coorround($coors{longitude});
+                #         $ew = $ew < 0 ?  (- $ew)."W" : "${ew}E";
+                #         my $ns = coorround($coors{latitude});
+                #         $ns = $ns < 0 ?  (- $ns)."S" : "${ns}N";
+                #         $uniq{"$ns, $ew"}++;
+                #     }
+                #     my @locs = sort keys %uniq;
+                #     $poi{loc} = \@locs;
+                #     push(@{$rec{pois}}, \%poi);
+                # }
             }
             if (scalar @sub > 0 || $desc) {
                 unshift(@sub, "Obj $ob{index}:\n$desc");
@@ -596,18 +596,18 @@ sub loaddeeddb {
             push(@objectives, join("\n", @sub)) if (scalar @sub > 0);
             next;
 
-            # foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
-            #     my %att = attmap($prog);
-            #     foreach my $key (qw(npcId itemId mobId)) {
-            #         my $id = $att{$key};
-            #         $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
-            #     }
-            # }
-            # foreach my $point ($o->findnodes('./*/point[@did]')) {
-            #     my %att = attmap($point);
-            #     my $id = $att{'did'};
-            #     $poilookups{'pois'}{$id}++ if ($id);
-            # }
+            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
+                my %att = attmap($prog);
+                foreach my $key (qw(npcId itemId mobId)) {
+                    my $id = $att{$key};
+                    $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
+                }
+            }
+            ## TODO: find a way to get the coords for things that have a <point coordinate tag w/o a parent npc/item/mob id.
+            ## ex <condition type="WORLD_EVENT_CONDITION" loreInfo="key:620841726:118018276" progressOverride="key:620841726:22075076" showBillboardText="false">
+            # <point key="skirmish_ford_bruinen_arrows" longitude="-11.370723" latitude="-33.501923"/>
+            # </condition>
+
         }
         if (scalar @objectives > 0) {
             my $o = join("\n", @objectives);
@@ -711,28 +711,4 @@ sub buildobjectivefunctions {
             return "Reach level $att->{level}";
         }
     );
-}
-
-sub generatemenu {
-	my($ref,$tabs,$all) = @_;
-	
-	my @m = ();
-	if ($ref == 1) {
-		return "0";
-	} else {
-		push(@m, $tabs . "[".string("All") . "]=0") unless ($tabs eq "" || !$all);
-		foreach my $key (sort keys %{ $ref }) {
-			my $nref = $ref->{$key};
-			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
-			my $item;
-			if ($nref != 1 && scalar keys %{ $nref } == 0) {
-				$item = $tabs . "[".string($key) . "]=0";
-			} else {
-				$item = $tabs . "[". string($key) . "]=" . generatemenu($nref, "$tabs\t", $nall);
-			}
-			push(@m, $item);
-		}
-		return "{\n". join (",\n", @m) . "\n$tabs}";
-	}
-	
 }
