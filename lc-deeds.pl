@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib '.';
+use lib '/home/kriley/workspace/lotro-compendium-tools/';
 use strict;
 use warnings;
 use utf8;
@@ -14,7 +14,7 @@ $|=1;
 
 my $deeddb = loaddeeddb();
 
-open INDEX, ">:utf8", "CompendiumDeedsDB.lua";
+open INDEX, ">:utf8", "data/output/Compendium/Deeds/CompendiumDeedsDB.lua";
 
 print INDEX <<EOB;
 ---\@diagnostic disable
@@ -32,7 +32,9 @@ print INDEX <<EOB;
 ---\@field zone string
 ---\@field t string type / category of deed
 ---\@field d string description
----\@field level number | '"Scaling"'
+---\@field o string
+---\@field class string class deed is for when t = class
+---\@field level number
 ---\@field mobs POI[]
 ---\@field pois POI[]
 ---\@field ndx number
@@ -74,15 +76,16 @@ my %indexes = ();
 my $index = 1;
 my %deedtoindex = ();
 my @levelranges = ();
-foreach my $q (@{ $deeddb }) {
+my @ordereddeeds = sort { $a->{name} cmp $b->{name} } @{ $deeddb };
+foreach my $q (@ordereddeeds) {
 	$deedtoindex{$q->{id}} = $index;
 	$index++;
 }
-for (my $i = 1; $i <= 140; $i += 5) {
+for (my $i = 1; $i <= 150; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
-foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
+foreach my $q (@ordereddeeds) {
 	my $mobs = $q->{'mobs'};
 	my $locs = $q->{'pois'};
 	
@@ -90,8 +93,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
         # replace next with deed offsets
 		my @newnext = ();
 		foreach my $id (@{ $q->{'next'} }) {
-			my $index = $deedtoindex{$id};			
-			push(@newnext, $deedtoindex{$id}) if ($index);
+			my $nindex = $deedtoindex{$id};			
+			push(@newnext, $nindex) if ($nindex);
 		}
 		if (scalar @newnext > 0) {
 			$q->{'next'} = \@newnext;
@@ -103,8 +106,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
         # replace prev with deed offsets
 		my @newprev = ();
 		foreach my $id (@{ $q->{'prev'} }) {
-			my $index = $deedtoindex{$id};
-			push(@newprev, $index) if ($index);
+			my $pindex = $deedtoindex{$id};
+			push(@newprev, $pindex) if ($pindex);
 		}
 		if (scalar @newprev) {
 			$q->{'prev'} = \@newprev;
@@ -166,12 +169,11 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
 
 	my $zone = $q->{'zone'};
 	my $area = $q->{'area'};
-	$zone =~ s/^The\s+//is;
-	$area =~ s/^The\s+//is;
-
 	$zone = 'Unknown' unless ($zone);
 	$area = 'Unknown' unless ($area);
-	
+    $zone =~ s/^The\s+//is;
+	$area =~ s/^The\s+//is;
+
 	if ($zone ne 'Unknown' && $area ne 'Unknown' && $area ne $zone) {
 		#$area .= " ($zone)";
 	}
@@ -207,14 +209,26 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
                     $menu{'Rewarded'}{$display} = 1;
                 }
             }
-        }
+        }      
     }
 	print INDEX ",\n" if ($index > 1) ;
 	print INDEX string(\%rec); 
 
 	if ($q->{t}) {
 		push(@{$indexes{$q->{t}}}, $index);
-		$menu{'Deed Type'}{$q->{t}} = 1;
+        if ($q->{t} eq 'Class') {
+            my $class = $q->{class};
+            if (!defined $class) {
+                if (!defined $menu{'Deed Type'}{'Class'}) {
+                    $menu{'Deed Type'}{'Class'} = {};
+                }
+            } else {
+                push(@{$indexes{$class}}, $index);
+                $menu{'Deed Type'}{'Class'}{$class} = 1;
+            }
+        } else {
+		    $menu{'Deed Type'}{$q->{t}} = 1;
+        }
 	}
 	if ($q->{faction}) {
 		if ($q->{faction} eq 'Mon') {
@@ -242,6 +256,13 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
 		}		
 	}
 	$index++;
+}
+while (my($fsub, $frec) = each %{$menu{'Zone'}}) {
+    while (my($zone, $zrec) = each %{$frec}) {
+        if (ref($zrec) eq 'HASH' && scalar keys %{$zrec} == 1 && defined $zrec->{'Unknown'}) {
+            $menu{'Zone'}{$fsub}{$zone} = 1;
+        }
+    }
 }
 store(\%deeditems, 'deeditems.db');
 
@@ -333,7 +354,7 @@ close INDEX;
 
 $menu{'Level Ranges'}{'Custom'} = 1;
 open OUT, ">:utf8", "deedmenu.lua";
-print OUT generatemenu(\%menu, "", 0);
+print OUT generatemenu("", \%menu, "", 0);
 close OUT;
 
 exit;
@@ -348,9 +369,9 @@ sub loaddeeddb {
         LORE => "Lore", RACE => "Race", REPUTATION => "Reputation", SLAYER => "Slayer"
     );
     my %attrmap = ( 
-        name => 'name', description => 'd', category => 'category', 
-        level => 'level', minLevel => 'minlevel', type => 'type',
-        id => 'id', monsterPlay => 'faction'
+        name => 'name', description => 'd', category => 'cat', 
+        level => 'level', minLevel => 'minlevel', type => 't',
+        id => 'id', monsterPlay => 'faction', requiredClass => 'class'
     );
     my %rewardmap = (
         XP => 'xp', classPoints => 'cp', craftingXp => 'cx', emote => 'em', glory => 'gl', itemXP => 'ix', lotroPoints => 'lp', 
@@ -365,24 +386,30 @@ sub loaddeeddb {
     my $craftdb = loadcraftdb();
     my %geobyname = ();
     while (my($geoid,$r) = each %{$geodb}) {
-        $geobyname{$r->{name}} = $r;
+        my $gname = $r->{name};
+        $gname =~ s/^The\s+//i;
+        $geobyname{$gname} = $r unless (defined $geobyname{$gname});
     }
     my $commentdb = decode_json(loadfile('deed-commentdb.json', ':raw'));
+    my $deedlabeldb = loadlabels('deeds');
+    my $catlabeldb = loadlabels('enum-DeedCategory');
+    my $catdb = loadmap('deedcats.db', 'data/source/lc/general/lore/enums/DeedCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
-    my $filename = 'data/source/lc/general/deeds/deeds.xml';
+    my $filename = 'data/source/lc/general/lore/deeds.xml';
     my $outputdir = 'data/output/Compendium/Deeds';
 
     my $dom = XML::LibXML->load_xml(location => $filename);
 
     my %questnamesbyid = ();
     foreach my $deed ($dom->findnodes('//deed')) {
-        my %att = attmap($deed);
+        my %att = attmap($deed, $deedlabeldb);
         $questnamesbyid{$att{id}} = $att{name};
     }
-    my $questfilename = 'data/source/lc/general/quests/quests.xml';
+    my $questlabeldb = loadlabels('quests');
+    my $questfilename = 'data/source/lc/general/lore/quests.xml';
     my $qdom = XML::LibXML->load_xml(location => $questfilename);
     foreach my $quest ($qdom->findnodes('//quest')) {
-        my %att = attmap($quest);
+        my %att = attmap($quest, $questlabeldb);
         $questnamesbyid{$att{id}} = $att{name};
     }
     $qdom = undef;
@@ -391,31 +418,77 @@ sub loaddeeddb {
     my %deeddeps = ();
     foreach my $deed ($dom->findnodes('//deed')) {
         my %rec = ();
-        my %att = attmap($deed);
+        my %att = attmap($deed, $deedlabeldb);
         while (my($name, $val) = each %att) {
             my $key = $attrmap{$name};
-            next unless ($key);
-            $rec{$key} = $val;
+            if ($key) {
+                $rec{$key} = $val;
+            }
         }
+        next if ($rec{name} =~ /\bDNT\b/);
         $rec{d} =~ s/\s*\(\$\{\w+\}\/(\$\{\w+\}|\d+)\)//gis if ($rec{d});
         $rec{id} = tohex($rec{id});
         $rec{faction} = $rec{faction} ? 'Mon' : 'FrP';
-        my $t = $rec{type} = $typemap{$rec{type}};
-        my $commentkey = $t eq 'Slayer' ? "$rec{name}|$t|$rec{category}" : "$rec{name}|$rec{category}";
+        my $t = $rec{t} = $typemap{$rec{t}};
+        my $catrec = $catdb->{$rec{cat}};
+        $rec{cat} = $catrec ? $catrec->{name} : '';
+
+        my $commentkey = "$rec{name}|$t";
+        if ($t eq 'Slayer') {
+            $commentkey = "$rec{name}|Slayer|$rec{cat}";
+        } elsif ($t eq 'Class' && $rec{class}) {
+            $commentkey = "$rec{name}|$rec{class}";
+        }
         my $comments = $commentdb->{$commentkey};
         $rec{c} = $comments if (defined $comments);
 
-        my $georef = $geobyname{$rec{category}};
+        # SOME deeds use category for the zone they apply to
+        my $possiblezone = $rec{cat};
+        $possiblezone =~ s/^The\s+//i;        
+        #delete $rec{cat};
+        # some explorer deeds are named with zone according to various patterns
+        if ($t eq 'Explorer' && !defined $geobyname{$possiblezone}) {
+            if ($rec{name} =~ m/^(.+)\s+(Traveller|Exploration|Explorer)$/i) {
+                $possiblezone = $1;
+            } elsif ($rec{name} =~ m/^(Reclaiming|Scouting|Discovering|Exploring)\s+(.+)$/i) {
+                $possiblezone = $1;
+            } elsif ($rec{name} =~ m/^(.+) (to|of|in)( the)? (.+)$/i) {
+                $possiblezone = $4;                
+            } elsif ($rec{name} =~ m/^(Discovery|Missions):\s+(.+?)(,.*)?$/i) {
+                $possiblezone = $2;        
+            } else {
+                #print "EXPLORE PATTERN: $rec{name}\n";
+                $possiblezone = $rec{name};
+            }
+        }
+        $possiblezone =~ s/^The\s+//i;
+        my $georef = $geobyname{$possiblezone};
         if ($georef) {
-            $rec{zone} = $rec{category};
+            $rec{zone} = $possiblezone;
             foreach my $key (qw(territory area)) {
                 my $to = $key eq 'territory' ? 'zone' : $key;
                 $rec{$to} = $georef->{$key} if ($georef->{$key});
             }
         }
-        my %poilookups = ();
-        $rec{zone} = 'Unknown' unless ($rec{zone});
-        $rec{area} = 'Unknown' unless ($rec{area});
+
+        if (!$rec{zone}) {
+            ##  USING THE MAPS IN DEEDS IS PROBLEMATIC.. THEY HAVE MAP REFERENCES THAT 
+            ## have nothign to do with the deed persay.. i.e. Ring-lore of Tham M�rdain
+            foreach my $m ($deed->findnodes('./map[@mapId]')) {
+                my $mapId = $m->findvalue('./@mapId');
+                my $geo = $geodb->{$mapId};
+                if ($geo) {
+                    foreach my $key (qw(territory area)) {
+                        my $to = $key eq 'territory' ? 'zone' : $key;
+                        $rec{$to} = $geo->{$key} if ($geo->{$key});
+                    }
+                    last;
+                }
+            }
+        }
+
+        #$rec{zone} = 'Unknown' unless ($rec{zone});
+        #$rec{area} = 'Unknown' unless ($rec{area});
 
         foreach my $p ($deed->findnodes('./objectives/objective/questComplete')) {
             # only add prereqs that have a deed name
@@ -453,11 +526,11 @@ sub loaddeeddb {
             } elsif ($type eq 'object') {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
-            } elsif ($type eq 'title') {
-                my %atts = attmap($reward);
+            } elsif ($type =~ m/^(title|emote)$/i) {
+                my %atts = attmap($reward, $deedlabeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $deedlabeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type =~ m/^(XP|glory|virtueXP|itemXP|mountXP|classPoints|lotroPoints)$/i) {
                 push(@{$rew{$rewkey}}, { val => $reward->findvalue('./@quantity') });
@@ -477,9 +550,10 @@ sub loaddeeddb {
             $rec{r} = \%rew;
         }
 
+        my %poilookups = ();
         my @objectives = ();
         foreach my $o ($deed->findnodes('./objectives/objective')) {
-            my %ob = attmap($o);
+            my %ob = attmap($o, $deedlabeldb);
             my $desc = '';
             # TODO: handle <objective index="3" text="${RACE:Jon Brackenbrook wishes to speak with you.&#10;&#10;After the assault on Archet, Jon Brackenbrook returned to the town to assist and rebuild, taking up his father's legacy.'[U,D,L]|'Mundo Sackville-Baggins wishes to speak with you.&#10;&#10;After the assault on Archet, you helped Mundo Sackville-Baggins and Celandine Brandybuck on their return trip to the Shire.'[O]}" progressOverride="${RACE:Speak with Mundo Sackville-Baggins[O]|Speak with Jon Brackenbrook in Archet[U,D,L]}">
             $desc .= "$ob{text}\n" if ($ob{text});
@@ -488,9 +562,9 @@ sub loaddeeddb {
             foreach my $prog ($o->nonBlankChildNodes()) {
                 my $nodename = $prog->localname;
                 #$o->findnodes('./*[@progressOverride or @name]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $deedlabeldb);
                 my $po = $att{progressOverride};
-                unless ($po) {
+                if (!defined $po || $nodename eq 'emote') {
                     my $func = $objectfuncs{$nodename};
                     if ($func) {
                         $po = $func->(\%att, \%questnamesbyid, $factions);
@@ -498,58 +572,26 @@ sub loaddeeddb {
                     }
                 }
                 push(@sub, "* $po");
-                my @points = $prog->findnodes('./point');
-                
-                if (scalar @points == 0) {
-                    foreach my $key (qw(npcId itemId mobId)) {
-                        my $id = $att{$key};
-                        $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
-                    }
-                } else {
-                    my $objName = $po;
-                    foreach my $key (keys %att) {
-                        if ($key =~ m/Name/) {
-                            $objName = $att{$key};
-                            last;
-                        }
-                    }
-                    $objName =~ s/^(Defeat|Discover|Find) (the|a)\s*//;
-                    my %poi = ( name => $objName, zone => $rec{zone} );
-                    $poi{area} = $rec{area} if ($rec{area} ne 'Unknown'); 
-                    my %uniq = ();
-                    #print "POINTS: $nodename, keys : " . join(", ", sort keys %att) . "\n";
-                    foreach my $point (@points) {
-                        my %coors = attmap($point);
-                        my $ew = coorround($coors{longitude});
-                        $ew = $ew < 0 ?  (- $ew)."W" : "${ew}E";
-                        my $ns = coorround($coors{latitude});
-                        $ns = $ns < 0 ?  (- $ns)."S" : "${ns}N";
-                        $uniq{"$ns, $ew"}++;
-                    }
-                    my @locs = sort keys %uniq;
-                    $poi{loc} = \@locs;
-                    push(@{$rec{pois}}, \%poi);
-                }
             }
             if (scalar @sub > 0 || $desc) {
                 unshift(@sub, "Obj $ob{index}:\n$desc");
             }
             
             push(@objectives, join("\n", @sub)) if (scalar @sub > 0);
-            next;
 
-            # foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
-            #     my %att = attmap($prog);
-            #     foreach my $key (qw(npcId itemId mobId)) {
-            #         my $id = $att{$key};
-            #         $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
-            #     }
-            # }
-            # foreach my $point ($o->findnodes('./*/point[@did]')) {
-            #     my %att = attmap($point);
-            #     my $id = $att{'did'};
-            #     $poilookups{'pois'}{$id}++ if ($id);
-            # }
+            ## deal with points of interest
+            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId or @landmarkId]')) {
+                my %att = attmap($prog);
+                foreach my $key (qw(npcId itemId mobId landmarkId)) {
+                    my $id = $att{$key};
+                    $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
+                }
+            }
+            ## TODO: find a way to get the coords for things that have a <point coordinate tag w/o a parent npc/item/mob id.
+            ## ex <condition type="WORLD_EVENT_CONDITION" loreInfo="key:620841726:118018276" progressOverride="key:620841726:22075076" showBillboardText="false">
+            # <point key="skirmish_ford_bruinen_arrows" longitude="-11.370723" latitude="-33.501923"/>
+            # </condition>
+
         }
         if (scalar @objectives > 0) {
             my $o = join("\n", @objectives);
@@ -594,14 +636,16 @@ sub buildobjectivefunctions {
         monsterDied => sub { 
             my($att) = @_; 
             my $name = $att->{mobName};
-            return $name ? "Defeat $name" : undef; 
+            return undef unless ($name);
+            return $att->{count} ? "Defeat $att->{count} $name" : "Defeat $name"; 
         },
         npcTalk => sub { my($att) = @_; return "Speak with $att->{npcName}"; },
         skillUsed => sub { my($att) = @_; return "Use the skill $att->{skillName}"; },
         questComplete => sub {
             my($att,$dbyid) = @_;
+            return undef unless ($att->{achievableId});
             my $quest = $dbyid->{$att->{achievableId}};
-            return $quest ? "Complete $quest": undef;
+            return $quest ? "Complete '$quest'": undef;
         },
         questBestowed => sub {
             my($att,$dbyid) = @_;
@@ -611,6 +655,16 @@ sub buildobjectivefunctions {
         enterDetection => sub {
             my($att,$dbyid) = @_;
             return $att->{progressOverride};
+        },
+        emote => sub {
+            my($att,$dbyid) = @_;
+            if ($att->{npcName}) {
+                return "Perform $att->{command} emote at $att->{npcName}";
+            } elsif ($att->{count}) {
+                return "Receive $att->{command} emote $att->{count} times ($att->{maxDaily} times/day)";
+            } else {
+                return "Perform $att->{command} emote";
+            }
         },
         factionLevel => sub {
             my($att,$dbyid,$fdb) = @_;
@@ -630,7 +684,7 @@ sub buildobjectivefunctions {
                     $l = 'Celebrated';
                 }
             }
-            return "You must earn $l standing with the $f->{name}";
+            return "You must earn $l standing with $f->{name}";
         },
         condition => sub {
             my($att,$dbyid,$fdb) = @_;
@@ -641,28 +695,4 @@ sub buildobjectivefunctions {
             return "Reach level $att->{level}";
         }
     );
-}
-
-sub generatemenu {
-	my($ref,$tabs,$all) = @_;
-	
-	my @m = ();
-	if ($ref == 1) {
-		return "0";
-	} else {
-		push(@m, $tabs . "[".string("All") . "]=0") unless ($tabs eq "" || !$all);
-		foreach my $key (sort keys %{ $ref }) {
-			my $nref = $ref->{$key};
-			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
-			my $item;
-			if ($nref != 1 && scalar keys %{ $nref } == 0) {
-				$item = $tabs . "[".string($key) . "]=0";
-			} else {
-				$item = $tabs . "[". string($key) . "]=" . generatemenu($nref, "$tabs\t", $nall);
-			}
-			push(@m, $item);
-		}
-		return "{\n". join (",\n", @m) . "\n$tabs}";
-	}
-	
 }

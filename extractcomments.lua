@@ -20,7 +20,7 @@ for i, rec in ipairs(deedtable) do
     if rec.c ~= nil then
         local name = rec.name;
         local subname, category = rec.name:match("^(.-)%s*%(([^%)]+)%)$");
-        if subname ~= nil then
+        if rec.t == "Slayer" and subname ~= nil then
             comments[subname .. '|' .. rec.t .. '|' .. category] = rec.c;
         else
             comments[name .. '|' .. rec.t] = rec.c;

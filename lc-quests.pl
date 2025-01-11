@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib '.';
+use lib '/home/kriley/workspace/lotro-compendium-tools/';
 use strict;
 use warnings;
 use utf8;
@@ -8,14 +8,11 @@ use Storable qw(freeze thaw store retrieve);
 use XML::LibXML;
 use Compendium;
 use JSON;
-#use Compress::Zlib;
-# use open ':utf8';
-# binmode STDOUT, ":utf8";
 $|=1;
 
 my $questdb = loadquestdb();
 
-open INDEX, ">:utf8", "CompendiumQuestsDB.lua";
+open INDEX, ">:utf8", "data/output/Compendium/Quests/CompendiumQuestsDB.lua";
 
 print INDEX <<EOB;
 ---\@diagnostic disable
@@ -84,15 +81,16 @@ my %indexes = ();
 my $index = 1;
 my %questtoindex = ();
 my @levelranges = ();
-foreach my $q (@{ $questdb }) {
+my @orderedquests = sort { $a->{name} cmp $b->{name} } @{ $questdb };
+foreach my $q (@orderedquests) {
 	$questtoindex{$q->{id}} = $index;
 	$index++;
 }
-for (my $i = 1; $i <= 140; $i += 5) {
+for (my $i = 1; $i <= 150; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
-foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
+foreach my $q (@orderedquests) {
 	my $mobs = $q->{'mobs'};
 	my $locs = $q->{'pois'};
 	
@@ -100,8 +98,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         # replace next with quest offsets
 		my @newnext = ();
 		foreach my $id (@{ $q->{'next'} }) {
-			my $index = $questtoindex{$id};			
-			push(@newnext, $questtoindex{$id}) if ($index);
+			my $nindex = $questtoindex{$id};			
+			push(@newnext, $nindex) if ($nindex);
 		}
 		if (scalar @newnext > 0) {
 			$q->{'next'} = \@newnext;
@@ -113,8 +111,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         # replace prev with quest offsets
 		my @newprev = ();
 		foreach my $id (@{ $q->{'prev'} }) {
-			my $index = $questtoindex{$id};
-			push(@newprev, $index) if ($index);
+			my $pindex = $questtoindex{$id};
+			push(@newprev, $pindex) if ($pindex);
 		}
 		if (scalar @newprev) {
 			$q->{'prev'} = \@newprev;
@@ -154,6 +152,10 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         if ($level eq 'Scaling') {
             push(@{$indexes{'Scaling'}}, $index);
             $menu{'Level Ranges'}{'Scaling'} = 1;
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
+        } else {
+            push(@{$indexes{'Non-Scaling'}}, $index);
+            $menu{'Level Ranges'}{'Non-Scaling'} = 1;
         }
         my $curlevel = $level eq 'Scaling' ? -1 : int($level);
         my $minlevel = defined $rec{minlevel} ? int($rec{minlevel}) : 0;
@@ -176,12 +178,11 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
 
 	my $zone = $q->{'zone'};
 	my $area = $q->{'area'};
-	$zone =~ s/^The\s+//is;
-	$area =~ s/^The\s+//is;
-
 	$zone = 'Unknown' unless ($zone);
 	$area = 'Unknown' unless ($area);
-	
+    $zone =~ s/^The\s+//is;
+	$area =~ s/^The\s+//is;
+
 	if ($zone ne 'Unknown' && $area ne 'Unknown' && $area ne $zone) {
 		#$area .= " ($zone)";
 	}
@@ -260,6 +261,13 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
 		}		
 	}
 	$index++;
+}
+while (my($fsub, $frec) = each %{$menu{'Zone'}}) {
+    while (my($zone, $zrec) = each %{$frec}) {
+        if (ref($zrec) eq 'HASH' && scalar keys %{$zrec} == 1 && defined $zrec->{'Unknown'}) {
+            $menu{'Zone'}{$fsub}{$zone} = 1;
+        }
+    }
 }
 store(\%questitems, 'questitems.db');
 
@@ -351,7 +359,7 @@ close INDEX;
 
 $menu{'Level Ranges'}{'Custom'} = 1;
 open OUT, ">:utf8", "questmenu.lua";
-print OUT generatemenu(\%menu, "", 0);
+print OUT generatemenu("", \%menu, "", 0);
 close OUT;
 
 
@@ -377,10 +385,13 @@ sub loadquestdb {
     my %moneymap = ( gold => 'g', silver => 's', copper => 'c' );
     my $geodb = loadgeodb();
     my $poidb = loadpoidb($geodb);
+    my $labeldb = loadlabels('quests');
     my $craftdb = loadcraftdb();
     my $commentdb = decode_json(loadfile('quest-commentdb.json', ':raw'));
+    my $catlabeldb = loadlabels('enum-QuestCategory');
+    my $catdb = loadmap('questcats.db', 'data/source/lc/general/lore/enums/QuestCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
-    my $filename = 'data/source/lc/general/quests/quests.xml';
+    my $filename = 'data/source/lc/general/lore/quests.xml';
     my $outputdir = 'data/output/Compendium/Quests';
 
     my $dom = XML::LibXML->load_xml(location => $filename);
@@ -388,17 +399,20 @@ sub loadquestdb {
     foreach my $quest ($dom->findnodes('//quest')) {
 
         my %rec = ();
-        my %att = attmap($quest);
+        my %att = attmap($quest, $labeldb);
         while (my($name, $val) = each %att) {
             my $key = $attrmap{$name};
             next unless ($key);
             $rec{$key} = $val;
         }
+        my $autobestowed = defined $att{autoBestowed} && $att{autoBestowed} eq 'true';
         $rec{d} =~ s/\s*\(\$\{\w+\}\/(\$\{\w+\}|\d+)\)//gis if ($rec{d});
         $rec{id} = tohex($rec{id});
         $rec{repeatable} = $rec{repeatable} ? 'Yes' : 'No';
         $rec{faction} = $rec{faction} ? 'Mon' : 'FrP';
         $rec{instance} = defined $rec{instance} && $rec{instance} eq 'true' ? 'Yes' : 'No';
+        my $catrec = $catdb->{$rec{category}};
+        $rec{category} = $catrec ? $catrec->{name} : 'Unknown';
         my $comments = $commentdb->{"$rec{name}|$rec{category}"};
         $rec{c} = $comments if (defined $comments);
         if ($att{size} && $att{size} =~ m/(SMALL_FELLOWSHIP|FELLOWSHIP)/) {
@@ -449,19 +463,37 @@ sub loadquestdb {
             }
             # TODO: There can be more than one... Do something with other bestowers?
         }
-        $rec{zone} = 'Unknown' unless ($rec{zone});
-        $rec{area} = 'Unknown' unless ($rec{area});
-
+        if (!$rec{zone} && $autobestowed) {
+            ##  USING THE MAPS IN QUESTS IS PROBLEMATIC.  Their presence doesn't mean it starts there
+            foreach my $m ($quest->findnodes('./map[@mapId]')) {
+                my $mapId = $m->findvalue('./@mapId');
+                my $geo = $geodb->{$mapId};
+                if ($geo) {
+                    foreach my $key (qw(dungeon territory area)) {
+                        my $to = $key eq 'territory' ? 'zone' : $key;
+                        $rec{$to} = $geo->{$key} if ($geo->{$key});
+                    }
+                    last;
+                }
+            }
+        }
+        #$rec{zone} = 'Unknown' unless ($rec{zone});
+        #$rec{area} = 'Unknown' unless ($rec{area});
+        my %pseen = ();
         foreach my $p ($quest->findnodes('./compoundPrerequisite/prerequisite')) {
             # only add prereqs that have a quest name
-            push(@{$rec{prev}}, tohex($p->findvalue('./@id'))) if ($p->findvalue('./@name'));
+            my $curid = tohex($p->findvalue('./@id'));
+            push(@{$rec{prev}}, $curid) if ($p->findvalue('./@name') && !$pseen{$curid}++);
         }
         foreach my $p ($quest->findnodes('./prerequisite')) {
             # only add prereqs that have a quest name
-            push(@{$rec{prev}}, tohex($p->findvalue('./@id'))) if ($p->findvalue('./@name'));
+            my $curid = tohex($p->findvalue('./@id'));
+            push(@{$rec{prev}},  $curid) if ($p->findvalue('./@name') && !$pseen{$curid}++);
         }
+        my %nseen = ();
         foreach my $n ($quest->findnodes('./nextQuest')) {
-            push(@{$rec{next}}, tohex($n->findvalue('./@id')));
+            my $curid = tohex($n->findvalue('./@id'));
+            push(@{$rec{next}}, $curid) if (!$nseen{$curid}++);
         }
 
         my %rew = ();
@@ -489,11 +521,11 @@ sub loadquestdb {
             } elsif ($type eq 'object') {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
-            } elsif ($type eq 'title') {
-                my %atts = attmap($reward);
+            } elsif ($type =~ m/^(title|emote)$/i) {
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
-                my %atts = attmap($reward);
+                my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type =~ m/^(XP|glory|virtueXP|itemXP|mountXP|classPoints|lotroPoints)$/i) {
                 push(@{$rew{$rewkey}}, { val => $reward->findvalue('./@quantity') });
@@ -515,21 +547,21 @@ sub loadquestdb {
 
         my @objectives = ();
         foreach my $o ($quest->findnodes('./objectives/objective')) {
-            my %ob = attmap($o);
+            my %ob = attmap($o, $labeldb);
             my $desc = '';
             # TODO: handle <objective index="3" text="${RACE:Jon Brackenbrook wishes to speak with you.&#10;&#10;After the assault on Archet, Jon Brackenbrook returned to the town to assist and rebuild, taking up his father's legacy.'[U,D,L]|'Mundo Sackville-Baggins wishes to speak with you.&#10;&#10;After the assault on Archet, you helped Mundo Sackville-Baggins and Celandine Brandybuck on their return trip to the Shire.'[O]}" progressOverride="${RACE:Speak with Mundo Sackville-Baggins[O]|Speak with Jon Brackenbrook in Archet[U,D,L]}">
             $desc .= "$ob{text}\n" if ($ob{text});
             $desc .= "$ob{progressOverride}" if ($ob{progressOverride});
             my @sub = ("Obj $ob{index}:\n$desc");
             foreach my $prog ($o->findnodes('./*[@progressOverride]')) {
-                my %att = attmap($prog);
+                my %att = attmap($prog, $labeldb);
                 push(@sub, "* $att{progressOverride}");
             }
             push(@objectives, join("\n", @sub));
             
-            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
-                my %att = attmap($prog);
-                foreach my $key (qw(npcId itemId mobId)) {
+            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId or @landmarkId]')) {
+                my %att = attmap($prog, $labeldb);
+                foreach my $key (qw(npcId itemId mobId landmarkId)) {
                     my $id = $att{$key};
                     $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
                 }
@@ -557,28 +589,4 @@ sub loadquestdb {
     }
     store(\@quests, $questdbfile);
     return \@quests;
-}
-
-sub generatemenu {
-	my($ref,$tabs,$all) = @_;
-	
-	my @m = ();
-	if ($ref == 1) {
-		return "0";
-	} else {
-		push(@m, $tabs . "[".string("All") . "]=0") unless ($tabs eq "" || !$all);
-		foreach my $key (sort keys %{ $ref }) {
-			my $nref = $ref->{$key};
-			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
-			my $item;
-			if ($nref != 1 && scalar keys %{ $nref } == 0) {
-				$item = $tabs . "[".string($key) . "]=0";
-			} else {
-				$item = $tabs . "[". string($key) . "]=" . generatemenu($nref, "$tabs\t", $nall);
-			}
-			push(@m, $item);
-		}
-		return "{\n". join (",\n", @m) . "\n$tabs}";
-	}
-	
 }
