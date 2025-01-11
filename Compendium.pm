@@ -179,6 +179,11 @@ sub loadgeodb {
         if ($rec{id} eq '1879063940') {
             %rec = %{$geos{'1879072227'}};
             $rec{id} = 1879063940;
+        } elsif ($rec{id} =~ /^(1879063919|1879063920)$/) {
+            # xml has a couple bad areas that are in breeland but aren't really areas
+            # routing to breeland itself
+            $geos{$rec{id}} = $geos{'1879049792'};
+            next;
         }
 
         $geos{$rec{id}} = \%rec;
@@ -187,13 +192,13 @@ sub loadgeodb {
         }
     }
     while (my($id,$rec) = each %geos) {
-        if (defined $geobyname{$rec->{name}}) {
-            # my $or = $geobyname{$rec->{name}};
-            # print "DUPLICATE $rec->{name} ($rec->{id}|$rec->{parentId} <==> $or->{id}|$or->{parentId}\n";
-        } else {
-            # only allow first area by that name to be used.  There is a lot of name reuse.  
-            # the early tags are the zones.. farter down are the areas.. so taking zone is better
-            $geobyname{$rec->{name}} = $rec;
+        my $name = $rec->{name};
+        # only allow first area by that name to be used.  There is a lot of name reuse.  
+        # the early tags are the zones.. farter down are the areas.. so taking zone is better
+        $geobyname{$name} = $rec unless (defined $geobyname{$name});
+        if ($name =~ /^The\s+/) {
+            $name =~ s/^The\s+//;
+            $geobyname{$name} = $rec unless (defined $geobyname{$name});
         }
     }
     my %maps = ();
@@ -232,7 +237,8 @@ sub loadgeodb {
     foreach my $d ($dungdom->findnodes('//dungeons/dungeon')) {
         my $name = $d->findvalue('./@name');
         $name =~ s/[\n\r]+.*//s;
-        $dungeons{$d->findvalue('./@id')} = { name => $name, override => $d->findvalue('./position/@zoneID') };
+        my $override = $d->findvalue('./position/@zoneID');
+        $dungeons{$d->findvalue('./@id')} = { name => $name, override => ($geos{$override} ? $override : '') };
     }
     my $lbdom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/landblocks.xml');
     my %lbseen = ();
@@ -240,7 +246,7 @@ sub loadgeodb {
         my $dungId = $g->findvalue('./@dungeonId');
         next if ($dungId eq '0'); # skip placeholder ids
         my $drec = $dungeons{$dungId};
-        my $id = $drec->{override} or $g->findvalue('./@areaId');
+        my $id = $drec->{override} eq '' ? $g->findvalue('./@areaId') : $drec->{override};
         next if (defined $lbseen{"$id|$dungId"}); # skip ones we've processed before as there are dups
         my $geo = $geos{$id};
         if ($geo) {
@@ -249,7 +255,10 @@ sub loadgeodb {
                 $vals{$key} = $geo->{$key} if ($geo->{$key});
             }
             if (defined $geos{$dungId}) {
-                die "ERROR: id collision for dungeon! : $dungId";
+                if ($vals{'territory'} ne $geos{$dungId}{territory}) {
+                    print "ERROR: id collision for dungeon! : $dungId";
+                }
+                next;
             }
             $geos{$dungId} = \%vals;
         }
@@ -389,7 +398,7 @@ sub generatemenu {
         }
 		foreach my $key (@keys) {
 			my $nref = $ref->{$key};
-			my $nall = $all ? $all : ( $key =~ m/^(Zone|Crafting XP)$/ ? 1 : 0); 
+			my $nall = $all ? $all : ( $key =~ m/^(Zone|Class|Crafting XP)$/ ? 1 : 0); 
 			my $item;
 			if ($nref != 1 && scalar keys %{ $nref } == 0) {
 				$item = $tabs . "[".string($key) . "]=0";

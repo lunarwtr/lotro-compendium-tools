@@ -81,7 +81,8 @@ my %indexes = ();
 my $index = 1;
 my %questtoindex = ();
 my @levelranges = ();
-foreach my $q (@{ $questdb }) {
+my @orderedquests = sort { $a->{name} cmp $b->{name} } @{ $questdb };
+foreach my $q (@orderedquests) {
 	$questtoindex{$q->{id}} = $index;
 	$index++;
 }
@@ -89,7 +90,7 @@ for (my $i = 1; $i <= 150; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
-foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
+foreach my $q (@orderedquests) {
 	my $mobs = $q->{'mobs'};
 	my $locs = $q->{'pois'};
 	
@@ -97,8 +98,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         # replace next with quest offsets
 		my @newnext = ();
 		foreach my $id (@{ $q->{'next'} }) {
-			my $index = $questtoindex{$id};			
-			push(@newnext, $questtoindex{$id}) if ($index);
+			my $nindex = $questtoindex{$id};			
+			push(@newnext, $nindex) if ($nindex);
 		}
 		if (scalar @newnext > 0) {
 			$q->{'next'} = \@newnext;
@@ -110,8 +111,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
         # replace prev with quest offsets
 		my @newprev = ();
 		foreach my $id (@{ $q->{'prev'} }) {
-			my $index = $questtoindex{$id};
-			push(@newprev, $index) if ($index);
+			my $pindex = $questtoindex{$id};
+			push(@newprev, $pindex) if ($pindex);
 		}
 		if (scalar @newprev) {
 			$q->{'prev'} = \@newprev;
@@ -177,12 +178,11 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
 
 	my $zone = $q->{'zone'};
 	my $area = $q->{'area'};
-	$zone =~ s/^The\s+//is;
-	$area =~ s/^The\s+//is;
-
 	$zone = 'Unknown' unless ($zone);
 	$area = 'Unknown' unless ($area);
-	
+    $zone =~ s/^The\s+//is;
+	$area =~ s/^The\s+//is;
+
 	if ($zone ne 'Unknown' && $area ne 'Unknown' && $area ne $zone) {
 		#$area .= " ($zone)";
 	}
@@ -261,6 +261,13 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $questdb }) {
 		}		
 	}
 	$index++;
+}
+while (my($fsub, $frec) = each %{$menu{'Zone'}}) {
+    while (my($zone, $zrec) = each %{$frec}) {
+        if (ref($zrec) eq 'HASH' && scalar keys %{$zrec} == 1 && defined $zrec->{'Unknown'}) {
+            $menu{'Zone'}{$fsub}{$zone} = 1;
+        }
+    }
 }
 store(\%questitems, 'questitems.db');
 
@@ -398,6 +405,7 @@ sub loadquestdb {
             next unless ($key);
             $rec{$key} = $val;
         }
+        my $autobestowed = defined $att{autoBestowed} && $att{autoBestowed} eq 'true';
         $rec{d} =~ s/\s*\(\$\{\w+\}\/(\$\{\w+\}|\d+)\)//gis if ($rec{d});
         $rec{id} = tohex($rec{id});
         $rec{repeatable} = $rec{repeatable} ? 'Yes' : 'No';
@@ -455,19 +463,37 @@ sub loadquestdb {
             }
             # TODO: There can be more than one... Do something with other bestowers?
         }
-        $rec{zone} = 'Unknown' unless ($rec{zone});
-        $rec{area} = 'Unknown' unless ($rec{area});
-
+        if (!$rec{zone} && $autobestowed) {
+            ##  USING THE MAPS IN QUESTS IS PROBLEMATIC.  Their presence doesn't mean it starts there
+            foreach my $m ($quest->findnodes('./map[@mapId]')) {
+                my $mapId = $m->findvalue('./@mapId');
+                my $geo = $geodb->{$mapId};
+                if ($geo) {
+                    foreach my $key (qw(dungeon territory area)) {
+                        my $to = $key eq 'territory' ? 'zone' : $key;
+                        $rec{$to} = $geo->{$key} if ($geo->{$key});
+                    }
+                    last;
+                }
+            }
+        }
+        #$rec{zone} = 'Unknown' unless ($rec{zone});
+        #$rec{area} = 'Unknown' unless ($rec{area});
+        my %pseen = ();
         foreach my $p ($quest->findnodes('./compoundPrerequisite/prerequisite')) {
             # only add prereqs that have a quest name
-            push(@{$rec{prev}}, tohex($p->findvalue('./@id'))) if ($p->findvalue('./@name'));
+            my $curid = tohex($p->findvalue('./@id'));
+            push(@{$rec{prev}}, $curid) if ($p->findvalue('./@name') && !$pseen{$curid}++);
         }
         foreach my $p ($quest->findnodes('./prerequisite')) {
             # only add prereqs that have a quest name
-            push(@{$rec{prev}}, tohex($p->findvalue('./@id'))) if ($p->findvalue('./@name'));
+            my $curid = tohex($p->findvalue('./@id'));
+            push(@{$rec{prev}},  $curid) if ($p->findvalue('./@name') && !$pseen{$curid}++);
         }
+        my %nseen = ();
         foreach my $n ($quest->findnodes('./nextQuest')) {
-            push(@{$rec{next}}, tohex($n->findvalue('./@id')));
+            my $curid = tohex($n->findvalue('./@id'));
+            push(@{$rec{next}}, $curid) if (!$nseen{$curid}++);
         }
 
         my %rew = ();
@@ -495,7 +521,7 @@ sub loadquestdb {
             } elsif ($type eq 'object') {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
-            } elsif ($type eq 'title') {
+            } elsif ($type =~ m/^(title|emote)$/i) {
                 my %atts = attmap($reward, $labeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
@@ -533,9 +559,9 @@ sub loadquestdb {
             }
             push(@objectives, join("\n", @sub));
             
-            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
+            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId or @landmarkId]')) {
                 my %att = attmap($prog, $labeldb);
-                foreach my $key (qw(npcId itemId mobId)) {
+                foreach my $key (qw(npcId itemId mobId landmarkId)) {
                     my $id = $att{$key};
                     $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
                 }

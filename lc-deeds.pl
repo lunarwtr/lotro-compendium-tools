@@ -32,7 +32,9 @@ print INDEX <<EOB;
 ---\@field zone string
 ---\@field t string type / category of deed
 ---\@field d string description
----\@field level number | '"Scaling"'
+---\@field o string
+---\@field class string class deed is for when t = class
+---\@field level number
 ---\@field mobs POI[]
 ---\@field pois POI[]
 ---\@field ndx number
@@ -74,7 +76,8 @@ my %indexes = ();
 my $index = 1;
 my %deedtoindex = ();
 my @levelranges = ();
-foreach my $q (@{ $deeddb }) {
+my @ordereddeeds = sort { $a->{name} cmp $b->{name} } @{ $deeddb };
+foreach my $q (@ordereddeeds) {
 	$deedtoindex{$q->{id}} = $index;
 	$index++;
 }
@@ -82,7 +85,7 @@ for (my $i = 1; $i <= 150; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
-foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
+foreach my $q (@ordereddeeds) {
 	my $mobs = $q->{'mobs'};
 	my $locs = $q->{'pois'};
 	
@@ -90,8 +93,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
         # replace next with deed offsets
 		my @newnext = ();
 		foreach my $id (@{ $q->{'next'} }) {
-			my $index = $deedtoindex{$id};			
-			push(@newnext, $deedtoindex{$id}) if ($index);
+			my $nindex = $deedtoindex{$id};			
+			push(@newnext, $nindex) if ($nindex);
 		}
 		if (scalar @newnext > 0) {
 			$q->{'next'} = \@newnext;
@@ -103,8 +106,8 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
         # replace prev with deed offsets
 		my @newprev = ();
 		foreach my $id (@{ $q->{'prev'} }) {
-			my $index = $deedtoindex{$id};
-			push(@newprev, $index) if ($index);
+			my $pindex = $deedtoindex{$id};
+			push(@newprev, $pindex) if ($pindex);
 		}
 		if (scalar @newprev) {
 			$q->{'prev'} = \@newprev;
@@ -166,12 +169,11 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
 
 	my $zone = $q->{'zone'};
 	my $area = $q->{'area'};
-	$zone =~ s/^The\s+//is;
-	$area =~ s/^The\s+//is;
-
 	$zone = 'Unknown' unless ($zone);
 	$area = 'Unknown' unless ($area);
-	
+    $zone =~ s/^The\s+//is;
+	$area =~ s/^The\s+//is;
+
 	if ($zone ne 'Unknown' && $area ne 'Unknown' && $area ne $zone) {
 		#$area .= " ($zone)";
 	}
@@ -215,9 +217,15 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
 	if ($q->{t}) {
 		push(@{$indexes{$q->{t}}}, $index);
         if ($q->{t} eq 'Class') {
-            my $class = $q->{cat};
-    		push(@{$indexes{$class}}, $index);
-            $menu{'Deed Type'}{'Class'}{$class} = 1;
+            my $class = $q->{class};
+            if (!defined $class) {
+                if (!defined $menu{'Deed Type'}{'Class'}) {
+                    $menu{'Deed Type'}{'Class'} = {};
+                }
+            } else {
+                push(@{$indexes{$class}}, $index);
+                $menu{'Deed Type'}{'Class'}{$class} = 1;
+            }
         } else {
 		    $menu{'Deed Type'}{$q->{t}} = 1;
         }
@@ -248,6 +256,13 @@ foreach my $q (sort { $a->{name} cmp $b->{name} } @{ $deeddb }) {
 		}		
 	}
 	$index++;
+}
+while (my($fsub, $frec) = each %{$menu{'Zone'}}) {
+    while (my($zone, $zrec) = each %{$frec}) {
+        if (ref($zrec) eq 'HASH' && scalar keys %{$zrec} == 1 && defined $zrec->{'Unknown'}) {
+            $menu{'Zone'}{$fsub}{$zone} = 1;
+        }
+    }
 }
 store(\%deeditems, 'deeditems.db');
 
@@ -377,7 +392,6 @@ sub loaddeeddb {
     }
     my $commentdb = decode_json(loadfile('deed-commentdb.json', ':raw'));
     my $deedlabeldb = loadlabels('deeds');
-    my $questlabeldb = loadlabels('quests');
     my $catlabeldb = loadlabels('enum-DeedCategory');
     my $catdb = loadmap('deedcats.db', 'data/source/lc/general/lore/enums/DeedCategory.xml', '/enum/entry', 'code', $catlabeldb);
 
@@ -391,6 +405,7 @@ sub loaddeeddb {
         my %att = attmap($deed, $deedlabeldb);
         $questnamesbyid{$att{id}} = $att{name};
     }
+    my $questlabeldb = loadlabels('quests');
     my $questfilename = 'data/source/lc/general/lore/quests.xml';
     my $qdom = XML::LibXML->load_xml(location => $questfilename);
     foreach my $quest ($qdom->findnodes('//quest')) {
@@ -416,7 +431,7 @@ sub loaddeeddb {
         $rec{faction} = $rec{faction} ? 'Mon' : 'FrP';
         my $t = $rec{t} = $typemap{$rec{t}};
         my $catrec = $catdb->{$rec{cat}};
-        $rec{cat} = $catrec ? $catrec->{name} : 'Unknown';
+        $rec{cat} = $catrec ? $catrec->{name} : '';
 
         my $commentkey = "$rec{name}|$t";
         if ($t eq 'Slayer') {
@@ -430,6 +445,7 @@ sub loaddeeddb {
         # SOME deeds use category for the zone they apply to
         my $possiblezone = $rec{cat};
         $possiblezone =~ s/^The\s+//i;        
+        #delete $rec{cat};
         # some explorer deeds are named with zone according to various patterns
         if ($t eq 'Explorer' && !defined $geobyname{$possiblezone}) {
             if ($rec{name} =~ m/^(.+)\s+(Traveller|Exploration|Explorer)$/i) {
@@ -471,8 +487,8 @@ sub loaddeeddb {
             }
         }
 
-        $rec{zone} = 'Unknown' unless ($rec{zone});
-        $rec{area} = 'Unknown' unless ($rec{area});
+        #$rec{zone} = 'Unknown' unless ($rec{zone});
+        #$rec{area} = 'Unknown' unless ($rec{area});
 
         foreach my $p ($deed->findnodes('./objectives/objective/questComplete')) {
             # only add prereqs that have a deed name
@@ -510,7 +526,7 @@ sub loaddeeddb {
             } elsif ($type eq 'object') {
                 my %item = itemmap($reward);
                 push(@{$rew{$rewkey}}, \%item);
-            } elsif ($type eq 'title') {
+            } elsif ($type =~ m/^(title|emote)$/i) {
                 my %atts = attmap($reward, $deedlabeldb);
                 push(@{$rew{$rewkey}}, { val => $atts{name} });
             } elsif ($type eq 'trait') {
@@ -556,49 +572,17 @@ sub loaddeeddb {
                     }
                 }
                 push(@sub, "* $po");
-                # my @points = $prog->findnodes('./point');
-                
-                # if (scalar @points == 0) {
-                #     foreach my $key (qw(npcId itemId mobId)) {
-                #         my $id = $att{$key};
-                #         $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
-                #     }
-                # } else {
-                #     my $objName = $po;
-                #     foreach my $key (keys %att) {
-                #         if ($key =~ m/Name/) {
-                #             $objName = $att{$key};
-                #             last;
-                #         }
-                #     }
-                #     $objName =~ s/^(Defeat|Discover|Find) (the|a)\s*//;
-                #     my %poi = ( name => $objName, zone => $rec{zone} );
-                #     $poi{area} = $rec{area} if ($rec{area} ne 'Unknown'); 
-                #     my %uniq = ();
-                #     #print "POINTS: $nodename, keys : " . join(", ", sort keys %att) . "\n";
-                #     foreach my $point (@points) {
-                #         my %coors = attmap($point);
-                #         my $ew = coorround($coors{longitude});
-                #         $ew = $ew < 0 ?  (- $ew)."W" : "${ew}E";
-                #         my $ns = coorround($coors{latitude});
-                #         $ns = $ns < 0 ?  (- $ns)."S" : "${ns}N";
-                #         $uniq{"$ns, $ew"}++;
-                #     }
-                #     my @locs = sort keys %uniq;
-                #     $poi{loc} = \@locs;
-                #     push(@{$rec{pois}}, \%poi);
-                # }
             }
             if (scalar @sub > 0 || $desc) {
                 unshift(@sub, "Obj $ob{index}:\n$desc");
             }
             
             push(@objectives, join("\n", @sub)) if (scalar @sub > 0);
-            next;
 
-            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId]')) {
+            ## deal with points of interest
+            foreach my $prog ($o->findnodes('./*[@npcId or @itemId or @mobId or @landmarkId]')) {
                 my %att = attmap($prog);
-                foreach my $key (qw(npcId itemId mobId)) {
+                foreach my $key (qw(npcId itemId mobId landmarkId)) {
                     my $id = $att{$key};
                     $poilookups{$key eq 'mobId' ? 'mobs' : 'pois'}{$id}++ if ($id);
                 }
