@@ -132,10 +132,28 @@ sub attmap {
 
 sub geopath {
     my($geosref, $c, $r) = @_;
+    my $name = $c->{name};
     if ($c->{parentId}) {
         geopath($geosref, $geosref->{$c->{parentId}}, $r);
     }
-    $r->{$c->{type}} = $c->{name};
+    $r->{$c->{type}} = $name;
+}
+
+sub findnearestparchment {
+    my($parchref, $gbyname, $georef, $c) = @_;
+    my $id = $c->{id};
+    if (defined $parchref->{$id}) {
+        return $id;
+    } elsif ($c->{type} eq 'territory') {
+        my $name = $c->{name};
+        $name =~ s/^The\s+//;
+        if ($gbyname->{$name}) {
+            return $gbyname->{$name}{id};
+        }
+        # if its a territory and no match this is bad
+        return -1;
+    }
+    return $c->{parentId} ? findnearestparchment($parchref, $gbyname, $georef, $georef->{$c->{parentId}}) : -1;
 }
 
 sub itemmap {
@@ -167,51 +185,131 @@ sub loadgeodb {
     if (-e $geodbfile) {
         return retrieve($geodbfile);
     }
-    my %geos = ();
+    my %parch = ();
+    my $meid = 0;
+    my $geodom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/parchmentMaps.xml');
+    my %regions = ();
+    foreach my $g ($geodom->findnodes('//parchmentMaps/parchmentMap')) {
+        my %rec = attmap($g);
+        $rec{parentId} = $rec{parentMapId};
+        $rec{name} =~ s/\s*[,;]\s+/: /;
+        delete $rec{parentMapId};
+        if ($rec{region} eq '0') {
+            $meid = $rec{id};
+            next;
+        }
+        if ($rec{parentId} eq $meid) {
+            $rec{type} = 'land';
+            $regions{$rec{id}} = $rec{name};
+            delete $rec{parentId};
+        } elsif ($regions{$rec{parentId}}) {
+            $rec{type} = 'region';
+        } else {
+            $rec{type} = 'area';
+        }
+        $parch{$rec{id}} = \%rec;
+        foreach my $a ($g->findnodes('./area')) {
+            my %att = attmap($a);
+            $att{name} =~ s/\s*[,;]\s+/: /;
+            $att{parentId} = $rec{id};
+            $att{type} = 'area';
+            $parch{$att{id}} = \%att;
+        }
+    }
     my %geobyname = ();
-    my $geodom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/geoAreas.xml');
+    while (my($id, $rec) = each %parch) {
+        $parch{$rec->{id}} = $rec;
+        if ($rec->{parentId}) {
+            geopath(\%parch, $rec, $rec);
+        }
+        if ($rec->{area} && $rec->{area} eq $rec->{region}) {
+            delete $rec->{area};
+            $rec->{type} = 'region';
+        }
+        my $name = $rec->{name};
+        $name =~ s/^The\s+//;
+        if ($geobyname{$name}) {
+            # allow regions to overrite areas
+            if ($geobyname{$name}{type} eq 'area' && $rec->{type} eq 'region') {
+                $geobyname{$name} = $rec;
+            } else {
+                #print "Geo By Name DUP: $name\n";
+            }
+        } else {
+            $geobyname{$name} = $rec;
+        }
+    }
+    # $geodom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/geoAreas.xml');
+    # foreach my $g ($geodom->findnodes('//geoAreas/area')) {
+    #     my %rec = attmap($g);
+    #     my $name = $rec{name};
+    #     $name =~ s/^The\s+//;
+    #     next if ($parch{$rec{id}});
+    #     my $geo = $geobyname{$name};
+    #     if ($geo) {
+    #         $parch{$rec{id}} = $geo;
+    #     } else {
+    #         #print "Geo not found for area: $name\n";
+    #     }
+    # }
+
+    my %geos = ();
+    $geodom = XML::LibXML->load_xml(location => 'data/source/lc/general/lore/geoAreas.xml');
     foreach my $g ($geodom->findnodes('//geoAreas/*')) {
         my %rec = attmap($g);
         $rec{type} = $g->localname;
-
+        $geos{$rec{id}} = \%rec;
+    }
+    my %geotoparch = ();
+    while (my($id, $rec) = each %geos) {
+        # skip geo regions.. only process territory & area
+        next if ($rec->{type} eq 'region');
         # hack for misty mountains.. there is an area that keeps pointing at trollshaws
         # <area id="1879063940" name="Misty Mountains" parentId="1879072246" iconId="1091632757"/>
-        if ($rec{id} eq '1879063940') {
-            %rec = %{$geos{'1879072227'}};
-            $rec{id} = 1879063940;
-        } elsif ($rec{id} =~ /^(1879063919|1879063920)$/) {
-            # xml has a couple bad areas that are in breeland but aren't really areas
-            # routing to breeland itself
-            $geos{$rec{id}} = $geos{'1879049792'};
+        # if ($rec{id} eq '1879063940') {
+        #     %rec = %{$geos{'1879072227'}};
+        #     $rec{id} = 1879063940;
+        # } elsif ($rec{id} =~ /^(1879063919|1879063920)$/) {
+        #     # xml has a couple bad areas that are in breeland but aren't really areas
+        #     # routing to breeland itself
+        #     $geos{$rec{id}} = $geos{'1879049792'};
+        #     next;
+        # }
+        my $geo = $parch{$id};
+        if ($geo) {
+            #print "Direct Hit for $id, \"$rec->{name}\" <=> \"$geo->{name}\"\n";
             next;
         }
+        my $match = findnearestparchment(\%parch, \%geobyname, \%geos, $rec);
+        if ($match > -1) {
+            $geo = $parch{$match};
+            $geotoparch{$id} = $geo;
+        } else {
+            print "Still No Match $id \"$rec->{name}\"\n";
+        }
+    }
+    # while (my($id,$rec) = each %geos) {
+    #     my $name = $rec->{name};
+    #     # only allow first area by that name to be used.  There is a lot of name reuse.  
+    #     # the early tags are the zones.. farter down are the areas.. so taking zone is better
+    #     $geobyname{$name} = $rec unless (defined $geobyname{$name});
+    #     if ($name =~ /^The\s+/) {
+    #         $name =~ s/^The\s+//;
+    #         $geobyname{$name} = $rec unless (defined $geobyname{$name});
+    #     }
+    # }
+    # my %maps = ();
+    # my $mapdom = XML::LibXML->load_xml(location => 'data/source/lc/maps/maps/maps.xml');
+    # foreach my $g ($mapdom->findnodes('//map')) {
+    #     my %rec = attmap($g);
+    #     my $id = $rec{id};
+    #     my $geo = $geos{$id};
+    #     $maps{$id} = \%rec;
+    #     if (length($id) < 10 && $geobyname{$rec{name}} && !defined $geos{$id}) {
+    #         $geos{$id} = $geobyname{$rec{name}};
+    #     }
+    # }
 
-        $geos{$rec{id}} = \%rec;
-        if ($rec{parentId}) {
-            geopath(\%geos, \%rec, \%rec);
-        }
-    }
-    while (my($id,$rec) = each %geos) {
-        my $name = $rec->{name};
-        # only allow first area by that name to be used.  There is a lot of name reuse.  
-        # the early tags are the zones.. farter down are the areas.. so taking zone is better
-        $geobyname{$name} = $rec unless (defined $geobyname{$name});
-        if ($name =~ /^The\s+/) {
-            $name =~ s/^The\s+//;
-            $geobyname{$name} = $rec unless (defined $geobyname{$name});
-        }
-    }
-    my %maps = ();
-    my $mapdom = XML::LibXML->load_xml(location => 'data/source/lc/maps/maps/maps.xml');
-    foreach my $g ($mapdom->findnodes('//map')) {
-        my %rec = attmap($g);
-        my $id = $rec{id};
-        my $geo = $geos{$id};
-        $maps{$id} = \%rec;
-        if (length($id) < 10 && $geobyname{$rec{name}} && !defined $geos{$id}) {
-            $geos{$id} = $geobyname{$rec{name}};
-        }
-    }
     # dungeons.xml
     # <dungeon id="1879323954" name="The Dome of Stars" basemapId="1091961257">
     #     <position region="3" longitude="-9.04206" latitude="-61.52641" zoneID="1879320844"/>
@@ -251,16 +349,18 @@ sub loadgeodb {
         my $geo = $geos{$id};
         if ($geo) {
             my %vals = ( id => $dungId, type => 'dungeon', dungeon => $drec->{name}, name => $drec->{name} );
-            foreach my $key (qw(region territory area)) {
+            foreach my $key (qw(land region area)) {
                 $vals{$key} = $geo->{$key} if ($geo->{$key});
             }
             if (defined $geos{$dungId}) {
-                if ($vals{'territory'} ne $geos{$dungId}{territory}) {
-                    print "ERROR: id collision for dungeon! : $dungId";
+                if ($vals{'region'} ne $geos{$dungId}{region}) {
+                    #print "ERROR: id collision for dungeon! : $dungId";
                 }
                 next;
             }
             $geos{$dungId} = \%vals;
+        } else {
+            print "ERROR: no parchmentArea for areaId $id, reeferenced by dungeon: \"$drec->{name}\", id: $dungId\n";
         }
         $lbseen{"$id|$dungId"} = 1;
     }
