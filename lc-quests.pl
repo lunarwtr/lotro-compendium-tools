@@ -387,6 +387,7 @@ sub loadquestdb {
     my $poidb = loadpoidb($geodb);
     my $labeldb = loadlabels('quests');
     my $craftdb = loadcraftdb();
+    my $wikidb = (-e 'wiki-quest.db') ? retrieve('wiki-quest.db') : {};
     my $commentdb = decode_json(loadfile('quest-commentdb.json', ':raw'));
     my $catlabeldb = loadlabels('enum-QuestCategory');
     my $catdb = loadmap('questcats.db', 'data/source/lc/general/lore/enums/QuestCategory.xml', '/enum/entry', 'code', $catlabeldb);
@@ -413,8 +414,33 @@ sub loadquestdb {
         $rec{instance} = defined $rec{instance} && $rec{instance} eq 'true' ? 'Yes' : 'No';
         my $catrec = $catdb->{$rec{category}};
         $rec{category} = $catrec ? $catrec->{name} : 'Unknown';
+        my @c = ();
+        # my $wikicomments = $wikidb->{$rec{id}};
+        # push(@c, @{ $wikicomments }) if (defined $wikicomments);
+        # my $comments = $commentdb->{"$rec{name}|$rec{category}"};
+        # push(@c, @$comments) if (defined $comments);
+        my $wikicomments = $wikidb->{$rec{id}};
+        push @c, @$wikicomments if defined $wikicomments;
+
         my $comments = $commentdb->{"$rec{name}|$rec{category}"};
-        $rec{c} = $comments if (defined $comments);
+        push @c, @$comments if defined $comments;
+
+        # Remove duplicates while preserving first-seen order
+        my %seen;
+        my @uniq = grep {
+            my $orig = $_;
+
+            # --- NORMALIZATION RULES (used only for comparison) ---
+            my $norm = lc $orig;                      # ignore case
+            $norm =~ s/[[:punct:]]//g;                # remove punctuation
+            $norm =~ s/\s+/ /g;                       # collapse whitespace
+            $norm =~ s/^\s+|\s+$//g;                  # trim            
+            # -------------------------------------------------------
+
+            !$seen{$norm}++;
+        } @c;
+
+        $rec{c} = \@uniq if (scalar @uniq > 0);        
         if ($att{size} && $att{size} =~ m/(SMALL_FELLOWSHIP|FELLOWSHIP)/) {
             $rec{t} = $1 eq 'SMALL_FELLOWSHIP' ? 'Small Fellowship' : 'Fellowship';
         }
