@@ -81,7 +81,7 @@ foreach my $q (@ordereddeeds) {
 	$deedtoindex{$q->{id}} = $index;
 	$index++;
 }
-for (my $i = 1; $i <= 150; $i += 5) {
+for (my $i = 1; $i <= 160; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
@@ -244,15 +244,19 @@ foreach my $q (@ordereddeeds) {
 	unless (lc($area) eq lc($zone)) {
 		if ($zone =~ m/^[a-e]/i) {
 			$menu{'Zone'}{'A-E'}{$zone}{$area} = 1;	
+        } elsif ($zone =~ m/^[f-m]/i) {
+            $menu{'Zone'}{'F-M'}{$zone}{$area} = 1;	
 		} else {
-			$menu{'Zone'}{'F-Z'}{$zone}{$area} = 1;	
+			$menu{'Zone'}{'N-Z'}{$zone}{$area} = 1;	
 		}
 		push(@{$indexes{$area}}, $index);
 	} else {
 		if ($zone =~ m/^[a-e]/i) {
 			$menu{'Zone'}{'A-E'}{$zone} = {} unless ($menu{'Zone'}{'A-E'}{$zone});	
+        } elsif ($zone =~ m/^[f-m]/i) {
+            $menu{'Zone'}{'F-M'}{$zone} = {} unless ($menu{'Zone'}{'F-M'}{$zone})
 		} else {
-			$menu{'Zone'}{'F-Z'}{$zone} = {} unless ($menu{'Zone'}{'F-Z'}{$zone});
+			$menu{'Zone'}{'N-Z'}{$zone} = {} unless ($menu{'Zone'}{'N-Z'}{$zone});
 		}		
 	}
 	$index++;

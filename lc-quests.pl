@@ -86,7 +86,7 @@ foreach my $q (@orderedquests) {
 	$questtoindex{$q->{id}} = $index;
 	$index++;
 }
-for (my $i = 1; $i <= 150; $i += 5) {
+for (my $i = 1; $i <= 160; $i += 5) {
 	push(@levelranges,[ $i, $i + 4]);
 }
 $index = 1;
@@ -146,6 +146,14 @@ foreach my $q (@orderedquests) {
 			$menu{'Quest Chains'}{'Other'}{$aname} = 1;
 		}
 	}
+    # Required Class
+    my $rc = $rec{rc};
+    if ($rc) {
+        foreach my $class (sort split(/[;,]/, $rc)) {
+            push(@{$indexes{$class}}, $index);
+            $menu{'Required Class'}{$class} = 1;
+        }
+    }
 	# build level & zone indexes
 	my $level = $rec{level};
 	if ($level) {
@@ -249,16 +257,20 @@ foreach my $q (@orderedquests) {
 	unless (lc($area) eq lc($zone)) {
 		if ($zone =~ m/^[a-e]/i) {
 			$menu{'Zone'}{'A-E'}{$zone}{$area} = 1;	
+        } elsif ($zone =~ m/^[f-m]/i) {
+            $menu{'Zone'}{'F-M'}{$zone}{$area} = 1;	
 		} else {
-			$menu{'Zone'}{'F-Z'}{$zone}{$area} = 1;	
+			$menu{'Zone'}{'N-Z'}{$zone}{$area} = 1;	
 		}
 		push(@{$indexes{$area}}, $index);
 	} else {
 		if ($zone =~ m/^[a-e]/i) {
 			$menu{'Zone'}{'A-E'}{$zone} = {} unless ($menu{'Zone'}{'A-E'}{$zone});	
+        } elsif ($zone =~ m/^[f-m]/i) {
+            $menu{'Zone'}{'F-M'}{$zone} = {} unless ($menu{'Zone'}{'F-M'}{$zone})
 		} else {
-			$menu{'Zone'}{'F-Z'}{$zone} = {} unless ($menu{'Zone'}{'F-Z'}{$zone});
-		}		
+			$menu{'Zone'}{'N-Z'}{$zone} = {} unless ($menu{'Zone'}{'N-Z'}{$zone});
+		}
 	}
 	$index++;
 }
@@ -374,7 +386,7 @@ sub loadquestdb {
 
     my %attrmap = ( 
         questArc => 'arcs', name => 'name', description => 'd', category => 'category', level => 'level', minLevel => 'minlevel', 
-        id => 'id', repeatable => 'repeatable', monsterPlay => 'faction', instanced => 'instance'
+        id => 'id', repeatable => 'repeatable', monsterPlay => 'faction', instanced => 'instance', requiredClass=> 'rc'
     );
     my %rewardmap = (
         XP => 'xp', classPoints => 'cp', craftingXp => 'cx', emote => 'em', glory => 'gl', itemXP => 'ix', lotroPoints => 'lp', 
@@ -414,6 +426,9 @@ sub loadquestdb {
         $rec{instance} = defined $rec{instance} && $rec{instance} eq 'true' ? 'Yes' : 'No';
         my $catrec = $catdb->{$rec{category}};
         $rec{category} = $catrec ? $catrec->{name} : 'Unknown';
+        if ($rec{rc}) {
+            $rec{rc} =~ s/;/,/g;
+        }
         my @c = ();
         # my $wikicomments = $wikidb->{$rec{id}};
         # push(@c, @{ $wikicomments }) if (defined $wikicomments);

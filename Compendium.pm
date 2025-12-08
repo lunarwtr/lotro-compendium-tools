@@ -246,6 +246,7 @@ sub loadgeodb {
         my $dungId = $g->findvalue('./@dungeonId');
         next if ($dungId eq '0'); # skip placeholder ids
         my $drec = $dungeons{$dungId};
+        next if (!defined $drec);
         my $id = $drec->{override} eq '' ? $g->findvalue('./@areaId') : $drec->{override};
         next if (defined $lbseen{"$id|$dungId"}); # skip ones we've processed before as there are dups
         my $geo = $geos{$id};

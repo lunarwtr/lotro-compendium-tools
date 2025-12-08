@@ -1,8 +1,10 @@
 .vscode
 oldscripts/
 *.bak
+.cache/
 plugin/
 bak/
 /*.db
 /*.lua
 *derp*
+*.log
